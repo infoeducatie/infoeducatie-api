@@ -1,6 +1,10 @@
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
 
+  # GET /
+  def homepage
+  end
+
   # GET /pages
   # GET /pages.json
   def index
