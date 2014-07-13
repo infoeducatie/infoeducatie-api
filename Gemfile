@@ -49,11 +49,24 @@ gem 'unicorn-rails'
 # Use debugger
 gem 'debugger', group: [:development, :test]
 
+gem 'devise'
+
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'guard-rspec', require: false
   gem 'simplecov', require: false
-  gem 'pry-rails'
   gem 'sqlite3'
+  gem 'pry-rails'
+end
+
+group :test do
+  gem 'factory_girl_rails', "~> 4.0"
+  gem "database_cleaner", "~> 1.2.0"
+  gem 'vcr', require: false
 end
