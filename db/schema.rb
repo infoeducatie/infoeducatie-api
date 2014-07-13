@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140713191105) do
+ActiveRecord::Schema.define(version: 20140713191801) do
+
+  create_table "editions", force: true do |t|
+    t.datetime "start"
+    t.datetime "end"
+    t.integer  "cardinal"
+    t.string   "motto"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "editions", ["cardinal"], name: "index_editions_on_cardinal", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
