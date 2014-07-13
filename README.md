@@ -20,4 +20,5 @@ After you have pulled the repo run:
 1. ```bundle install```
 2. ```cp config/database.yml.sample config/database.yml``` - and make the proper
    edits (like the development database name etc).
-3. ```rails server``` - Have Fun
+3. ```rails server```
+4. Have Fun
