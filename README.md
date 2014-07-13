@@ -20,5 +20,7 @@ After you have pulled the repo run:
 1. ```bundle install```
 2. ```cp config/database.yml.sample config/database.yml``` - and make the proper
    edits (like the development database name etc).
-3. ```rails server```
-4. Have Fun
+3. ```bundle exec rake db:migrate```
+3. ```bundle exec rake db:seed``` - for the moment seeds are _disabled_
+4. ```rails server```
+5. Have Fun
