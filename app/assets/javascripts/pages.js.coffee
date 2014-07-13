@@ -1,8 +1,8 @@
 #= require_self
-#= require_tree ./controllers/homepage
 #= require_tree ./directives
 #= require_tree ./services
 #= require_tree ./templates
+#= require_tree ./controllers/homepage
 
 @app = angular.module('infoeducatie', [ 'ngRoute', 'ngResource', 'ngAnimate' ])
 
