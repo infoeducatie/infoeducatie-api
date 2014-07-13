@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :editions
   resources :pages
+  resources :news
 
   root 'pages#homepage'
 

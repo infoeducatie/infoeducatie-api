@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140713193401) do
+ActiveRecord::Schema.define(version: 20140713203708) do
 
   create_table "editions", force: true do |t|
     t.datetime "start"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 20140713193401) do
   end
 
   add_index "editions", ["cardinal"], name: "index_editions_on_cardinal", unique: true, using: :btree
+
+  create_table "news", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "edition_id"
+    t.boolean  "is_pinned"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pages", force: true do |t|
     t.string   "name"
