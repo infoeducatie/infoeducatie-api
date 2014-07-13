@@ -125,6 +125,7 @@ GEM
     minitest (5.4.0)
     multi_json (1.10.1)
     mysql2 (0.3.16)
+    ng-rails-csrf (0.1.0)
     oj (2.9.9)
     orm_adapter (0.5.0)
     polyglot (0.3.5)
@@ -251,6 +252,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   mysql2
+  ng-rails-csrf
   oj
   pry-rails
   rabl (~> 0.9.0)
