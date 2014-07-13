@@ -14,6 +14,8 @@ gem 'compass-rails'
 
 # UI-related
 gem 'haml-rails'
+gem 'tilt'
+
 gem 'bootstrap-sass', '~> 3.2.0'
 
 # Use Uglifier as compressor for JavaScript assets
