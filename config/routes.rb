@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :sponsors
+
   resources :talks
 
   devise_for :users

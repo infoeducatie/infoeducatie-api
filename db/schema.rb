@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714053118) do
+ActiveRecord::Schema.define(version: 20140714053418) do
 
   create_table "editions", force: true do |t|
     t.datetime "start"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20140714053118) do
     t.integer  "edited_by"
     t.integer  "version"
     t.integer  "edition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sponsors", force: true do |t|
+    t.integer  "edition_id"
+    t.string   "name"
+    t.string   "logo"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
