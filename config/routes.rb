@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :talks
   resources :alumnis
 
+  resources :projects
+
   root 'pages#homepage'
 
   # The priority is based upon order of creation: first created -> highest priority.
