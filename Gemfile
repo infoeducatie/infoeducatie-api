@@ -55,6 +55,8 @@ gem 'devise'
 
 gem 'ng-rails-csrf'
 
+gem 'rails_admin'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
