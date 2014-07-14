@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :sponsors
-
-  resources :talks
-
   devise_for :users
 
   resources :editions
   resources :pages
   resources :news
+  resources :sponsors
+  resources :talks
 
   root 'pages#homepage'
 
