@@ -6,7 +6,5 @@ FactoryGirl.define do
     self.end Faker::Number.digit.to_i.days.from_now
     cardinal 1
     motto Faker::Lorem.sentence
-    created_at Time.now
-    updated_at Time.now
   end
 end
