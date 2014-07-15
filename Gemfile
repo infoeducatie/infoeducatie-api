@@ -1,7 +1,4 @@
-source 'https://rubygems.org'
-
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+source 'https://rubygems.org' # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
 
 gem 'dotenv-rails'
@@ -69,6 +66,10 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'sqlite3'
   gem 'pry-rails'
+end
+
+group :production do
+  gem 'pg'
 end
 
 group :test do
