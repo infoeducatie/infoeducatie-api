@@ -6,7 +6,8 @@
     = javascript_include_tag 'application', 'pages'
     = csrf_meta_tags
   %body
-    %nav.navbar.navbar-default.navbar-fixed-top{role: "navigation"}
+    %div.colorbar
+    %nav.navbar.navbar-default{role: "navigation"}
       .container
         / Brand and toggle get grouped for better mobile display
         .navbar-header
@@ -30,7 +31,7 @@
             %li
               %a{href: "#/galaciuc"} Gălăciuc
             %li
-              %a{href: "#/inscriere"} Înscriere
+              %a.join{href: "#/inscriere"} Înscriere
 
           %ul.nav.navbar-nav.navbar-right
   .container#infoeducatie-main
