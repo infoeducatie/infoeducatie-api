@@ -56,6 +56,7 @@ gem 'devise'
 gem 'ng-rails-csrf'
 
 gem 'rails_admin'
+gem 'pg'
 
 group :development do
   gem 'better_errors'
