@@ -5,7 +5,7 @@ FactoryGirl.define do
     title Faker::Lorem.sentence
     description Faker::Lorem.paragraph
     scheduled_at Faker::Number.digit.to_i.days.from_now
-    duration Faker::Number
+    duration Faker::Number.digit
     location Faker::Lorem.sentence
   end
 end
