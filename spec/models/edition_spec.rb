@@ -2,7 +2,7 @@ require  'rails_helper'
 
 RSpec.describe Edition do
   it "is valid" do
-    edition = build(:edition)
+    edition = create(:edition)
     expect(edition.valid?)
   end
 end
