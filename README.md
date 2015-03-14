@@ -1,7 +1,7 @@
 infoeducatie
 ============
 
-"Just win baby" - Al Davis
+![](https://travis-ci.org/infoeducatie/infoeducatie-api.svg?branch=master)
 
 ## Installation
 
@@ -24,7 +24,3 @@ After you have pulled the repo run:
 3. ```bundle exec rake db:seed``` - for the moment seeds are _disabled_
 4. ```rails server```
 5. Have Fun
-
-### Tools
-
-* Convert html2haml (http://html2haml.heroku.com)
