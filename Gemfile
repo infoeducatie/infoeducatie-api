@@ -52,8 +52,9 @@ gem 'ng-rails-csrf'
 
 gem 'rails_admin'
 
+gem 'pg'
+
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
@@ -74,7 +75,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec', require: false
   gem 'simplecov', require: false
-  gem 'pg'
   gem 'mysql2'
   gem 'sqlite3'
   gem 'pry-rails'
