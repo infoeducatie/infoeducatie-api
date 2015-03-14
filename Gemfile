@@ -52,23 +52,14 @@ gem 'ng-rails-csrf'
 
 gem 'rails_admin'
 
-group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-end
-
-group :development, :test do
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'guard-rspec', require: false
-  gem 'simplecov', require: false
-  gem 'sqlite3'
-  gem 'pry-rails'
-end
-
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
@@ -77,3 +68,18 @@ group :test do
   gem "database_cleaner", "~> 1.2.0"
   gem 'vcr', require: false
 end
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'guard-rspec', require: false
+  gem 'simplecov', require: false
+  gem 'pg'
+  gem 'mysql2'
+  gem 'sqlite3'
+  gem 'pry-rails'
+end
+
+
+
+
