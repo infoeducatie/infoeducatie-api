@@ -3,8 +3,6 @@ gem 'rails', '4.1.4'
 
 gem 'dotenv-rails'
 
-# Use mysql as the database for Active Record
-gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 gem 'compass-rails'
@@ -53,7 +51,6 @@ gem 'devise'
 gem 'ng-rails-csrf'
 
 gem 'rails_admin'
-gem 'pg'
 
 group :development do
   gem 'better_errors'
