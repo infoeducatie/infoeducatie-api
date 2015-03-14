@@ -2,8 +2,8 @@ require 'faker'
 
 FactoryGirl.define do
   factory :sponsor do
-    name Faker::Lorem.word
+    name Faker::Lorem.characters(7)
     # TODO: Change in a default image
-    logo Faker::Lorem.word
+    logo Faker::Lorem.characters(7)
   end
 end
