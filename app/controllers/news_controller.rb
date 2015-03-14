@@ -12,7 +12,6 @@ class NewsController < ApplicationController
     render :json => @news
   end
 
-  # POST /news
   # POST /news.json
   def create
     @news = News.new(news_params)
