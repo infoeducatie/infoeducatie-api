@@ -1,24 +1,15 @@
 class NewsController < ApplicationController
   before_action :set_news, only: [:show, :edit, :update, :destroy]
 
-  # GET /news
   # GET /news.json
   def index
     @news = News.all
+    render :json => @news
   end
 
-  # GET /news/1
   # GET /news/1.json
   def show
-  end
-
-  # GET /news/new
-  def new
-    @news = News.new
-  end
-
-  # GET /news/1/edit
-  def edit
+    render :json => @news
   end
 
   # POST /news
@@ -26,23 +17,21 @@ class NewsController < ApplicationController
   def create
     @news = News.new(news_params)
     if @news.save
-      render :show, status: :created, location: @news
+      render :show, status: :created
     else
       render json: @news.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /news/1
   # PATCH/PUT /news/1.json
   def update
     if @news.update(news_params)
-      render :show, status: :ok, location: @news
+      render :show, status: :ok
     else
       render json: @news.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /news/1
   # DELETE /news/1.json
   def destroy
     @news.destroy
