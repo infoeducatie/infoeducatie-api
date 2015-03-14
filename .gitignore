@@ -30,5 +30,6 @@ config/secrets.yml
 /tmp
 
 config/database.yml
+config/initializers/devise.rb
 
 .DS_Store
