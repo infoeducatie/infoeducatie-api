@@ -25,29 +25,20 @@ class EditionsController < ApplicationController
   # POST /editions.json
   def create
     @edition = Edition.new(edition_params)
-
-    respond_to do |format|
-      if @edition.save
-        format.html { redirect_to @edition, notice: 'Edition was successfully created.' }
-        format.json { render :show, status: :created, location: @edition }
-      else
-        format.html { render :new }
-        format.json { render json: @edition.errors, status: :unprocessable_entity }
-      end
+    if @edition.save
+      render :show, status: :created, location: @edition
+    else
+      render json: @edition.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /editions/1
   # PATCH/PUT /editions/1.json
   def update
-    respond_to do |format|
-      if @edition.update(edition_params)
-        format.html { redirect_to @edition, notice: 'Edition was successfully updated.' }
-        format.json { render :show, status: :ok, location: @edition }
-      else
-        format.html { render :edit }
-        format.json { render json: @edition.errors, status: :unprocessable_entity }
-      end
+    if @edition.update(edition_params)
+      render :show, status: :ok, location: @edition
+    else
+      render json: @edition.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +46,7 @@ class EditionsController < ApplicationController
   # DELETE /editions/1.json
   def destroy
     @edition.destroy
-    respond_to do |format|
-      format.html { redirect_to editions_url, notice: 'Edition was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private

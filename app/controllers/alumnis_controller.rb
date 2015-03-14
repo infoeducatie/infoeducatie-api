@@ -25,29 +25,20 @@ class AlumnisController < ApplicationController
   # POST /alumnis.json
   def create
     @alumni = Alumni.new(alumni_params)
-
-    respond_to do |format|
-      if @alumni.save
-        format.html { redirect_to @alumni, notice: 'Alumni was successfully created.' }
-        format.json { render :show, status: :created, location: @alumni }
-      else
-        format.html { render :new }
-        format.json { render json: @alumni.errors, status: :unprocessable_entity }
-      end
+    if @alumni.save
+      render :show, status: :created, location: @alumni
+    else
+      render json: @alumni.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /alumnis/1
   # PATCH/PUT /alumnis/1.json
   def update
-    respond_to do |format|
-      if @alumni.update(alumni_params)
-        format.html { redirect_to @alumni, notice: 'Alumni was successfully updated.' }
-        format.json { render :show, status: :ok, location: @alumni }
-      else
-        format.html { render :edit }
-        format.json { render json: @alumni.errors, status: :unprocessable_entity }
-      end
+    if @alumni.update(alumni_params)
+      render :show, status: :ok, location: @alumni
+    else
+      render json: @alumni.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +46,7 @@ class AlumnisController < ApplicationController
   # DELETE /alumnis/1.json
   def destroy
     @alumni.destroy
-    respond_to do |format|
-      format.html { redirect_to alumnis_url, notice: 'Alumni was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
