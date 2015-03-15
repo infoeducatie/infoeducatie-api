@@ -1,4 +1,5 @@
-source 'https://rubygems.org' # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+source 'https://rubygems.org'
 gem 'rails', '4.1.4'
 
 gem 'dotenv-rails'
@@ -26,15 +27,11 @@ gem 'oj'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+# Turbolinks makes following links in your web application faster.
+# Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
-
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -43,16 +40,15 @@ gem 'spring',        group: :development
 gem 'unicorn'
 gem 'unicorn-rails'
 
-# Use debugger
-gem 'debugger', group: [:development, :test]
-
 gem 'devise'
-
 gem 'ng-rails-csrf'
-
 gem 'rails_admin'
-
 gem 'pg'
+
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', '~> 0.4.0'
+end
 
 group :production do
   gem 'rails_12factor'
@@ -61,6 +57,9 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  # Spring speeds up development by keeping your application running in the
+  # background. Read more: https://github.com/rails/spring
+  gem 'spring'
 end
 
 group :test do
@@ -78,8 +77,6 @@ group :development, :test do
   gem 'mysql2'
   gem 'sqlite3'
   gem 'pry-rails'
+  gem 'debugger'
 end
-
-
-
 
