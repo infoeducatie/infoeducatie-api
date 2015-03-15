@@ -1,7 +1,7 @@
 infoeducatie
 ============
 
-![](https://travis-ci.org/infoeducatie/infoeducatie-api.svg?branch=master)
+[![](https://travis-ci.org/infoeducatie/infoeducatie-api.svg?branch=master)](https://travis-ci.org/infoeducatie/infoeducatie-api)
 
 ## Installation
 
