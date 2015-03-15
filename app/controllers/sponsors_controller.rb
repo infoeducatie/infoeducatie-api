@@ -25,29 +25,20 @@ class SponsorsController < ApplicationController
   # POST /sponsors.json
   def create
     @sponsor = Sponsor.new(sponsor_params)
-
-    respond_to do |format|
-      if @sponsor.save
-        format.html { redirect_to @sponsor, notice: 'Sponsor was successfully created.' }
-        format.json { render :show, status: :created, location: @sponsor }
-      else
-        format.html { render :new }
-        format.json { render json: @sponsor.errors, status: :unprocessable_entity }
-      end
+    if @sponsor.save
+      render :show, status: :created, location: @sponsor
+    else
+      render json: @sponsor.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /sponsors/1
   # PATCH/PUT /sponsors/1.json
   def update
-    respond_to do |format|
-      if @sponsor.update(sponsor_params)
-        format.html { redirect_to @sponsor, notice: 'Sponsor was successfully updated.' }
-        format.json { render :show, status: :ok, location: @sponsor }
-      else
-        format.html { render :edit }
-        format.json { render json: @sponsor.errors, status: :unprocessable_entity }
-      end
+    if @sponsor.update(sponsor_params)
+      render :show, status: :ok, location: @sponsor
+    else
+      render json: @sponsor.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,10 +46,7 @@ class SponsorsController < ApplicationController
   # DELETE /sponsors/1.json
   def destroy
     @sponsor.destroy
-    respond_to do |format|
-      format.html { redirect_to sponsors_url, notice: 'Sponsor was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private

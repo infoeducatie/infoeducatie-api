@@ -15,10 +15,14 @@ Rails.application.routes.draw do
   resources :sponsors
   resources :talks
   resources :alumnis
-
   resources :projects
 
-  root 'pages#homepage'
+  get "/404", :to => "errors#error_404"
+  get "/422", :to => "errors#error_404"
+  get "/500", :to => "errors#error_500"
+
+  match '*unmatched_route', :to => 'errors#error_404', via: [:get, :put, :patch, :post,
+         :delete, :copy, :head, :options, :link, :unlink, :purge, :lock, :unlock, :propfind]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
