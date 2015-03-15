@@ -78,6 +78,5 @@ group :development, :test do
   gem 'mysql2'
   gem 'sqlite3'
   gem 'pry-rails'
-  gem 'debugger'
 end
 
