@@ -7,7 +7,7 @@ infoeducatie
 
 ### Prerequisites
 
-* Ruby 2.2.0 - check out [rbenv](https://github.com/sstephenson/rbenv) and
+* Ruby 2.2.1 - check out [rbenv](https://github.com/sstephenson/rbenv) and
   ruby-build.
 * For development and testing - mysql server + bindings.
 * Make sure you have _nodejs_ installed since it's necessary for the assets
