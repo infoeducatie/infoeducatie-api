@@ -14,3 +14,6 @@ before_script:
   - cp config/database.travis.yml config/database.yml
   - mysql -e 'create database infoeducatie_test'
   - psql -c 'create database infoeducatie_test' -U postgres
+addons:
+  code_climate:
+    repo_token: ea6c130d1191a255b2ecdefc0a0bafc07b62ede5d3e60b13c13192adc0a34147

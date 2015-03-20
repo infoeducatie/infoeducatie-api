@@ -78,5 +78,6 @@ group :development, :test do
   gem 'mysql2'
   gem 'sqlite3'
   gem 'pry-rails'
+  gem "codeclimate-test-reporter", require: nil
 end
 
