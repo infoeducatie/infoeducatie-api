@@ -1,12 +1,12 @@
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 source 'https://rubygems.org'
 ruby '2.2.1'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.1'
 
 gem 'dotenv-rails'
 
 # JSON building and parsing
-gem 'rabl', '~> 0.9.0'
+gem 'rabl', '~> 0.11.0'
 gem 'oj'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -44,7 +44,7 @@ end
 group :test do
   gem 'factory_girl_rails', "~> 4.0"
   gem 'faker', "~> 1.4.1"
-  gem "database_cleaner", "~> 1.2.0"
+  gem "database_cleaner", "~> 1.4.0"
   gem 'vcr', require: false
 end
 
