@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140714061218) do
 
-  create_table "alumnis", force: true do |t|
+  create_table "alumnis", force: :cascade do |t|
     t.string   "description"
     t.string   "picture"
     t.integer  "user_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "updated_at"
   end
 
-  create_table "editions", force: true do |t|
+  create_table "editions", force: :cascade do |t|
     t.datetime "start"
     t.datetime "end"
     t.integer  "cardinal"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
 
   add_index "editions", ["cardinal"], name: "index_editions_on_cardinal", unique: true
 
-  create_table "news", force: true do |t|
+  create_table "news", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "edition_id"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "updated_at"
   end
 
-  create_table "pages", force: true do |t|
+  create_table "pages", force: :cascade do |t|
     t.string   "name"
     t.text     "body"
     t.integer  "edited_by"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "updated_at"
   end
 
-  create_table "projects", force: true do |t|
+  create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.text     "technologies"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "updated_at"
   end
 
-  create_table "sponsors", force: true do |t|
+  create_table "sponsors", force: :cascade do |t|
     t.integer  "edition_id"
     t.string   "name"
     t.string   "logo"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "updated_at"
   end
 
-  create_table "talks", force: true do |t|
+  create_table "talks", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.datetime "scheduled_at"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"

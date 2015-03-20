@@ -7,7 +7,7 @@ infoeducatie-api
 
 ### Prerequisites
 
-* Ruby 2.1.0 - check out [rbenv](https://github.com/sstephenson/rbenv) and
+* Ruby 2.2.1 - check out [rbenv](https://github.com/sstephenson/rbenv) and
   ruby-build.
 * For development and testing - mysql server + bindings.
 * Make sure you have _nodejs_ installed since it's necessary for the assets
@@ -22,5 +22,5 @@ After you have pulled the repo run:
    edits (like the development database name etc).
 3. ```bundle exec rake db:migrate```
 3. ```bundle exec rake db:seed``` - for the moment seeds are _disabled_
-4. ```rails server```
+4. ```bundle exec rails server```
 5. Have Fun
