@@ -47,6 +47,8 @@ GEM
     builder (3.2.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    codeclimate-test-reporter (0.4.7)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -205,7 +207,6 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (4.2.0)
-      json (~> 1.4)
     remotipart (1.2.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
@@ -283,6 +284,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  codeclimate-test-reporter
   database_cleaner (~> 1.2.0)
   devise (~> 3.4.0)
   dotenv-rails
