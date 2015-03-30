@@ -1,19 +1,22 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.2.1
+- 2.2.1
 env:
-  - DB=postgresql
+- DB=postgresql
 before_install:
-  - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
+- 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rake
 before_script:
-  - cp config/database.travis.yml config/database.yml
-  - mysql -e 'create database infoeducatie_test'
-  - psql -c 'create database infoeducatie_test' -U postgres
+- cp config/database.travis.yml config/database.yml
+- mysql -e 'create database infoeducatie_test'
+- psql -c 'create database infoeducatie_test' -U postgres
 addons:
   code_climate:
     repo_token: ea6c130d1191a255b2ecdefc0a0bafc07b62ede5d3e60b13c13192adc0a34147
+notifications:
+  slack:
+    secure: PeXzkhKooZNcgBX7oPxDDKP7vVOToXTS9h1be+Go/C7HcfXkX+gqoFi/RYBGkkS6hRXmnnJIqMNS1rt839+GndW8KiUwvqZ4o41uJeXJd0OFN7743t8f8KvFOUz/BQGkLF240+400oSy5fPAgx+gUKcKAebCkm//efFof2w5FPM=
