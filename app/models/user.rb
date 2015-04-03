@@ -6,5 +6,5 @@ class User < ActiveRecord::Base
          :confirmable
 
   # discourse_id needs to be unique
-  validates :discourse_id, uniqueness: true
+  validates :discourse_id, uniqueness: true, :allow_nil => true
 end
