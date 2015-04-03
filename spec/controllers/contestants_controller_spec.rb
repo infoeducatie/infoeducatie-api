@@ -52,21 +52,6 @@ RSpec.describe ContestantsController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new contestant as @contestant" do
-      get :new, {}, valid_session
-      expect(assigns(:contestant)).to be_a_new(Contestant)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested contestant as @contestant" do
-      contestant = Contestant.create! valid_attributes
-      get :edit, {:id => contestant.to_param}, valid_session
-      expect(assigns(:contestant)).to eq(contestant)
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Contestant" do
@@ -140,20 +125,4 @@ RSpec.describe ContestantsController, type: :controller do
       end
     end
   end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested contestant" do
-      contestant = Contestant.create! valid_attributes
-      expect {
-        delete :destroy, {:id => contestant.to_param}, valid_session
-      }.to change(Contestant, :count).by(-1)
-    end
-
-    it "redirects to the contestants list" do
-      contestant = Contestant.create! valid_attributes
-      delete :destroy, {:id => contestant.to_param}, valid_session
-      expect(response).to redirect_to(contestants_url)
-    end
-  end
-
 end
