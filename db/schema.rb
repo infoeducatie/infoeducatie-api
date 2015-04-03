@@ -11,74 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714061218) do
+ActiveRecord::Schema.define(version: 20150331035818) do
 
-  create_table "alumnis", force: :cascade do |t|
-    t.string   "description"
-    t.string   "picture"
+  create_table "contestants", force: :cascade do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "county"
+    t.string   "country"
+    t.string   "zip_code"
+    t.string   "cnp"
+    t.integer  "sex"
+    t.string   "id_card_type"
+    t.string   "id_card_number"
+    t.string   "phone_number"
+    t.string   "school_name"
+    t.string   "grade"
+    t.string   "school_county"
+    t.string   "school_city"
+    t.string   "school_country"
+    t.date     "date_of_birth"
+    t.string   "mentoring_teacher_first_name"
+    t.string   "mentoring_teacher_last_name"
+    t.boolean  "official"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "editions", force: :cascade do |t|
-    t.datetime "start"
-    t.datetime "end"
-    t.integer  "cardinal"
-    t.string   "motto"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "editions", ["cardinal"], name: "index_editions_on_cardinal", unique: true
-
-  create_table "news", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
     t.integer  "edition_id"
-    t.boolean  "is_pinned"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pages", force: :cascade do |t|
-    t.string   "name"
-    t.text     "body"
-    t.integer  "edited_by"
-    t.integer  "version"
-    t.integer  "edition_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.text     "technologies"
-    t.string   "coordinators"
-    t.string   "url"
-    t.boolean  "is_approved"
-    t.integer  "edition_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "sponsors", force: :cascade do |t|
-    t.integer  "edition_id"
-    t.string   "name"
-    t.string   "logo"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "talks", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.datetime "scheduled_at"
-    t.integer  "duration"
-    t.string   "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "accompanying_teacher_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -96,16 +55,15 @@ ActiveRecord::Schema.define(version: 20140714061218) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        default: 0,  null: false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name",             default: "", null: false
+    t.string   "last_name",              default: "", null: false
+    t.integer  "discourse_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
 end
