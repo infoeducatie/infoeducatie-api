@@ -18,10 +18,5 @@ RSpec.describe ContestantsController, type: :routing do
     it "routes to #update" do
       expect(:put => "/contestants/1").to route_to("contestants#update", :id => "1")
     end
-
-    it "routes to #destroy" do
-      expect(:delete => "/contestants/1").to route_to("contestants#destroy", :id => "1")
-    end
-
   end
 end
