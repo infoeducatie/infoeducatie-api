@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
   resources :contestants, :only => [:index, :show, :create, :update]
 
   get "/404", :to => "errors#error_404"
