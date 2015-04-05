@@ -1,4 +1,5 @@
 class ContestantsController < ApplicationController
+  before_action :always_request_json
   before_action :set_contestant, only: [:show, :edit, :update, :destroy]
 
   # GET /contestants.json
