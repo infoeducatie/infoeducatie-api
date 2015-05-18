@@ -58,6 +58,5 @@ group :development, :test do
   gem 'sqlite3'
   gem 'pry-rails'
   gem "codeclimate-test-reporter", require: nil
-
   gem 'factory_girl_rails', "~> 4.0"
 end
