@@ -50,13 +50,13 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'guard-rspec', require: false
-  gem 'simplecov', require: false
-  gem 'mysql2'
-  gem 'sqlite3'
-  gem 'pry-rails'
   gem "codeclimate-test-reporter", require: nil
   gem 'factory_girl_rails', "~> 4.0"
+  gem 'guard-rspec', require: false
+  gem 'mysql2'
+  gem 'pry-rails'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'simplecov', require: false
+  gem 'sqlite3'
 end
