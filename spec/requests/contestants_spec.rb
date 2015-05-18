@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "Contestants", type: :request do
-  describe "GET /contestants" do
-    it "works! (now write some real specs)" do
-      get contestants_path
+  describe "GET /contestants.json" do
+    it "Render all the contestants" do
+      get "/contestants.json"
       expect(response).to have_http_status(200)
     end
   end
