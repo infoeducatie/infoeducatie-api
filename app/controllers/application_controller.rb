@@ -6,12 +6,11 @@ class ApplicationController < ActionController::Base
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
-  # always render json
-  before_action do |controller|
-    klass = controller.class.to_s
-    unless ["RailsAdmin", "Devise"].include?(klass.deconstantize)
-      request.format = :json
-    end
+  def ensure_json_request
+    return if params[:format] == "json" || request.headers["Accept"] =~ /json/
+
+    render :json => {:status => 404, :error => "Not Found"},
+           :status => :not_found
   end
 
   def cors_set_access_control_headers
