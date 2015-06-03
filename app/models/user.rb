@@ -7,4 +7,11 @@ class User < ActiveRecord::Base
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true
+
+  after_create :update_access_token!
+
+  def update_access_token!
+    self.access_token = "#{self.id}:#{Devise.friendly_token}"
+    save
+  end
 end

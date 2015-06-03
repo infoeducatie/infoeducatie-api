@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331035818) do
+ActiveRecord::Schema.define(version: 20150603063222) do
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150331035818) do
     t.string   "first_name",             default: "", null: false
     t.string   "last_name",              default: "", null: false
     t.integer  "discourse_id"
+    t.string   "access_token"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

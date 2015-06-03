@@ -24,6 +24,8 @@ gem 'devise', '~> 3.4.0'
 gem 'rails_admin', '~> 0.6.7'
 gem 'pg'
 
+gem 'active_model_serializers', '~> 0.9.3'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
