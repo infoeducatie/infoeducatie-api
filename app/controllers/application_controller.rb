@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
 
-  #before_filter :cors_preflight_check
-  #after_filter :cors_set_access_control_headers
+  before_filter :cors_preflight_check
+  after_filter :cors_set_access_control_headers
 
   def ensure_json_request
     return if params[:format] == "json" || request.headers["Accept"] =~ /json/
