@@ -5,7 +5,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-    Rails.application.load_seed 
+    Rails.application.load_seed
   end
 
   config.before(:each, :js => true) do
