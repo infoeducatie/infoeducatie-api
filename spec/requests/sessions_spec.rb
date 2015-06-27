@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "V1::Sessions", type: :request do
   describe "POST /v1/sign_in" do
 
-    let(:valid_email) { "test@user.ro" }
+    let(:valid_email) { "test2@user.ro" }
     let(:valid_password) { "TestP4ssW0rd" }
 
     before { @user = FactoryGirl.create(:confirmed_user) }

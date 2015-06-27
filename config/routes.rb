@@ -2,9 +2,23 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
-  devise_for :users
-
   resources :contestants, :only => [:index, :show, :create, :update]
+
+  devise_for :users, class_name: 'User', controllers: {
+    registrations: 'users/registrations',
+    #sessions: 'users/sessions'
+  }, only: [:confirmations]
+  # WARNING: If you want to activate HTML login for this instance put:
+  # only: [:passwords]
+  # in the configuration above.
+  # Also uncomment sessions from above and all the routes from devise_scope
+
+  devise_scope :user do
+    post '/v1/users' => 'users/registrations#create', as: 'user_registration'
+    #get '/v1/users' => 'users/registrations#new', as: 'new_user_registration'
+    #get '/v1/users/sign_in', to: 'users/sessions#new', as: 'new_user_session'
+    #post '/v1/users/sign_in', to: 'users/sessions#create', as: 'user_session'
+  end
 
   namespace :v1, defaults: { format: :json } do
     resource :sign_in, only: [:create], controller: :sessions
