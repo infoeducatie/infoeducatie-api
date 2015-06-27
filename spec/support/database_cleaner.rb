@@ -1,10 +1,11 @@
 RSpec.configure do |config|
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:deletion)
+    #DatabaseCleaner.clean_with(:deletion)
   end
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
+    Rails.application.load_seed 
   end
 
   config.before(:each, :js => true) do

@@ -12,6 +12,9 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = 'ping@infoeducatie.ro'
 
+  # accept html AND json
+  config.navigational_formats = ["*/*", :html, :json]
+
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
