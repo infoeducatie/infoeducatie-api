@@ -27,7 +27,4 @@ class Contestant < ActiveRecord::Base
   validates :mentoring_teacher_first_name, presence: true
   validates :mentoring_teacher_last_name, presence: true
 
-  validates :official, presence: true
-  validates :present_in_camp, presence: true
-  validates :paying_camp_accommodation, presence: true
 end
