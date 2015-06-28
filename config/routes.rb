@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/internal/admin', as: 'rails_admin'
 
-  resources :contestants, :only => [:index, :show, :create, :update]
-
   devise_for :users, class_name: 'User', controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions'
@@ -19,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: :json } do
     resource :sign_in, only: [:create], controller: :sessions
+    resources :contestants, only: [:index, :show, :create]
   end
 
   get "/404", :to => "errors#error_404"
