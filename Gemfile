@@ -28,6 +28,8 @@ gem 'active_model_serializers', '~> 0.9.3'
 
 gem "pundit"
 
+gem 'airbrake'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
