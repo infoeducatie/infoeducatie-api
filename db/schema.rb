@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627185539) do
+ActiveRecord::Schema.define(version: 20150628084602) do
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -38,6 +38,20 @@ ActiveRecord::Schema.define(version: 20150627185539) do
     t.integer  "accompanying_teacher_id"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+  end
+
+  create_table "editions", force: :cascade do |t|
+    t.integer  "year"
+    t.string   "name"
+    t.date     "camp_start_date"
+    t.date     "camp_end_date"
+    t.string   "motto"
+    t.datetime "registration_start_date"
+    t.datetime "registration_end_date"
+    t.date     "travel_data_deadline"
+    t.boolean  "published"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "rights", force: :cascade do |t|
