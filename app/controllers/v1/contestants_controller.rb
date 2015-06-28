@@ -1,38 +1,24 @@
 module V1
   class ContestantsController < ApplicationController
-    before_filter :ensure_json_request
     before_action :set_contestant, only: [:show, :edit, :update, :destroy]
+    before_action :authenticate_user_from_token!
 
-    # GET /contestants.json
+    # GET /v1/contestants.json
     def index
       @contestants = Contestant.all
     end
 
-    # GET /contestants/1.json
+    # GET /v1/contestants/1.json
     def show
     end
 
-    # POST /contestants.json
+    # POST /v1/contestants.json
     def create
       @contestant = Contestant.new(contestant_params)
-
-      respond_to do |format|
-        if @contestant.save
-          format.json { render :show, status: :created, location: @contestant }
-        else
-          format.json { render json: @contestant.errors, status: :unprocessable_entity }
-        end
-      end
-    end
-
-    # PATCH/PUT /contestants/1.json
-    def update
-      respond_to do |format|
-        if @contestant.update(contestant_params)
-          format.json { render :show, status: :ok, location: @contestant }
-        else
-          format.json { render json: @contestant.errors, status: :unprocessable_entity }
-        end
+      if @contestant.save
+        render :show, status: :created, location: @contestant
+      else
+        render json: @contestant.errors, status: :unprocessable_entity
       end
     end
 
@@ -63,9 +49,8 @@ module V1
           :mentoring_teacher_first_name,
           :mentoring_teacher_last_name,
           :official,
-          :user_id,
-          :edition_id,
-          :accompanying_teacher_id
+          :present_in_camp,
+          :paying_camp_accommodation
         )
       end
   end
