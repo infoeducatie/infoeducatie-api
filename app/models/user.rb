@@ -16,6 +16,14 @@ class User < ActiveRecord::Base
   after_create :update_access_token!
   after_create :set_default_role
 
+  def admin?
+    self.roles.include?(Role.find_by(name: "admin"))
+  end
+
+  def contestant?
+    self.roles.include?(Role.find_by(name: "contestant"))
+  end
+
   def update_access_token!
     self.access_token = "#{self.id}:#{Devise.friendly_token}"
     save
