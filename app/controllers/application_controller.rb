@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
+  before_action :set_locale
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
   def ensure_json_request
     return if params[:format] == "json" || request.headers["Accept"] =~ /json/
 
