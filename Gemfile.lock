@@ -89,6 +89,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.9)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
@@ -139,6 +141,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.7.0)
     multi_json (1.11.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.18)
     nenv (0.2.0)
     nested_form (0.3.2)
@@ -250,6 +253,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sentry-raven (0.13.3)
+      faraday (>= 0.7.6)
     shellany (0.0.1)
     simplecov (0.10.0)
       docile (~> 1.1.0)
@@ -314,6 +319,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   sdoc (~> 0.4.0)
+  sentry-raven
   simplecov
   spring
   sqlite3
