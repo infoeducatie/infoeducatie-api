@@ -17,8 +17,7 @@ RSpec.describe "Contestants", type: :request do
       expect(response).to have_http_status(200)
 
       body = JSON.parse(response.body)
-      # why 2? one above + one from db/seeds.rb
-      expect(body.size).to eq(2)
+      expect(body.size).to eq(1)
     end
   end
 end

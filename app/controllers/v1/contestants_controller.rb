@@ -5,7 +5,12 @@ module V1
 
     # GET /v1/contestants.json
     def index
-      @contestants = Contestant.all
+      editition_id = if params.has_key?(:edition)
+        params[:editition]
+      else
+        Edition.find_by(current: true).id
+      end
+      @contestants = Contestant.where(edition_id: editition_id).all
     end
 
     # GET /v1/contestants/1.json
@@ -15,6 +20,8 @@ module V1
     # POST /v1/contestants.json
     def create
       @contestant = Contestant.new(contestant_params)
+      @contestant.editition = Edition.find_by(current: true)
+
       if @contestant.save
         render :show, status: :created, location: @contestant
       else

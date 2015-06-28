@@ -27,5 +27,10 @@ FactoryGirl.define do
     official false
     present_in_camp true
     paying_camp_accommodation true
+
+    after(:create) { |contestant|
+      contestant.edition = create(:edition)
+      contestant.save!
+    }
   end
 end
