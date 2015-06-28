@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150628084602) do
+ActiveRecord::Schema.define(version: 20150628084844) do
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(version: 20150628084602) do
     t.datetime "registration_end_date"
     t.date     "travel_data_deadline"
     t.boolean  "published"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "is_current",              default: false
   end
 
   create_table "rights", force: :cascade do |t|
