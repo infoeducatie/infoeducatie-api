@@ -28,8 +28,6 @@ gem 'active_model_serializers', '~> 0.9.3'
 
 gem "pundit"
 
-gem 'airbrake'
-
 gem "aws-ses", "~> 0.6.0", :require => 'aws/ses'
 
 group :doc do
