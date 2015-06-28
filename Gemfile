@@ -30,6 +30,8 @@ gem "pundit"
 
 gem 'airbrake'
 
+gem "aws-ses", "~> 0.6.0", :require => 'aws/ses'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
