@@ -21,7 +21,19 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
-    }
+    },
+    "SENTRY_DSN": {
+      "required": true
+    },
+    "AWS_SES_ACCESS_KEY": {
+      "required": true
+    },
+    "AWS_SES_ENDPOINT": {
+      "required": true
+    },
+    "AWS_SES_SECRET_KEY": {
+      "required": true
+    },
   },
   "addons": [
     "heroku-postgresql"
