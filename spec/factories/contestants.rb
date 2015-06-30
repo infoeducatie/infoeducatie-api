@@ -31,9 +31,7 @@ FactoryGirl.define do
     present_in_camp true
     paying_camp_accommodation true
 
-    before(:create) { |contestant|
-      contestant.edition = Edition.first || FactoryGirl.create(:edition)
-      contestant.user = User.first || FactoryGirl.create(:user)
-    }
+    association :edition
+    association :user
   end
 end
