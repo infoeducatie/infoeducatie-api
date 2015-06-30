@@ -29,7 +29,11 @@ FactoryGirl.define do
     paying_camp_accommodation true
 
     after(:create) { |contestant|
-      contestant.edition = create(:edition)
+      contestant.edition = Edition.find_or_create_by(current: true) do |edition|
+        edition.year = 2015
+        edition.name = "MyString"
+        edition.current = true
+      end
       contestant.save!
     }
   end

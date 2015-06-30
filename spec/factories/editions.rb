@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :edition do
+  factory :edition, class: Edition do
     year 2015
     name "MyString"
     camp_start_date "2015-06-28"
