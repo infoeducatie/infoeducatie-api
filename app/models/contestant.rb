@@ -2,6 +2,9 @@ class Contestant < ActiveRecord::Base
   belongs_to :edition
   belongs_to :user
 
+  has_many :colaborators
+  has_many :projects, through: :colaborators
+
   enum sex: [:male, :female, :undisclosed]
 
   validates :address, presence: true
