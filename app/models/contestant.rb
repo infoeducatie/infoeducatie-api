@@ -1,9 +1,9 @@
 class Contestant < ActiveRecord::Base
   belongs_to :edition
-  validates :edition, :presence => true
+  validates :edition, presence: true
 
   belongs_to :user
-  validates :user, :presence => true
+  validates :user, presence: true
 
   validates :address, presence: true
   validates :city, presence: true
