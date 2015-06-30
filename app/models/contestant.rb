@@ -28,4 +28,19 @@ class Contestant < ActiveRecord::Base
   validates :mentoring_teacher_first_name, presence: true
   validates :mentoring_teacher_last_name, presence: true
 
+  def first_name
+    user.first_name
+  end
+
+  def last_name
+    user.last_name
+  end
+
+  rails_admin do
+    list do
+      field :first_name
+      field :last_name
+      field :school_name
+    end
+  end
 end
