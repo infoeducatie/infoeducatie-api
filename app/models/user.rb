@@ -5,9 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  has_many :rights
+  has_many :rights, dependent: :destroy
   has_many :roles, through: :rights
-  has_many :contestants
+  has_many :contestants, dependent: :destroy
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true
@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
 
   after_create :update_access_token!
   after_create :set_default_role
+
+  validates :email, presence: true, uniqueness: true
 
   def admin?
     self.roles.include?(Role.find_by(name: "admin"))
@@ -32,5 +34,21 @@ class User < ActiveRecord::Base
 
   def set_default_role
     self.roles << Role.find_by(name: "registered")
+  end
+
+  rails_admin do
+    edit do
+      field :email
+      field :first_name
+      field :last_name
+      field :roles
+      field :password
+    end
+    list do
+      field :email
+      field :first_name
+      field :last_name
+      field :roles
+    end
   end
 end

@@ -32,6 +32,8 @@ gem "aws-ses", "~> 0.6.0", :require => 'aws/ses'
 
 gem "sentry-raven"
 
+gem "date_validator"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
