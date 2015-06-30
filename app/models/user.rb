@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :rights
   has_many :roles, through: :rights
+  has_many :contestants
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true

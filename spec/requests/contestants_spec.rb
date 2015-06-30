@@ -10,14 +10,30 @@ RSpec.describe "Contestants", type: :request do
   }
 
   describe "GET /v1/contestants.json" do
-    it "Render all the contestants" do
-      contestant = FactoryGirl.create(:contestant)
+    context "list all contestants" do
+      it "Render all the contestants" do
+        contestant = FactoryGirl.create(:contestant)
 
-      get "/v1/contestants.json", {}, valid_headers
-      expect(response).to have_http_status(200)
+        get "/v1/contestants", {}, valid_headers
+        expect(response).to have_http_status(200)
 
-      body = JSON.parse(response.body)
-      expect(body.size).to eq(1)
+        body = JSON.parse(response.body)
+        expect(body.size).to eq(1)
+      end
+    end
+  end
+
+  describe "POST /v1/contestants.json" do
+    context "a valid entity" do
+      it "creates a contestant" do
+        contestant_attributes = FactoryGirl.attributes_for(:contestant)
+        contestant_attributes[:sex] = "male"
+
+        post "/v1/contestants", { :contestant => contestant_attributes }, valid_headers
+
+        expect(response).to have_http_status(201)
+        body = JSON.parse(response.body)
+      end
     end
   end
 end

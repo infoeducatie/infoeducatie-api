@@ -3,6 +3,8 @@ module V1
     before_action :set_contestant, only: [:show, :edit, :update, :destroy]
     before_action :authenticate_user_from_token!
 
+    respond_to :json
+
     # GET /v1/contestants.json
     def index
       editition_id = if params.has_key?(:edition)
@@ -19,11 +21,11 @@ module V1
 
     # POST /v1/contestants.json
     def create
-      @contestant = Contestant.new(contestant_params)
-      @contestant.editition = Edition.find_by(current: true)
+      @contestant = current_user.contestants.build(contestant_params)
+      @contestant.edition = Edition.find_by(current: true)
 
       if @contestant.save
-        render :show, status: :created, location: @contestant
+        render :show, status: :created
       else
         render json: @contestant.errors, status: :unprocessable_entity
       end
@@ -43,6 +45,7 @@ module V1
           :county,
           :country,
           :zip_code,
+          :sex,
           :cnp,
           :id_card_type,
           :id_card_number,
