@@ -58,6 +58,8 @@ module V1
           :date_of_birth,
           :mentoring_teacher_first_name,
           :mentoring_teacher_last_name,
+          :accompanying_teacher_first_name,
+          :accompanying_teacher_last_name,
           :official,
           :present_in_camp,
           :paying_camp_accommodation

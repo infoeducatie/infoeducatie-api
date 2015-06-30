@@ -6,7 +6,7 @@ FactoryGirl.define do
     country "Romania"
     zip_code "731050"
 
-    sex 0
+    sex 1
 
     cnp "123123"
     id_card_type "VS"
@@ -24,17 +24,14 @@ FactoryGirl.define do
     mentoring_teacher_first_name "Cersei"
     mentoring_teacher_last_name "Lannister"
 
+    accompanying_teacher_first_name "Cercel"
+    accompanying_teacher_last_name "Dinescu"
+
     official false
     present_in_camp true
     paying_camp_accommodation true
 
-    after(:create) { |contestant|
-      contestant.edition = Edition.find_or_create_by(current: true) do |edition|
-        edition.year = 2015
-        edition.name = "MyString"
-        edition.current = true
-      end
-      contestant.save!
-    }
+    association :edition
+    association :user
   end
 end
