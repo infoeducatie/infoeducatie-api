@@ -31,7 +31,6 @@ RSpec.describe "Contestants", type: :request do
     context "resource is valid" do
       it "creates a contestant" do
         contestant_attributes = FactoryGirl.attributes_for(:contestant)
-        contestant_attributes[:sex] = "male"
 
         post "/v1/contestants", { :contestant => contestant_attributes }, valid_headers
 

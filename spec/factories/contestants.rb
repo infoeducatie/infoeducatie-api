@@ -6,7 +6,7 @@ FactoryGirl.define do
     country "Romania"
     zip_code "731050"
 
-    sex 0
+    sex "female"
 
     cnp "123123"
     id_card_type "VS"
@@ -23,6 +23,9 @@ FactoryGirl.define do
     date_of_birth "30/05/1990"
     mentoring_teacher_first_name "Cersei"
     mentoring_teacher_last_name "Lannister"
+
+    accompanying_teacher_first_name "Cercel"
+    accompanying_teacher_last_name "Dinescu"
 
     official false
     present_in_camp true
