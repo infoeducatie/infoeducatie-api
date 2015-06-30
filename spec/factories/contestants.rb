@@ -31,13 +31,9 @@ FactoryGirl.define do
     present_in_camp true
     paying_camp_accommodation true
 
-    after(:create) { |contestant|
-      contestant.edition = Edition.find_or_create_by(current: true) do |edition|
-        edition.year = 2015
-        edition.name = "MyString"
-        edition.current = true
-      end
-      contestant.save!
+    before(:create) { |contestant|
+      contestant.edition = Edition.first || FactoryGirl.create(:edition)
+      contestant.user = User.first || FactoryGirl.create(:user)
     }
   end
 end

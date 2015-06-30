@@ -1,6 +1,9 @@
 class Contestant < ActiveRecord::Base
   belongs_to :edition
+  validates :edition, :presence => true
+
   belongs_to :user
+  validates :user, :presence => true
 
   enum sex: [:male, :female, :undisclosed]
 
