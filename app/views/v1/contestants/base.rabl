@@ -17,6 +17,5 @@ attributes :id,
            :mentoring_teacher_first_name,
            :mentoring_teacher_last_name,
            :official,
-           :user_id,
-           :edition_id,
-           :accompanying_teacher_id
+           :present_in_camp,
+           :paying_camp_accommodation
