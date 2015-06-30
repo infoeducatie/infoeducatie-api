@@ -28,6 +28,10 @@ class Contestant < ActiveRecord::Base
   validates :mentoring_teacher_first_name, presence: true
   validates :mentoring_teacher_last_name, presence: true
 
+  def sex_enum
+    [:male, :female, :undisclosed]
+  end
+
   def first_name
     user.first_name
   end
