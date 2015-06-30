@@ -1,7 +1,7 @@
 {
   "name": "infoeducatie-api",
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate"
+    "postdeploy": "bundle exec rake db:migrate db:seed"
   },
   "env": {
     "DATABASE_URL": {
