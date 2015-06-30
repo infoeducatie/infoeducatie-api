@@ -5,7 +5,7 @@
   Role.find_or_create_by({name: role})
 end
 
-['web', 'utilitar', 'educational', 'multimedia', "roboti"] each do |category|
+['web', 'utilitar', 'educational', 'multimedia', 'roboti'].each do |category|
   Category.find_or_create_by({name: category})
 end
 

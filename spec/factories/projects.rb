@@ -10,7 +10,5 @@ FactoryGirl.define do
     final_score 1.5
     extra_score 1.5
     notes "MyText"
-    user_id 1
-    category_id 1
   end
 end

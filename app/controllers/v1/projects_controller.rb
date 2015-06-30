@@ -1,7 +1,6 @@
 module V1
   class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-    before_action :set_edition, only: [:index]
     before_action :authenticate_user_from_token!, only: [:create]
 
     respond_to :json
@@ -15,10 +14,10 @@ module V1
     def show
     end
 
-    # POST /v1/project.json
+    # POST /v1/project.json?contestant_id=XXX
     def create
-      @project = current_user.projects.build(project_params)
-      @project .edition = Edition.find_by(current: true)
+      @contestant = current_user.contestants.find(params[:contestant_id])
+      @project = @contestant.projects.new(project_params)
 
       if @project.save
         render :show, status: :created
@@ -33,17 +32,16 @@ module V1
         @project = Project.find(params[:id])
       end
 
-      def set_edition
-        @edition = if params.has_key?(:edition)
-          Edition.find(params[:edition])
-        else
-          Edition.find_by(current: true)
-        end
-      end
-
       # Never trust parameters from the scary internet, only allow the white list through.
       def project_params
         params.require(:project).permit(
+          :title,
+          :description,
+          :technical_description,
+          :system_requirements,
+          :source_url,
+          :homepage,
+          :category
         )
       end
   end

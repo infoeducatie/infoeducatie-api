@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630064923) do
+ActiveRecord::Schema.define(version: 20150630093311) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -78,13 +78,13 @@ ActiveRecord::Schema.define(version: 20150630064923) do
     t.text     "system_requirements"
     t.string   "source_url"
     t.string   "homepage"
-    t.boolean  "approved"
+    t.boolean  "approved",              default: false
     t.float    "final_score"
     t.float    "extra_score"
     t.text     "notes"
     t.integer  "category_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "rights", force: :cascade do |t|

@@ -5,6 +5,11 @@ class Contestant < ActiveRecord::Base
   has_many :colaborators
   has_many :projects, through: :colaborators
 
+  accepts_nested_attributes_for :colaborators,
+    :reject_if => :all_blank,
+    :allow_destroy => true
+  accepts_nested_attributes_for :projects
+
   enum sex: [:male, :female, :undisclosed]
 
   validates :address, presence: true
