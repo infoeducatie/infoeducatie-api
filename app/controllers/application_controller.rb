@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :null_session
 
+  # We don't need CSRF authenticity because our requests come only from the API
+  skip_before_filter :verify_authenticity_token
+
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
