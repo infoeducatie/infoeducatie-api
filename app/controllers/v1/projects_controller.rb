@@ -14,10 +14,13 @@ module V1
     def show
     end
 
-    # POST /v1/project.json?contestant_id=XXX
+    # POST /v1/project.json
     def create
       category = Category.find_by(name: params[:category])
-      contestant = current_user.contestants.where(id: params[:contestant_id])
+      current_edition = Edition.find_by(current: true)
+      # TODO @palcu: dupa ce implementezi contestants belongs to edition
+      # faci aici un filter dupa current edition
+      contestant = current_user.contestants[0]
 
       @project = Project.new(
         project_params.merge({
