@@ -1,7 +1,7 @@
 module V1
   class ContestantsController < ApplicationController
     before_action :set_contestant, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user_from_token!
+    before_action :authenticate_user_from_token!, only: [:create]
 
     respond_to :json
 

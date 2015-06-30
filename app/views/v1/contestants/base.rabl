@@ -19,3 +19,11 @@ attributes :id,
            :official,
            :present_in_camp,
            :paying_camp_accommodation
+
+child :user => :user do
+  attributes :id, :first_name, :last_name
+end
+
+child :edition => :edition do
+  attributes :id, :year, :name
+end
