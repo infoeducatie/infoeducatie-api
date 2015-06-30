@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630215433) do
+ActiveRecord::Schema.define(version: 20150630224416) do
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 20150630215433) do
     t.boolean  "published"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
-    t.boolean  "is_current",              default: false
     t.boolean  "current",                 default: false
   end
 
