@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150628103943) do
+ActiveRecord::Schema.define(version: 20150630122540) do
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -35,11 +35,12 @@ ActiveRecord::Schema.define(version: 20150628103943) do
     t.boolean  "official"
     t.integer  "user_id"
     t.integer  "edition_id"
-    t.integer  "accompanying_teacher_id"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.boolean  "present_in_camp",              default: false
-    t.boolean  "paying_camp_accommodation",    default: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.boolean  "present_in_camp",                 default: false
+    t.boolean  "paying_camp_accommodation",       default: false
+    t.string   "accompanying_teacher_first_name"
+    t.string   "accompanying_teacher_last_name"
   end
 
   create_table "editions", force: :cascade do |t|
