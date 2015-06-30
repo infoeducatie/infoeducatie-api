@@ -6,7 +6,7 @@ FactoryGirl.define do
     country "Romania"
     zip_code "731050"
 
-    sex "female"
+    sex 1
 
     cnp "123123"
     id_card_type "VS"

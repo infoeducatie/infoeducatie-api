@@ -5,8 +5,6 @@ class Contestant < ActiveRecord::Base
   belongs_to :user
   validates :user, :presence => true
 
-  enum sex: [:male, :female, :undisclosed]
-
   validates :address, presence: true
   validates :city, presence: true
   validates :county, presence: true
@@ -14,6 +12,9 @@ class Contestant < ActiveRecord::Base
   validates :zip_code, presence: true
 
   validates :sex, presence: true
+  validates :sex, numericality: { only_integer: true,
+                                  greater_than_or_equal_to: 1,
+                                  less_than_or_equal_to: 3}
 
   validates :cnp, presence: true
   validates :id_card_type, presence: true
@@ -35,7 +36,7 @@ class Contestant < ActiveRecord::Base
   validates :accompanying_teacher_last_name, presence: true
 
   def sex_enum
-    [:male, :female, :undisclosed]
+    [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end
 
   def first_name
