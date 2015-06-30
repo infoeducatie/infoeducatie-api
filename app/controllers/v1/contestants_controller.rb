@@ -7,15 +7,13 @@ module V1
 
     # GET /v1/contestants.json?email=XXX
     def index
-      editition_id = if params.has_key?(:edition)
-        params[:editition]
+      edition = if params.has_key?(:edition)
+        Edition.find_by(id: params[:editition])
       else
-        Edition.find_by(current: true).id
+        Edition.current
       end
 
-      @contestants = Contestant.where(
-        edition_id: editition_id
-      ).all
+      @contestants = Contestant.where(edition: edition).all
     end
 
     # GET /v1/contestants/1.json
@@ -76,6 +74,8 @@ module V1
           :date_of_birth,
           :mentoring_teacher_first_name,
           :mentoring_teacher_last_name,
+          :accompanying_teacher_first_name,
+          :accompanying_teacher_last_name,
           :official,
           :present_in_camp,
           :paying_camp_accommodation
