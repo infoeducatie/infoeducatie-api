@@ -16,17 +16,15 @@ module V1
 
     # POST /v1/project.json
     def create
-      category = Category.find_by(name: params[:category])
+      category = Category.find_by(name: params[:category_name])
       current_edition = Edition.find_by(current: true)
-      # TODO @palcu: dupa ce implementezi contestants belongs to edition
-      # faci aici un filter dupa current edition
-      contestant = current_user.contestants[0]
+      contestant = current_user.contestants.find_by(:edition => current_edition)
 
       @project = Project.new(
         project_params.merge({
           category: category,
           contestants: contestant
-        })
+        }).except(:category_name)
       )
 
       if @project.save
@@ -51,7 +49,7 @@ module V1
           :system_requirements,
           :source_url,
           :homepage,
-          :category_id
+          :category_name
         )
       end
   end
