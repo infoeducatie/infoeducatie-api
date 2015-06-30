@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630053816) do
+ActiveRecord::Schema.define(version: 20150630064923) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "colaborators", force: :cascade do |t|
+    t.integer  "contestant_id"
+    t.integer  "project_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -69,7 +82,6 @@ ActiveRecord::Schema.define(version: 20150630053816) do
     t.float    "final_score"
     t.float    "extra_score"
     t.text     "notes"
-    t.integer  "user_id"
     t.integer  "category_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
