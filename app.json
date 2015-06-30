@@ -33,7 +33,7 @@
     },
     "AWS_SES_SECRET_KEY": {
       "required": true
-    },
+    }
   },
   "addons": [
     "heroku-postgresql"
