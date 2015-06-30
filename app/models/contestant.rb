@@ -13,8 +13,6 @@ class Contestant < ActiveRecord::Base
     :allow_destroy => true
   accepts_nested_attributes_for :projects
 
-  enum sex: [:male, :female, :undisclosed]
-
   validates :address, presence: true
   validates :city, presence: true
   validates :county, presence: true
