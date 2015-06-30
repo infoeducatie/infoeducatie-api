@@ -16,8 +16,15 @@ module V1
 
     # POST /v1/project.json?contestant_id=XXX
     def create
-      @contestant = current_user.contestants.find(params[:contestant_id])
-      @project = @contestant.projects.new(project_params)
+      category = Category.find_by(name: params[:category])
+      contestant = current_user.contestants.where(id: params[:contestant_id])
+
+      @project = Project.new(
+        project_params.merge({
+          category: category,
+          contestants: contestant
+        })
+      )
 
       if @project.save
         render :show, status: :created
@@ -41,7 +48,7 @@ module V1
           :system_requirements,
           :source_url,
           :homepage,
-          :category
+          :category_id
         )
       end
   end

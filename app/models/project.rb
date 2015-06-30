@@ -9,10 +9,7 @@ class Project < ActiveRecord::Base
     :allow_destroy => true
   accepts_nested_attributes_for :contestants
 
-  before_save :set_category
+  validates :category, presence: true
+  validates :contestants, presence: true
 
-  private
-    def set_category
-      true
-    end
 end
