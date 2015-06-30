@@ -5,9 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  has_many :rights
+  has_many :rights, dependent: :destroy
   has_many :roles, through: :rights
-  has_many :contestants
+  has_many :contestants, dependent: :destroy
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true
