@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   after_create :update_access_token!
   after_create :set_default_role
 
+  validates :email, presence: true, uniqueness: true
+
   def admin?
     self.roles.include?(Role.find_by(name: "admin"))
   end
@@ -32,5 +34,21 @@ class User < ActiveRecord::Base
 
   def set_default_role
     self.roles << Role.find_by(name: "registered")
+  end
+
+  rails_admin do
+    edit do
+      field :email
+      field :first_name
+      field :last_name
+      field :roles
+      field :password
+    end
+    list do
+      field :email
+      field :first_name
+      field :last_name
+      field :roles
+    end
   end
 end
