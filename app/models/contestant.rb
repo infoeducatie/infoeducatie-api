@@ -1,9 +1,9 @@
 class Contestant < ActiveRecord::Base
   belongs_to :edition
-  validates :edition, :presence => true
+  validates :edition, presence: true
 
   belongs_to :user
-  validates :user, :presence => true
+  validates :user, presence: true
 
   has_many :colaborators
   has_many :projects, through: :colaborators
@@ -29,7 +29,7 @@ class Contestant < ActiveRecord::Base
   validates :id_card_number, presence: true
 
   validates :phone_number, presence: true
-  validates :date_of_birth, presence: true
+  validates :date_of_birth, presence: true, date: true
 
   validates :school_name, presence: true
   validates :grade, presence: true
