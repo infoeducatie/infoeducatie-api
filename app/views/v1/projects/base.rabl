@@ -10,5 +10,5 @@ node :category do |u|
   u.category.name
 end
 
-node :discourse_id do 0 end
-node :discourse_comments_no do 0 end
+node :discourse_url do "http://community.infoeducatie.ro/ceva_id" end
+node :discourse_comments_count do 0 end
