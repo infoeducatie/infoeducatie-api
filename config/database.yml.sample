@@ -24,6 +24,9 @@ defaults: &defaults
 development:
   <<: *defaults
 
+staging:
+  <<: *defaults
+
 test:
   <<: *defaults
 
