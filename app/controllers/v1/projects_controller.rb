@@ -23,7 +23,7 @@ module V1
       @project = Project.new(
         project_params.merge({
           category: category,
-          contestants: contestant
+          contestants: [ contestant ]
         }).except(:category_name)
       )
 

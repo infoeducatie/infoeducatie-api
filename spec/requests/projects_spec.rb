@@ -21,12 +21,12 @@ RSpec.describe "V1::Projects", type: :request do
         project_attributes = FactoryGirl.attributes_for(:project)
         params = {
           :project => project_attributes,
-          :category => "web"
+          :category_name => "web"
         }
 
-        post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
-        expect(response).to have_http_status(201)
+        post "/v1/projects", params, valid_headers
 
+        expect(response).to have_http_status(201)
         body = JSON.parse(response.body)
 
         project = Project.last
@@ -41,7 +41,7 @@ RSpec.describe "V1::Projects", type: :request do
         project_attributes = FactoryGirl.attributes_for(:project)
         params = {
           :project => project_attributes,
-          :category => "random"
+          :category_name => "random"
         }
 
         post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
@@ -49,20 +49,6 @@ RSpec.describe "V1::Projects", type: :request do
 
         body = JSON.parse(response.body)
       end
-
-      it "responds with 422 when contestant does not exist" do
-        project_attributes = FactoryGirl.attributes_for(:project)
-        params = {
-          :project => project_attributes,
-          :category => "web"
-        }
-
-        post "/v1/projects?contestant_id=9999999", params, valid_headers
-        expect(response).to have_http_status(422)
-
-        body = JSON.parse(response.body)
-      end
-
     end
   end
 end
