@@ -30,7 +30,7 @@ module V1
 
     # POST /v1/project.json
     def create
-      category = Category.find_by(name: params[:category_name])
+      category = Category.find_by(name: params[:project][:category])
       current_edition = Edition.find_by(current: true)
       contestant = current_user.contestants.find_by(:edition => current_edition)
 
@@ -38,7 +38,7 @@ module V1
         project_params.merge({
           category: category,
           contestants: [ contestant ]
-        }).except(:category_name)
+        })
       )
 
       if @project.save
@@ -63,7 +63,7 @@ module V1
           :system_requirements,
           :source_url,
           :homepage,
-          :category_name
+          :category
         )
       end
   end
