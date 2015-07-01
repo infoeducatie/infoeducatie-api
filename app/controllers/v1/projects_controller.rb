@@ -7,7 +7,11 @@ module V1
 
     # GET /v1/projects.json
     def index
-      @projects = Project.where(edition_id: @edition.id).all
+      # TODO @palcu write a test for this
+      current_edition = Edition.find_by(:current => true)
+      @projects = Project.active
+                         .joins(:contestants)
+                         .where(:contestants => { :edition => current_edition })
     end
 
     # GET /v1/projects/1.json

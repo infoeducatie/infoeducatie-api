@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     self.roles << Role.find_by(name: "registered")
   end
 
+  def name
+    self.first_name + " " + self.last_name
+  end
+
   rails_admin do
     edit do
       field :email
