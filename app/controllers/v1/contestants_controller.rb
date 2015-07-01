@@ -44,7 +44,11 @@ module V1
       if @contestant.save
         render :show, status: :created
       else
-        render json: @contestant.errors, status: :unprocessable_entity
+        if @contestant.edition.nil?
+          render json: { edition: [ "There is no edition marked as current" ] }, status: :unprocessable_entity
+        else
+          render json: @contestant.errors, status: :unprocessable_entity
+        end
       end
     end
 
