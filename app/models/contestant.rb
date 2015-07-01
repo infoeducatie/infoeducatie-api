@@ -6,7 +6,7 @@ class Contestant < ActiveRecord::Base
   validates :user, presence: true
 
   has_many :colaborators
-  has_many :projects, through: :colaborators
+  has_many :projects, through: :colaborators, inverse_of: :contestants
 
   accepts_nested_attributes_for :colaborators,
     :reject_if => :all_blank,
