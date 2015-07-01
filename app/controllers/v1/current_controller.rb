@@ -23,7 +23,11 @@ module V1
           has_projects: has_projects,
           has_finished: has_finished
         },
-        edition: edition
+        edition: edition,
+        stats: {
+          total_projects: Project.active.size,
+          total_participants: current_user.contestants.size
+        }
       }
 
       render json: @current
