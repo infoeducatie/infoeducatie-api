@@ -49,6 +49,21 @@ RSpec.describe "V1::Projects", type: :request do
 
         body = JSON.parse(response.body)
       end
+
+      it "responds with 422 when category is web and homepage is missing" do
+        contestant = valid_user_with_contestant.contestants.first
+        project_attributes = FactoryGirl.attributes_for(:project)
+        project_attributes[:homepage] = ""
+        params = {
+          :project => project_attributes,
+          :category_name => "web"
+        }
+
+        post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
+        expect(response).to have_http_status(422)
+
+        body = JSON.parse(response.body)
+      end
     end
   end
 end

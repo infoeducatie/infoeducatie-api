@@ -20,7 +20,7 @@ gem 'unicorn'
 gem 'unicorn-rails'
 
 gem 'uglifier', '>= 1.3.0'
-gem 'devise', '~> 3.4.0'
+gem 'devise', '~> 3.5.0'
 gem 'rails_admin', '~> 0.6.7'
 gem 'pg'
 

@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  default_scope { where(finished: true).where(approved: true) }
+
   belongs_to :category
   has_many :colaborators
   has_many :contestants, through: :colaborators, inverse_of: :projects
