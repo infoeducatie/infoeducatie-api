@@ -7,7 +7,7 @@ RSpec.describe "V1::Projects", type: :request do
       Category.find_by(name: "web")
     }
 
-    let!(:valid_user_with_contestant) { 
+    let!(:valid_user_with_contestant) {
       FactoryGirl.create(:valid_user_with_contestant)
     }
 

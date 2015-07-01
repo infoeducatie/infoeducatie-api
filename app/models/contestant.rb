@@ -1,9 +1,6 @@
 class Contestant < ActiveRecord::Base
   belongs_to :edition
-  validates :edition, presence: true
-
   belongs_to :user
-  validates :user, presence: true
 
   has_many :colaborators
   has_many :projects, through: :colaborators, inverse_of: :contestants
@@ -12,6 +9,8 @@ class Contestant < ActiveRecord::Base
     :reject_if => :all_blank,
     :allow_destroy => true
   accepts_nested_attributes_for :projects
+
+  validates :edition, presence: true
 
   validates :address, presence: true
   validates :city, presence: true

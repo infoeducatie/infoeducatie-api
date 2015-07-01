@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def update_access_token!
-    self.access_token = "#{self.id}:#{Devise.friendly_token}"
+    self.update_column(:access_token, "#{self.id}:#{Devise.friendly_token}")
   end
 
   def set_default_role

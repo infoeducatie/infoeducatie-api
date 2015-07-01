@@ -14,7 +14,10 @@ FactoryGirl.define do
   factory :confirmed_user, class: User do
     email { generate(:email) }
     password "TestP4ssW0rd"
-    after(:create) { |user| user.confirm }
+    after(:create) { |user|
+      user.confirm
+      user.update_access_token!
+    }
 
     first_name "Ionut"
     last_name "Zapada"
@@ -28,6 +31,8 @@ FactoryGirl.define do
 
     after(:create) { |user|
       user.confirm
+
+      user.update_access_token!
 
       contestant = create(:contestant)
       user.contestants << contestant

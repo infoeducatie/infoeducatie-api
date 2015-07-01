@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  default_scope { where(finished: true).where(approved: true) }
+  scope :active, -> { where(finished: true).where(approved: true) }
 
   belongs_to :category
   has_many :colaborators
