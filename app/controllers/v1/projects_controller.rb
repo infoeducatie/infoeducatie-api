@@ -9,7 +9,7 @@ module V1
     def index
       # TODO @palcu write a test for this
       current_edition = Edition.find_by(:current => true)
-      @projects = Project.where(:approved => true)
+      @projects = Project.active
                          .joins(:contestants)
                          .where(:contestants => { :edition => current_edition })
     end
