@@ -47,7 +47,7 @@ RSpec.describe "V1::Projects", type: :request do
         project_attributes = FactoryGirl.attributes_for(:project)
         params = {
           :project => project_attributes,
-          :category_name => "web"
+          :category => "web"
         }
 
         post "/v1/projects", params, valid_headers
