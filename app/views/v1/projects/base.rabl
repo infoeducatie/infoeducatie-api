@@ -1,12 +1,9 @@
 attributes :id,
            :title,
-           :description,
-           :technical_description,
-           :system_requirements,
-           :source_url,
-           :homepage,
-           :approved
+           :county
 
 child :contestants => :contestants do
-  attributes :id
+  attributes :id, :name
 end
+
+child(:category) { attributes :name }

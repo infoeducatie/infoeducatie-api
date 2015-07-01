@@ -24,4 +24,11 @@ class Project < ActiveRecord::Base
     !self.category.nil? && self.category.name == "web"
   }
 
+  def edition
+    contestants.first.edition
+  end
+
+  def county
+    contestants.first.county
+  end
 end
