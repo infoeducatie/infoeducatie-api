@@ -67,7 +67,7 @@ RSpec.describe "V1::Projects", type: :request do
         project_attributes = FactoryGirl.attributes_for(:project)
         params = {
           :project => project_attributes,
-          :category_name => "random"
+          :category => "random"
         }
 
         post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
@@ -82,7 +82,7 @@ RSpec.describe "V1::Projects", type: :request do
         project_attributes[:homepage] = ""
         params = {
           :project => project_attributes,
-          :category_name => "web"
+          :category => "web"
         }
 
         post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
