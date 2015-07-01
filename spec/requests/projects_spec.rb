@@ -43,22 +43,22 @@ RSpec.describe "V1::Projects", type: :request do
 
     context "when resource is valid" do
       it "responds with 200" do
-        # TODO @palcu: fix this
-        # contestant = valid_user_with_contestant.contestants.first
-        # project_attributes = FactoryGirl.attributes_for(:project)
-        # debugger
-        # params = {
-        #   :project => project_attributes
-        # }
+        contestant = valid_user_with_contestant.contestants.first
+        project_attributes = FactoryGirl.attributes_for(:project)
 
-        # post "/v1/projects", params, valid_headers
+        params = {
+          :project => project_attributes,
+        }
+        params[:project][:category] = "web"
 
-        # expect(response).to have_http_status(201)
-        # body = JSON.parse(response.body)
+        post "/v1/projects", params, valid_headers
 
-        # project = Project.last
-        # expect(contestant.projects).to eq([project])
-        # expect(project.category).to eq(Category.find_by(name: "web"))
+        expect(response).to have_http_status(201)
+        body = JSON.parse(response.body)
+
+        project = Project.last
+        expect(contestant.projects).to eq([project])
+        expect(project.category).to eq(Category.find_by(name: "web"))
       end
     end
 
