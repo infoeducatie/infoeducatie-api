@@ -15,6 +15,8 @@ module V1
       has_projects = projects.empty?
       has_finished = projects.map(&:finished).any?
       edition = Edition.find_by(current: true)
+      total_counties = Project.active.joins(:contestants)
+                              .count('county', :distinct => true)
 
       @current = {
         user: current_user,
@@ -26,7 +28,8 @@ module V1
         edition: edition,
         stats: {
           total_projects: Project.active.size,
-          total_participants: current_user.contestants.size
+          total_participants: current_user.contestants.size,
+          total_counties: total_counties
         }
       }
 
