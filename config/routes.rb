@@ -28,6 +28,8 @@ Rails.application.routes.draw do
         post :finish
       end
     end
+
+    get "current" => "current#index"
   end
 
   get "/404", :to => "errors#error_404"
