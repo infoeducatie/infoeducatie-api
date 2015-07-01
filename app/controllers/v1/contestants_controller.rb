@@ -13,7 +13,9 @@ module V1
         Edition.current
       end
 
-      @contestants = Contestant.where(edition: edition).all
+      @contestants = Contestant.joins(:user).where(edition: edition)
+      @contestants = @contestants.where(users: { email: params[:email] }) if params[:email].present?
+      @contestants = @contestants.all
     end
 
     # GET /v1/contestants/1.json

@@ -1,6 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe "V1::Projects", type: :request do
+
+  describe "POST /v1/projects/:id/finish" do
+    let!(:valid_user) {
+      FactoryGirl.create(:confirmed_user)
+    }
+
+    let!(:valid_edition) {
+      FactoryGirl.create(:edition)
+    }
+
+    let(:valid_headers) {
+      { 'Authorization' => valid_user.access_token }
+    }
+
+    context "when resource is valid" do
+      it "responds with 200" do
+        project = FactoryGirl.create(:project)
+        valid_user.contestants << project.contestants.first
+
+        post "/v1/projects/#{project.id}/finish", {}, valid_headers
+
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
+
   describe "POST /v1/projects" do
 
     let!(:valid_web_category) {

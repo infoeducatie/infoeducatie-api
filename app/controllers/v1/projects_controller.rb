@@ -1,7 +1,7 @@
 module V1
   class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user_from_token!, only: [:create]
+    before_action :authenticate_user_from_token!, only: [:create, :finish]
 
     respond_to :json
 
@@ -12,6 +12,20 @@ module V1
 
     # GET /v1/projects/1.json
     def show
+    end
+
+    # POST /v1/projects/:id/finish
+    def finish
+      contestants = current_user.contestants
+
+      project = Project.joins(:contestants).where(:contestants => { :id => current_user.contestants }).where(id: params[:id]).first
+
+      if project.nil?
+        render :json => {}, status: :bad_request
+      else
+        project.update_attribute(:finished, true)
+        render :json => {}, status: :ok
+      end
     end
 
     # POST /v1/project.json

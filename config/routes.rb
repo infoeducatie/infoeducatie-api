@@ -23,7 +23,11 @@ Rails.application.routes.draw do
         post :additional
       end
     end
-    resources :projects, only: [:index, :show, :create]
+    resources :projects, only: [:index, :show, :create] do
+      member do
+        post :finish
+      end
+    end
   end
 
   get "/404", :to => "errors#error_404"
