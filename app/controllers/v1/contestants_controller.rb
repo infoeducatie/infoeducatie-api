@@ -5,18 +5,35 @@ module V1
 
     respond_to :json
 
-    # GET /v1/contestants.json
+    # GET /v1/contestants.json?email=XXX
     def index
       edition = if params.has_key?(:edition)
         Edition.find_by(id: params[:editition])
       else
         Edition.current
       end
-      @contestants = Contestant.where(edition: edition).all
+
+      @contestants = Contestant.joins(:user).where(edition: edition)
+      @contestants = @contestants.where(users: { email: params[:email] }) if params[:email].present?
+      @contestants = @contestants.all
     end
 
     # GET /v1/contestants/1.json
     def show
+    end
+
+    # POST /v1/contestants/additional.json?project_id=XXX
+    def additional
+      contestant = Contestant.new(contestant_params.merge({
+        edition: Edition.find_by(current: true),
+        projects: Project.where(id: params[:project_id])
+      }))
+
+      if contestant.save
+        render :show, status: :created
+      else
+        render json: contestant.errors, status: :unprocessable_entity
+      end
     end
 
     # POST /v1/contestants.json

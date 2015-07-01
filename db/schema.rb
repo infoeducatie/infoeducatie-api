@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630224416) do
+ActiveRecord::Schema.define(version: 20150701031420) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "colaborators", force: :cascade do |t|
+    t.integer  "contestant_id"
+    t.integer  "project_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "contestants", force: :cascade do |t|
     t.string   "address"
@@ -56,6 +69,23 @@ ActiveRecord::Schema.define(version: 20150630224416) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.boolean  "current",                 default: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "technical_description"
+    t.text     "system_requirements"
+    t.string   "source_url"
+    t.string   "homepage"
+    t.boolean  "approved",              default: false
+    t.float    "final_score"
+    t.float    "extra_score"
+    t.text     "notes"
+    t.integer  "category_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "finished",              default: false
   end
 
   create_table "rights", force: :cascade do |t|

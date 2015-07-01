@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name , presence: true
 
-  after_create :update_access_token!
+  after_commit :update_access_token!, on: :create
   after_create :set_default_role
 
   validates :email, presence: true, uniqueness: true
@@ -28,8 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def update_access_token!
-    self.access_token = "#{self.id}:#{Devise.friendly_token}"
-    save
+    self.update_column(:access_token, "#{self.id}:#{Devise.friendly_token}")
   end
 
   def set_default_role

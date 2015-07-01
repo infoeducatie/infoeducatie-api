@@ -5,6 +5,11 @@
   Role.find_or_create_by({name: role})
 end
 
+['web', 'utilitar', 'educational', 'multimedia', 'roboti'].each do |category|
+  Category.find_or_create_by({name: category})
+end
+
+
 # WARNING! This seed can be used in development mode. Never uncomment this in productition.
 
 #Contestant.find_or_create_by(school_name: "Scoala Vietii \"Bibi zis Ciuma\"") do |contestant|

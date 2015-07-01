@@ -55,4 +55,23 @@ RSpec.describe "Contestants", type: :request do
       end
     end
   end
+
+  describe "POST /v1/contestants/additional.json?project_id=XXX" do
+    context "resource is valid" do
+      it "creates a contestant" do
+        project = FactoryGirl.create(:project)
+        valid_user.contestants << project.contestants.first
+
+        contestant_attributes = FactoryGirl.attributes_for(:additional_contestant)
+
+        post "/v1/contestants/additional.json?project_id=#{project.id}", { :contestant => contestant_attributes }, valid_headers
+
+        expect(response).to have_http_status(201)
+
+        project.reload
+        expect(project.contestants.size).to eq(2)
+      end
+    end
+  end
+
 end

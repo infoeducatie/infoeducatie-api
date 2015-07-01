@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users, class_name: 'User', controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    confirmations: 'users/confirmations'
   }, only: [:confirmations, :passwords]
 
   devise_scope :user do
@@ -17,7 +18,16 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: :json } do
     resource :sign_in, only: [:create], controller: :sessions
-    resources :contestants, only: [:index, :show, :create]
+    resources :contestants, only: [:index, :show, :create] do
+      collection do
+        post :additional
+      end
+    end
+    resources :projects, only: [:index, :show, :create] do
+      member do
+        post :finish
+      end
+    end
   end
 
   get "/404", :to => "errors#error_404"
