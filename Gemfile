@@ -34,6 +34,8 @@ gem "sentry-raven"
 
 gem "date_validator"
 
+gem "rails_config"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
