@@ -35,6 +35,8 @@ gem "date_validator"
 
 gem "rails_config"
 
+gem 'recursive-open-struct', '~> 0.6.3'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'

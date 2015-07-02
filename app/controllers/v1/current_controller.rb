@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module V1
   class CurrentController < ApplicationController
 
@@ -18,7 +16,7 @@ module V1
           :total_participants => total_participants,
           :total_counties => total_counties
         },
-        :edition => Edition.find_by(current: true)
+        :edition => Edition.current
       }
 
       unless current_user.nil?
@@ -35,7 +33,7 @@ module V1
         })
       end
 
-      @current = OpenStruct.new @current
+      @current = RecursiveOpenStruct.new @current
     end
   end
 end
