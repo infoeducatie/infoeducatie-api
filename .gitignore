@@ -38,3 +38,7 @@ config/initializers/devise.rb
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
+
+# TODO @palcu: use a standard for these
+.ruby-version
+.ruby-gemset
