@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'rails_admin_approve_project.rb')
+
 RailsAdmin.config do |config|
 
   ### Popular gems integration
@@ -31,6 +33,10 @@ RailsAdmin.config do |config|
     edit
     delete
     show_in_app
+
+    approve_project do
+      only ['UnapprovedProject']
+    end
 
     ## With an audit adapter, you can add:
     # history_index
