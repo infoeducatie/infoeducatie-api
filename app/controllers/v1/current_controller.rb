@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module V1
   class CurrentController < ApplicationController
 
@@ -7,40 +9,35 @@ module V1
     def index
       total_counties = Project.active.joins(:contestants)
                               .count('county', :distinct => true)
-      stats = {
-        total_projects: Project.active.size,
-        total_participants: Contestant.joins(:projects).where(:projects => { :approved => true }).size,
-        total_counties: total_counties
+      total_participants = Project.active.joins(:contestants)
+                                  .count(:contestant_id)
+      @current = {
+        is_logged_in: false,
+        :stats => {
+          :total_projects => Project.active.size,
+          :total_participants => total_participants,
+          :total_counties => total_counties
+        },
+        :edition => Edition.find_by(current: true)
       }
 
       unless current_user.nil?
-        has_contestant = !current_user.contestants.empty?
-
         projects = (current_user.contestants.map do |contestant|
           contestant.projects
         end).flatten
 
-        has_projects = projects.empty?
-        has_finished = projects.map(&:finished).any?
-        edition = Edition.find_by(current: true)
-        total_counties = Project.active.joins(:contestants)
-                                .count('county', :distinct => true)
-
-        @current = {
+        @current = @current.merge({
+          is_logged_in: true,
           user: current_user,
           registration: {
-            has_contestant: has_contestant,
-            has_projects: has_projects,
-            has_finished: has_finished
-          },
-          edition: edition
-        }
-      else
-        @current = {}
+            has_contestant: !current_user.contestants.empty?,
+            has_projects: projects.empty?,
+            has_finished: projects.map(&:finished).any?
+          }
+        })
       end
-      @current[:stats] = stats
 
-      render json: @current
+      @current = OpenStruct.new @current
     end
   end
 end
