@@ -4,6 +4,10 @@ rvm:
 - 2.2.1
 env:
 - DB=postgresql
+- AWS_S3_KEY=XXXXXXXXXXXXXXXXXXXX
+- AWS_S3_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- AWS_S3_REGION=eu-central-1
+- AWS_S3_BUCKET=infoeducatie
 before_install:
 - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
 script:
