@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def current_contestant
-    self.contestants.find_by(:edition => Edition.current)
+    self.contestants.find_by(:edition => Edition.get_current)
   end
 
   def update_access_token!

@@ -9,8 +9,19 @@ class Edition < ActiveRecord::Base
   validates :registration_start_date, presence: true, date: true
   validates :registration_end_date, presence: true, date: true
   validates :travel_data_deadline, date: true
+  validates_uniqueness_of :current, if: :current
 
-  def self.current
+  def current=(value)
+    if value and Edition.get_current
+      x = Edition.get_current
+      x.current = false
+      x.save!
+    end
+
+    write_attribute(:current, value)
+  end
+
+  def self.get_current
     where(current: true, published: true).first
   end
 
