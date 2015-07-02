@@ -1,7 +1,7 @@
 module V1
   class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user_from_token!, only: [:create, :finish]
+    before_action :authenticate_user_from_token!, only: [:create, :finish, :screenshots]
 
     respond_to :json
 
@@ -30,6 +30,21 @@ module V1
         project.update_attribute(:finished, true)
         render :json => {}, status: :ok
       end
+    end
+
+    # POST /v1/projects/:id/screenshots
+    def screenshots
+      @project = Project
+        .joins(:contestants)
+        .where(:contestants => { :id => current_user.contestants })
+        .where(id: params[:id])
+        .first
+
+      @project.screenshots << params[:screenshots].map do |key, value|
+        Screenshot.new(screenshot: value)
+      end
+
+      render :show, status: :created
     end
 
     # POST /v1/project.json

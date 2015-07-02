@@ -26,7 +26,9 @@ Rails.application.routes.draw do
     resources :projects, only: [:index, :show, :create] do
       member do
         post :finish
+        post :screenshots
       end
+
     end
 
     get "current" => "current#index"

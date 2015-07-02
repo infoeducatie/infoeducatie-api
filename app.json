@@ -33,6 +33,18 @@
     },
     "AWS_SES_SECRET_KEY": {
       "required": true
+    },
+    "AWS_S3_KEY": {
+      "required": true
+    },
+    "AWS_S3_SECRET": {
+      "required": true
+    },
+    "AWS_S3_REGION": {
+      "required": true
+    },
+    "AWS_S3_BUCKET": {
+      "required": true
     }
   },
   "addons": [
