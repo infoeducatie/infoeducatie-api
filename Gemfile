@@ -23,7 +23,6 @@ gem 'unicorn-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'devise', '~> 3.5.0'
 gem 'rails_admin', '~> 0.6.7'
-gem 'pg'
 
 gem 'active_model_serializers', '~> 0.9.3'
 
@@ -45,8 +44,9 @@ group :doc do
   gem 'sdoc', '~> 0.4.0'
 end
 
-group :production do
+group :production, :staging do
   gem 'rails_12factor'
+  gem 'pg'
 end
 
 group :development do
