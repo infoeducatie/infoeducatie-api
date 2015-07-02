@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate_user_from_token!
-    auth_token = request.cookies["accesToken"]
+    auth_token = request.headers['Authorization']
 
     if auth_token
       authenticate_with_auth_token auth_token
