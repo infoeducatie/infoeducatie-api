@@ -1,46 +1,5 @@
-class Project < ActiveRecord::Base
-  scope :active, -> { where(finished: true).where(approved: true) }
-
-  belongs_to :category
-  has_many :colaborators, inverse_of: :project
-  has_many :contestants, through: :colaborators, inverse_of: :projects
-  has_many :screenshots, inverse_of: :project
-
-  accepts_nested_attributes_for :category
-  accepts_nested_attributes_for :colaborators,
-    :reject_if => :all_blank,
-    :allow_destroy => true
-  accepts_nested_attributes_for :contestants
-  accepts_nested_attributes_for :screenshots
-
-  validates :category, presence: true
-  validates :contestants, presence: true
-
-  validates :title, presence: true
-  validates :description, presence: true
-  validates :technical_description, presence: true
-  validates :system_requirements, presence: true
-  validates :source_url, presence: true
-
-  validates :homepage, presence: true, if: Proc.new { |project|
-    !self.category.nil? && self.category.name == "web"
-  }
-
-  def edition
-    contestants.first.edition
-  end
-
-  def county
-    contestants.first.county
-  end
-
-  def authors
-    contestants.map(&:name).join(", ")
-  end
-
-  def category_name
-    category.name
-  end
+class UnapprovedProject < Project
+  default_scope { where(finished: true).where(approved: false) }
 
   rails_admin do
     list do

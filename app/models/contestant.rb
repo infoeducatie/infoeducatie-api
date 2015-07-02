@@ -2,7 +2,7 @@ class Contestant < ActiveRecord::Base
   belongs_to :edition
   belongs_to :user
 
-  has_many :colaborators
+  has_many :colaborators, inverse_of: :contestant
   has_many :projects, through: :colaborators, inverse_of: :contestants
 
   accepts_nested_attributes_for :colaborators,
@@ -47,7 +47,7 @@ class Contestant < ActiveRecord::Base
   end
 
   def name
-    user.name
+    user.name unless user.nil?
   end
 
   rails_admin do
