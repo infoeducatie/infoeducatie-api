@@ -86,6 +86,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authentication_error
+    cors_set_access_control_headers
     render json: { error: 'unauthorized' }, status: 401
   end
 end
