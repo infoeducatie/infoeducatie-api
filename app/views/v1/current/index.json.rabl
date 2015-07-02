@@ -7,7 +7,7 @@ child :edition do
 end
 
 child :registration => :registration do
-  attributes :has_contestant, :has_projects
+  attributes :has_contestant, :has_projects, :has_pending_project, :pending_project_title
 
   child :projects do |project|
     attributes :id, :title, :finished

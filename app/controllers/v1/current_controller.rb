@@ -20,16 +20,39 @@ module V1
       }
 
       unless current_user.nil?
-        projects = current_user.current_contestant.projects
-
-        @current = @current.merge({
+        @current.merge!({
           is_logged_in: true,
-          user: current_user,
-          registration: {
-            has_contestant: !current_user.contestants.empty?,
-            has_projects: !projects.empty?,
-            projects: projects,
-          }
+          user: current_user
+        })
+
+        registration = {
+          has_contestant: false
+        }
+
+        if !current_user.contestants.empty?
+          registration.merge!({
+            has_contestant: true,
+            has_projects: false
+          })
+
+          projects = current_user.current_contestant.projects
+
+          if !projects.empty?
+            has_pending_project = !projects.map(&:finished).all?
+            pending_project_title = if has_pending_project
+                projects.where(:finished => false).first.title else "" end
+
+            registration.merge!({
+              has_projects: true,
+              has_pending_project: !projects.map(&:finished).all?,
+              pending_project_title: pending_project_title,
+              projects: projects,
+            })
+          end
+        end
+
+        @current.merge!({
+          registration: registration
         })
       end
 
