@@ -37,14 +37,17 @@ gem "date_validator"
 gem "rails_config"
 
 gem 'carrierwave'
+
 gem "fog", "~> 1.31.0"
+
+gem 'recursive-open-struct', '~> 0.6.3'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
 end
 
-group :production, :staging do
+group :production do
   gem 'rails_12factor'
   gem 'pg'
 end
