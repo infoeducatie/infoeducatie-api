@@ -5,4 +5,8 @@ class Screenshot < ActiveRecord::Base
 
   mount_uploader :screenshot, ScreenshotUploader
 
+  def url
+    screenshot.url unless screenshot.nil?
+  end
+
 end
