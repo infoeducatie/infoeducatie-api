@@ -16,7 +16,7 @@ module V1
           :total_participants => total_participants,
           :total_counties => total_counties
         },
-        :edition => Edition.current.first
+        :edition => Edition.current
       }
 
       unless current_user.nil?

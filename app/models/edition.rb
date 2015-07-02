@@ -1,6 +1,4 @@
 class Edition < ActiveRecord::Base
-  scope :current, -> { where(current: true, published: true) }
-
   has_many :contestants, dependent: :destroy
 
   validates :name, presence: true
@@ -11,6 +9,10 @@ class Edition < ActiveRecord::Base
   validates :registration_start_date, presence: true, date: true
   validates :registration_end_date, presence: true, date: true
   validates :travel_data_deadline, date: true
+
+  def self.current
+    where(current: true, published: true).first
+  end
 
   rails_admin do
     list do
