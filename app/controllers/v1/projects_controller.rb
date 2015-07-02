@@ -8,7 +8,7 @@ module V1
     # GET /v1/projects.json
     def index
       # TODO @palcu write a test for this
-      current_edition = Edition.find_by(:current => true)
+      current_edition = Edition.get_current
       @projects = Project.active
                          .joins(:contestants)
                          .where(:contestants => { :edition => current_edition })
@@ -35,8 +35,8 @@ module V1
     # POST /v1/project.json
     def create
       category = Category.find_by(name: params[:project][:category])
-      current_edition = Edition.find_by(current: true)
-      contestant = current_user.contestants.find_by(:edition => current_edition)
+      current_edition = Edition.get_current
+      contestant = current_user.get_current_contestant
 
       @project = Project.new(
         project_params.merge({

@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     self.roles.include?(Role.find_by(name: "contestant"))
   end
 
-  def current_contestant
+  def get_current_contestant
     self.contestants.find_by(:edition => Edition.get_current)
   end
 

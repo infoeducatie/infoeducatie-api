@@ -35,7 +35,7 @@ module V1
             has_projects: false
           })
 
-          projects = current_user.current_contestant.projects
+          projects = current_user.get_current_contestant.projects
 
           if !projects.empty?
             has_pending_project = !projects.map(&:finished).all?
