@@ -13,9 +13,9 @@ class Edition < ActiveRecord::Base
 
   def current=(value)
     if value and Edition.get_current
-      x = Edition.get_current
-      x.current = false
-      x.save!
+      edition = Edition.get_current
+      edition.current = false
+      edition.save!
     end
 
     write_attribute(:current, value)
