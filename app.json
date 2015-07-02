@@ -45,6 +45,9 @@
     },
     "AWS_S3_BUCKET": {
       "required": true
+    },
+    "AWS_S3_HOST": {
+      "required": true
     }
   },
   "addons": [
