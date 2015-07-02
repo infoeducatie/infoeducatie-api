@@ -16,7 +16,7 @@ module V1
           :total_participants => total_participants,
           :total_counties => total_counties
         },
-        :edition => Edition.current
+        :edition => Edition.current.first
       }
 
       unless current_user.nil?
@@ -40,7 +40,10 @@ module V1
           if !projects.empty?
             has_pending_project = !projects.map(&:finished).all?
             pending_project_title = if has_pending_project
-                projects.where(:finished => false).first.title else "" end
+              projects.where(:finished => false).first.title
+            else
+              ""
+            end
 
             registration.merge!({
               has_projects: true,
