@@ -32,6 +32,7 @@ module V1
         if !current_user.contestants.empty?
           registration.merge!({
             has_contestant: true,
+            has_pending_project: false,
             has_projects: false
           })
 
@@ -39,8 +40,8 @@ module V1
 
           if !projects.empty?
             has_pending_project = !projects.map(&:finished).all?
-            pending_project_title = if has_pending_project
-              projects.where(:finished => false).first.title
+            pending_project = if has_pending_project
+              projects.where(:finished => false).first
             else
               ""
             end
@@ -48,7 +49,7 @@ module V1
             registration.merge!({
               has_projects: true,
               has_pending_project: !projects.map(&:finished).all?,
-              pending_project_title: pending_project_title,
+              pending_project: pending_project,
               projects: projects,
             })
           end
