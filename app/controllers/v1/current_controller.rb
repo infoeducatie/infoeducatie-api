@@ -22,17 +22,15 @@ module V1
       }
 
       unless current_user.nil?
-        projects = (current_user.contestants.map do |contestant|
-          contestant.projects
-        end).flatten
+        projects = current_user.current_contestant.projects
 
         @current = @current.merge({
           is_logged_in: true,
           user: current_user,
           registration: {
             has_contestant: !current_user.contestants.empty?,
-            has_projects: projects.empty?,
-            has_finished: projects.map(&:finished).any?
+            has_projects: !projects.empty?,
+            projects: projects,
           }
         })
       end
