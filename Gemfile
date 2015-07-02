@@ -1,9 +1,10 @@
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 source 'https://rubygems.org'
 ruby '2.2.1'
-gem 'rails', '4.2.1'
 
-gem 'dotenv-rails'
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+
+gem 'rails', '4.2.3'
 
 # JSON building and parsing
 gem 'rabl', '~> 0.11.0'
@@ -35,6 +36,9 @@ gem "sentry-raven"
 gem "date_validator"
 
 gem "rails_config"
+
+gem 'carrierwave'
+gem "fog", "~> 1.31.0"
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

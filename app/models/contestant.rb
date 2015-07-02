@@ -52,8 +52,7 @@ class Contestant < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :first_name
-      field :last_name
+      field :name
       field :school_name
     end
   end

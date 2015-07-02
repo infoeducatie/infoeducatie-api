@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
   belongs_to :category
   has_many :colaborators
   has_many :contestants, through: :colaborators, inverse_of: :projects
+  has_many :screenshots
 
   accepts_nested_attributes_for :category
   accepts_nested_attributes_for :colaborators,
