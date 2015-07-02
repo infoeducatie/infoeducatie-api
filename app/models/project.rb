@@ -24,6 +24,11 @@ class Project < ActiveRecord::Base
     !self.category.nil? && self.category.name == "web"
   }
 
+  before_validation :initialize_colaborators, on: :create
+  def initialize_colaborators
+    colaborators.each { |c| c.project = self }
+  end
+
   def edition
     contestants.first.edition
   end
