@@ -60,16 +60,16 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate_user_from_token!
-    auth_token = request.headers['Authorization']
-
     if auth_token
-      authenticate_with_auth_token auth_token
+      authenticate_user_from_token
     else
       authentication_error
     end
   end
 
-  def authenticate_with_auth_token(auth_token)
+  def authenticate_user_from_token
+    auth_token = request.headers['Authorization']
+
     unless auth_token.include?(':')
       authentication_error
       return
