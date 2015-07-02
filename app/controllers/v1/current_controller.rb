@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module V1
   class CurrentController < ApplicationController
 
@@ -18,26 +16,51 @@ module V1
           :total_participants => total_participants,
           :total_counties => total_counties
         },
-        :edition => Edition.find_by(current: true)
+        :edition => Edition.get_current
       }
 
       unless current_user.nil?
-        projects = (current_user.contestants.map do |contestant|
-          contestant.projects
-        end).flatten
-
-        @current = @current.merge({
+        @current.merge!({
           is_logged_in: true,
-          user: current_user,
-          registration: {
-            has_contestant: !current_user.contestants.empty?,
-            has_projects: projects.empty?,
-            has_finished: projects.map(&:finished).any?
-          }
+          user: current_user
+        })
+
+        registration = {
+          has_contestant: false
+        }
+
+        if !current_user.contestants.empty?
+          registration.merge!({
+            has_contestant: true,
+            has_pending_project: false,
+            has_projects: false
+          })
+
+          projects = current_user.get_current_contestant.projects
+
+          if !projects.empty?
+            has_pending_project = !projects.map(&:finished).all?
+            pending_project = if has_pending_project
+              projects.where(:finished => false).first
+            else
+              ""
+            end
+
+            registration.merge!({
+              has_projects: true,
+              has_pending_project: !projects.map(&:finished).all?,
+              pending_project: pending_project,
+              projects: projects,
+            })
+          end
+        end
+
+        @current.merge!({
+          registration: registration
         })
       end
 
-      @current = OpenStruct.new @current
+      @current = RecursiveOpenStruct.new @current
     end
   end
 end

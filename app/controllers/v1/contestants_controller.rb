@@ -8,9 +8,9 @@ module V1
     # GET /v1/contestants.json?email=XXX
     def index
       edition = if params.has_key?(:edition)
-        Edition.find_by(id: params[:editition])
+        Edition.find_by(id: params[:edition])
       else
-        Edition.current
+        Edition.get_current
       end
 
       @contestants = Contestant.joins(:user).where(edition: edition)
@@ -25,7 +25,7 @@ module V1
     # POST /v1/contestants.json
     def create
       @contestant = current_user.contestants.build(contestant_params)
-      @contestant.edition = Edition.find_by(current: true)
+      @contestant.edition = Edition.get_current
 
       if @contestant.save
         render :show, status: :created
