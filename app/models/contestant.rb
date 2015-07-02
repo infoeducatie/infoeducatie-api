@@ -1,13 +1,15 @@
 class Contestant < ActiveRecord::Base
   belongs_to :edition
-  belongs_to :user
+  validates :edition, presence: true
 
-  has_many :colaborators, inverse_of: :contestant
+  belongs_to :user
+  validates :user, presence: true
+
+  has_many :colaborators, inverse_of: :contestant, dependent: :destroy
   has_many :projects, through: :colaborators, inverse_of: :contestants
 
   accepts_nested_attributes_for :colaborators,
-    :reject_if => :all_blank,
-    :allow_destroy => true
+    :reject_if => :all_blank
   accepts_nested_attributes_for :projects
 
   validates :edition, presence: true
@@ -44,6 +46,14 @@ class Contestant < ActiveRecord::Base
 
   def sex_enum
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
+  end
+
+  def first_name
+    user.first_name
+  end
+
+  def last_name
+    user.last_name
   end
 
   def name
