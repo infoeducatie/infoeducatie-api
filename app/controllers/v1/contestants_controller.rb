@@ -22,20 +22,6 @@ module V1
     def show
     end
 
-    # POST /v1/contestants/additional.json?project_id=XXX
-    def additional
-      contestant = Contestant.new(contestant_params.merge({
-        edition: Edition.find_by(current: true),
-        projects: Project.where(id: params[:project_id])
-      }))
-
-      if contestant.save
-        render :show, status: :created
-      else
-        render json: contestant.errors, status: :unprocessable_entity
-      end
-    end
-
     # POST /v1/contestants.json
     def create
       @contestant = current_user.contestants.build(contestant_params)
