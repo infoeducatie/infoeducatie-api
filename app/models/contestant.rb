@@ -48,8 +48,16 @@ class Contestant < ActiveRecord::Base
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end
 
+  def first_name
+    user.first_name
+  end
+
+  def last_name
+    user.last_name
+  end
+
   def name
-    user.name
+    user.name if user
   end
 
   rails_admin do
