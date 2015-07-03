@@ -47,6 +47,10 @@ class Project < ActiveRecord::Base
     category.name
   end
 
+  def discourse_url
+    "#{Settings.ui.community_url}/#{discourse_topic_id}" if discourse_topic_id
+  end
+
   rails_admin do
     list do
       field :title, :string
