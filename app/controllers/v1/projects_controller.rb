@@ -70,6 +70,26 @@ module V1
       end
     end
 
+    def colaborator
+      project = Project.find(params[:id])
+      projects = current_user.get_current_contestant.projects
+      contestant = Contestant.find(param[:contestant])
+
+      if projects.include?(project)
+        @colaborator = Colaborator.new({
+          project: project,
+          contestant: contestant
+        })
+        if @colaborator.save
+           render :show, status: :created
+        else
+          render json: @colaborator.errors, status: :unprocessable_entity
+        end
+      else
+        render json: { error: 'unauthorized' }, status: 401
+      end
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_project
