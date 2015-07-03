@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       member do
         post :finish
         post :screenshots
+        post :collaborators
       end
     end
 

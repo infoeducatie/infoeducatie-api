@@ -69,5 +69,10 @@ class Contestant < ActiveRecord::Base
       field :name
       field :school_name
     end
+    edit do
+      configure :projects do
+        hide
+      end
+    end
   end
 end

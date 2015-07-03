@@ -27,8 +27,12 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
-    export
+    new do
+      except ['UnapprovedProject']
+    end
+    export do
+      except ['Screenshot']
+    end
     bulk_delete
     show
     edit
