@@ -22,6 +22,18 @@ Edition.find_or_create_by({
   current: true
 })
 
+unless User.find_by({email: 'admin@infoeducatie.ro'})
+  user = User.create!({
+    email: 'admin@infoeducatie.ro',
+    password: 'secretpassword',
+    password_confirmation: 'secretpassword',
+    first_name: 'Super',
+    last_name: 'Admin'
+  })
+  user.confirm!
+  user.roles << Role.find_by(name: "admin")
+end
+
 # WARNING! This seed can be used in development mode. Never uncomment this in productition.
 
 #Contestant.find_or_create_by(school_name: "Scoala Vietii \"Bibi zis Ciuma\"") do |contestant|
