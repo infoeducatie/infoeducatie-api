@@ -1,9 +1,9 @@
 FactoryGirl.define do
-  sequence :name do |n|
+  sequence :role_name do |n|
     "Role #{n}"
   end
 
   factory :role do
-    name { generate(:name) }
+    name { generate(:role_name) }
   end
 end

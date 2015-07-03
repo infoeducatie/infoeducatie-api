@@ -23,14 +23,14 @@ Edition.find_or_create_by({
 })
 
 unless User.find_by({email: 'admin@infoeducatie.ro'})
-  user = User.create!({
+  user = User.create({
     email: 'admin@infoeducatie.ro',
     password: 'secretpassword',
     password_confirmation: 'secretpassword',
     first_name: 'Super',
     last_name: 'Admin'
   })
-  user.confirm!
+  user.confirm
   user.roles << Role.find_by(name: "admin")
 end
 
