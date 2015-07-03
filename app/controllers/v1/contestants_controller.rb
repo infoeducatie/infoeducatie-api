@@ -1,7 +1,7 @@
 module V1
   class ContestantsController < ApplicationController
     before_action :set_contestant, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user_from_token!, only: [:create]
+    before_action :authenticate_user_from_token!, only: [:create, :update_registration_step_number]
 
     respond_to :json
 
@@ -22,12 +22,20 @@ module V1
     def show
     end
 
+    # POST /v1/contestants/update_registration_step_number
+    def update_registration_step_number
+      current_user.update_attribute(:registration_step_number,
+                                    params[:step_number])
+      render :status => 202, :nothing => true
+    end
+
     # POST /v1/contestants.json
     def create
       @contestant = current_user.contestants.build(contestant_params)
       @contestant.edition = Edition.get_current
 
       if @contestant.save
+        current_user.increment_registration_step_number!
         render :show, status: :created
       else
         if @contestant.edition.nil?

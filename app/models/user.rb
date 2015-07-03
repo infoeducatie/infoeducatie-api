@@ -43,6 +43,11 @@ class User < ActiveRecord::Base
     self.first_name + " " + self.last_name
   end
 
+  def increment_registration_step_number!
+    self.update_column(:registration_step_number,
+                       self.registration_step_number + 1)
+  end
+
   rails_admin do
     edit do
       field :email

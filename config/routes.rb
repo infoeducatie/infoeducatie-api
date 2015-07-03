@@ -26,6 +26,9 @@ Rails.application.routes.draw do
         post :additional
       end
     end
+
+    post 'contestants/update_registration_step_number', to: 'contestants#update_registration_step_number'
+
     resources :projects, only: [:index, :show, :create] do
       member do
         post :finish
