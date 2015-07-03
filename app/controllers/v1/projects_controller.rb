@@ -1,7 +1,7 @@
 module V1
   class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user_from_token!, only: [:create, :finish, :screenshots]
+    before_action :authenticate_user_from_token!, only: [:create, :finish, :screenshots, :collaborators]
 
     respond_to :json
 
@@ -70,10 +70,11 @@ module V1
       end
     end
 
-    def colaborator
+    # POST /v1/projects/:id/collaborators
+    def collaborators
       project = Project.find(params[:id])
       projects = current_user.get_current_contestant.projects
-      contestant = Contestant.find(param[:contestant])
+      contestant = Contestant.find(params[:contestant_id])
 
       if projects.include?(project)
         @colaborator = Colaborator.new({
@@ -81,7 +82,8 @@ module V1
           contestant: contestant
         })
         if @colaborator.save
-           render :show, status: :created
+          current_user.update_column(:registration_step_number, 4)
+          render :show, status: :created
         else
           render json: @colaborator.errors, status: :unprocessable_entity
         end
