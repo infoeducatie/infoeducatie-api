@@ -45,6 +45,10 @@ module V1
         Screenshot.new(screenshot: value)
       end
 
+      if @project.screenshots.count >= 3
+        current_user.increment_registration_step_number!
+      end
+
       render :show, status: :created
     end
 
@@ -62,8 +66,7 @@ module V1
       )
 
       if @project.save
-        # TODO @palcu: remove this when I implement the other 2 forms
-        current_user.update_attribute(:registration_step_number, 4)
+        current_user.increment_registration_step_number!
         render :show, status: :created
       else
         render json: @project.errors, status: :unprocessable_entity
