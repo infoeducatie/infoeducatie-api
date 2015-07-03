@@ -63,8 +63,7 @@ module V1
 
       if @project.save
         # TODO @palcu: remove this when I implement the other 2 forms
-        current_user.registration_step_number = 5
-        current_user.save!
+        current_user.update_attribute(:registration_step_number, 4)
         render :show, status: :created
       else
         render json: @project.errors, status: :unprocessable_entity
