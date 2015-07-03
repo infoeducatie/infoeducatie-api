@@ -48,6 +48,12 @@
     },
     "AWS_S3_HOST": {
       "required": true
+    },
+    "DISCOURSE_API": {
+      "required": true
+    },
+    "DISCOURSE_USER": {
+      "required": true
     }
   },
   "addons": [
