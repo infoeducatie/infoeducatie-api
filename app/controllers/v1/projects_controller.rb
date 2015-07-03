@@ -41,7 +41,7 @@ module V1
         .where(id: params[:id])
         .first
 
-      @project.screenshots << params[:screenshots].map do |key, value|
+      @project.screenshots << params[:screenshots].map do |value|
         Screenshot.new(screenshot: value)
       end
 
