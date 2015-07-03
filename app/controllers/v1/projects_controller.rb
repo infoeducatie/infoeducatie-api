@@ -76,7 +76,7 @@ module V1
       projects = current_user.get_current_contestant.projects
       contestant = Contestant.find(params[:contestant_id])
 
-      if projects.include?(project)
+      if projects.include?(project) and current_user.registration_step_number == 3
         @colaborator = Colaborator.new({
           project: project,
           contestant: contestant
