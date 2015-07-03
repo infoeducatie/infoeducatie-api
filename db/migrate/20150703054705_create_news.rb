@@ -3,7 +3,7 @@ class CreateNews < ActiveRecord::Migration
     create_table :news do |t|
       t.string :title
       t.text :body
-      t.boolean :pinned
+      t.boolean :pinned, default: false
 
       t.timestamps null: false
     end

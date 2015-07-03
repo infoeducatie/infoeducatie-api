@@ -1,4 +1,5 @@
 require Rails.root.join('lib', 'rails_admin_approve_project.rb')
+require Rails.root.join('lib', 'rails_admin_pin_news.rb')
 
 RailsAdmin.config do |config|
 
@@ -37,6 +38,11 @@ RailsAdmin.config do |config|
     approve_project do
       only ['UnapprovedProject']
     end
+
+    pin_news do
+      only ['News']
+    end
+
 
     ## With an audit adapter, you can add:
     # history_index

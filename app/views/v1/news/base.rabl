@@ -1,7 +1,8 @@
 attributes :id,
            :title,
            :body,
-           :pinned
+           :pinned,
+           :created_at
 
 node :short_description do |news|
   truncate(news.body, length: 140)
