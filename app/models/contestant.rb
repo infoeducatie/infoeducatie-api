@@ -57,7 +57,11 @@ class Contestant < ActiveRecord::Base
   end
 
   def name
-    user.name unless user.nil?
+    user.name
+  end
+
+  def email
+    user.email
   end
 
   rails_admin do
