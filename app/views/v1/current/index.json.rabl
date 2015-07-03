@@ -19,5 +19,5 @@ child :registration => :registration do
 end
 
 child :user do
-  attributes :id, :email, :access_token, :name
+  attributes :id, :email, :access_token, :name, :registration_step_number
 end
