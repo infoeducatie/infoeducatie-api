@@ -28,6 +28,7 @@ module V1
       @contestant.edition = Edition.get_current
 
       if @contestant.save
+        current_user.increment_registration_step_number!
         render :show, status: :created
       else
         if @contestant.edition.nil?

@@ -27,6 +27,7 @@ module V1
       if project.nil?
         render :json => {}, status: :bad_request
       else
+        current_user.increment_registration_step_number!
         project.update_attribute(:finished, true)
         render :json => {}, status: :ok
       end
@@ -61,6 +62,9 @@ module V1
       )
 
       if @project.save
+        # TODO @palcu: remove this when I implement the other 2 forms
+        current_user.registration_step_number = 5
+        current_user.save!
         render :show, status: :created
       else
         render json: @project.errors, status: :unprocessable_entity
