@@ -49,15 +49,19 @@ class Contestant < ActiveRecord::Base
   end
 
   def first_name
-    user.first_name
+    user.first_name unless user.nil?
   end
 
   def last_name
-    user.last_name
+    user.last_name unless user.nil?
   end
 
   def name
     user.name unless user.nil?
+  end
+
+  def email
+    user.email unless user.nil?
   end
 
   rails_admin do

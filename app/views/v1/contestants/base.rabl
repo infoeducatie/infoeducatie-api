@@ -1,3 +1,4 @@
 attributes :id,
            :school_name,
-           :name
+           :name,
+           :email
