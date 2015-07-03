@@ -76,13 +76,13 @@ module V1
       projects = current_user.get_current_contestant.projects
       contestant = Contestant.find(params[:contestant_id])
 
-      if projects.include?(project) and current_user.registration_step_number == 3
+      if projects.include?(project) and current_user.registration_step_number == 4
         @colaborator = Colaborator.new({
           project: project,
           contestant: contestant
         })
         if @colaborator.save
-          current_user.update_column(:registration_step_number, 4)
+          current_user.increment_registration_step_number!
           render :show, status: :created
         else
           render json: @colaborator.errors, status: :unprocessable_entity
