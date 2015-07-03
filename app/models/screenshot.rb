@@ -11,4 +11,10 @@ class Screenshot < ActiveRecord::Base
     screenshot.url unless screenshot.nil?
   end
 
+  rails_admin do
+    list do
+      field :project
+      field :screenshot
+    end
+  end
 end

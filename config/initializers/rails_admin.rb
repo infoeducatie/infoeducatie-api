@@ -30,7 +30,9 @@ RailsAdmin.config do |config|
     new do
       except ['UnapprovedProject']
     end
-    export
+    export do
+      except ['Screenshot']
+    end
     bulk_delete
     show
     edit
