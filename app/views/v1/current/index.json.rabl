@@ -8,7 +8,7 @@ end
 
 child :registration => :registration do
   child :pending_project => :pending_project do
-    attributes :id, :title
+    attributes :id, :title, :screenshots_count
   end
 
   child :finished_projects => :finished_projects do |project|
