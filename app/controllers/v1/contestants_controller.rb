@@ -55,7 +55,7 @@ module V1
       # Never trust parameters from the scary internet, only allow the white list through.
       def contestant_params
         params.require(:contestant).permit(
-          :addressress,
+          :address,
           :city,
           :county,
           :country,
