@@ -1,7 +1,7 @@
 class Edition < ActiveRecord::Base
   has_many :contestants, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :year, presence: true
   validates :motto, presence: true
   validates :camp_start_date, date: true
