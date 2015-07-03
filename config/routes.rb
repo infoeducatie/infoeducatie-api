@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: :json } do
     resource :sign_in, only: [:create], controller: :sessions
+
+    resources :news, only: [:index, :show]
+
     resources :contestants, only: [:index, :show, :create] do
       collection do
         post :additional
@@ -28,7 +31,6 @@ Rails.application.routes.draw do
         post :finish
         post :screenshots
       end
-
     end
 
     get "current" => "current#index"
