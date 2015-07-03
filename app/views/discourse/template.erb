@@ -1,0 +1,37 @@
+Informatii generale
+---------------------------
+
+- Categorie: <%= @category %>
+- Homepage: <%= @homepage %>
+- Judetul: <%= @county %>
+
+Descriere
+--------------
+
+<%= @description %>
+
+Tehnologii
+---------------
+
+<%= @technical_description %>
+
+Cerinte sistem
+---------------------
+
+<%= @system_requirements %>
+
+Realizatori
+---------------------
+<% @contestants.each do |contestant| %>
+### <%= contestant.name %> ###
+- Scoala: <%= contestant.school_name %>
+- Clasa: <%= contestant.grade %>
+- Judet: <%= contestant.county %>
+- Oras: <%= contestant.city %>
+<% end %>
+
+Screenshots
+------------------
+<% @screenshots.each do |screenshot| %>
+<img src='<%= screenshot.url%>' />
+<% end %>
