@@ -2,15 +2,15 @@ class Project < ActiveRecord::Base
   scope :active, -> { where(finished: true).where(approved: true) }
 
   belongs_to :category
-  has_many :colaborators, inverse_of: :project
+  has_many :colaborators, inverse_of: :project, dependent: :destroy
   has_many :contestants, through: :colaborators, inverse_of: :projects
-  has_many :screenshots, inverse_of: :project
+  has_many :screenshots, inverse_of: :project, dependent: :destroy
 
   accepts_nested_attributes_for :category
   accepts_nested_attributes_for :colaborators,
-    :reject_if => :all_blank,
-    :allow_destroy => true
-  accepts_nested_attributes_for :contestants
+    :reject_if => :all_blank
+  accepts_nested_attributes_for :contestants,
+    :reject_if => :all_blank
   accepts_nested_attributes_for :screenshots
 
   validates :category, presence: true
@@ -81,10 +81,6 @@ class Project < ActiveRecord::Base
       field :contestants do
         nested_form false
       end
-
-      field :screenshots do
-        nested_form false
-      end
     end
 
     edit do
@@ -103,10 +99,6 @@ class Project < ActiveRecord::Base
       end
 
       field :contestants do
-        nested_form false
-      end
-
-      field :screenshots do
         nested_form false
       end
     end
