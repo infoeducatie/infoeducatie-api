@@ -45,6 +45,15 @@
     },
     "AWS_S3_BUCKET": {
       "required": true
+    },
+    "AWS_S3_HOST": {
+      "required": true
+    },
+    "DISCOURSE_API": {
+      "required": true
+    },
+    "DISCOURSE_USER": {
+      "required": true
     }
   },
   "addons": [

@@ -7,6 +7,7 @@ CarrierWave.configure do |config|
     :region                => ENV['AWS_S3_REGION']
   } if ENV['AWS_S3_KEY']
 
+  config.asset_host = ENV['AWS_S3_HOST'] if ENV['AWS_S3_HOST']
   config.fog_directory  = ENV['AWS_S3_BUCKET']
   config.fog_public = true
 
