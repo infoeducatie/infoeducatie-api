@@ -59,12 +59,10 @@ class Project < ActiveRecord::Base
     list do
       field :title, :string
       field :authors, :string
-      field :description, :string
       field :category_name, :string
       field :county, :string
-      field :screenshots
-      field :approved, :boolean
-      field :finished, :boolean
+      field :finished
+      field :approved
     end
 
     create do
