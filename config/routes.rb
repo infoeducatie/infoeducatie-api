@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/internal/admin', as: 'rails_admin'
 
   devise_for :users, class_name: 'User', controllers: {

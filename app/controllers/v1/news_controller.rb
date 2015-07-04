@@ -4,7 +4,17 @@ module V1
 
     # GET /v1/news.json
     def index
-      @news = News.all
+      edition = if params.has_key?(:edition)
+        Edition.find_by(id: params[:edition])
+      else
+        Edition.get_current
+      end
+
+      @news = News.all.where(edition: edition)
+
+      @news.map do |n|
+        n.body = "" if n.short.length < 50
+      end
     end
 
     # GET /v1/show/1.json

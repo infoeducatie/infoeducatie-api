@@ -44,6 +44,10 @@ gem 'recursive-open-struct', '~> 0.6.3'
 
 gem 'discourse_api'
 
+gem 'ckeditor'
+
+gem 'mini_magick'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
