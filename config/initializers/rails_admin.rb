@@ -28,14 +28,18 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      except ['UnapprovedProject']
+      except ["UnapprovedProject", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     export do
-      except ['Screenshot']
+      except ["Screenshot", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     bulk_delete
-    show
-    edit
+    show do
+      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+    end
+    edit do
+      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+    end
     delete
     show_in_app
 
@@ -53,5 +57,7 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  config.included_models = ["Project", "UnapprovedProject", "Contestant", "User", "Screenshot", "Edition", "News"]
+  config.included_models = ["Project", "UnapprovedProject", "Contestant", "User",
+                            "Screenshot", "Edition", "News", "Ckeditor::Asset",
+                            "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
 end

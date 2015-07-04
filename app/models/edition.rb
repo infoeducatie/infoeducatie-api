@@ -1,5 +1,6 @@
 class Edition < ActiveRecord::Base
   has_many :contestants, dependent: :destroy
+  has_many :news, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :year, presence: true
@@ -33,6 +34,9 @@ class Edition < ActiveRecord::Base
     end
     edit do
       configure :contestants do
+        hide
+      end
+      configure :news do
         hide
       end
     end
