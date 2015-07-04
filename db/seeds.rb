@@ -19,7 +19,8 @@ Edition.find_or_create_by({
   registration_end_date: DateTime.new(2015, 7, 28),
   travel_data_deadline: DateTime.new(2015, 7, 28),
   published: true,
-  current: true
+  current: true,
+  projects_forum_category: "Lucrari 2015 Nationala"
 })
 
 unless User.find_by({email: 'admin@infoeducatie.ro'})
