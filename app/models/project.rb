@@ -25,6 +25,10 @@ class Project < ActiveRecord::Base
     self.open_source == true
   }
 
+  validates :closed_source_reason, presence: true, if: Proc.new {
+    self.open_source == false
+  }
+
   validates :homepage, presence: true, if: Proc.new { |project|
     !self.category.nil? && self.category.name == "web"
   }
