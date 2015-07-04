@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20150704212813) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "seminars", force: :cascade do |t|
+  create_table "talks", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "user_id"

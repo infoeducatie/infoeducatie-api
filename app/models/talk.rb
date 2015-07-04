@@ -1,4 +1,4 @@
-class Seminar < ActiveRecord::Base
+class Talk < ActiveRecord::Base
   belongs_to :user
   validates :user, presence: true
 

@@ -1,6 +1,6 @@
-class CreateSeminars < ActiveRecord::Migration
+class CreateTalks < ActiveRecord::Migration
   def change
-    create_table :seminars do |t|
+    create_table :talks do |t|
       t.string :title
       t.text :description
       t.integer :user_id
