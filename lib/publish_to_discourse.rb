@@ -1,5 +1,4 @@
 class PublishToDiscourse
-  CATEGORY = "lucrari"
 
   def initialize(project)
     @project = project
@@ -10,7 +9,7 @@ class PublishToDiscourse
   end
 
   def publish!
-    title = "#{@project.title} - #{@project.category.name.capitalize} - #{@project.contestants.first.county} - Lucrari #{@project.edition.name}"
+    title = "#{@project.title} - #{@project.category.name.capitalize} - #{@project.contestants.first.county} - #{@project.edition.projects_forum_category}"
 
     # prepare raw value
     # 1. read ERB template and create ERB object
@@ -33,7 +32,7 @@ class PublishToDiscourse
     raw = erb_template.result(context.get_binding)
 
     @client.create_topic(
-      category: CATEGORY,
+      category: @project.edition.projects_forum_category,
       title: title,
       raw: raw
     )
