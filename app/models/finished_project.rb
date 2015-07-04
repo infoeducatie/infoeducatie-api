@@ -12,30 +12,12 @@ class FinishedProject < Project
       field :approved
     end
 
-    create do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
-      field :source_url, :string
-      field :homepage, :string
-
-      field :approved, :boolean
-
-      field :category do
-        nested_form false
-      end
-
-      field :contestants do
-        nested_form false
-      end
-    end
-
     edit do
       field :title, :string
       field :description, :string
       field :technical_description, :string
       field :system_requirements, :string
+      field :open_source
       field :source_url, :string
       field :homepage, :string
 
@@ -49,7 +31,6 @@ class FinishedProject < Project
         nested_form false
       end
     end
-
   end
 
 end

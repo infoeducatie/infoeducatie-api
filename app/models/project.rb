@@ -20,7 +20,10 @@ class Project < ActiveRecord::Base
   validates :description, presence: true
   validates :technical_description, presence: true
   validates :system_requirements, presence: true
-  validates :source_url, presence: true
+
+  validates :source_url, presence: true, if: Proc.new {
+    self.open_source == true
+  }
 
   validates :homepage, presence: true, if: Proc.new { |project|
     !self.category.nil? && self.category.name == "web"
@@ -53,58 +56,6 @@ class Project < ActiveRecord::Base
 
   def discourse_url
     "#{Settings.ui.community_url}/t/#{discourse_topic_id}" if discourse_topic_id
-  end
-
-  rails_admin do
-    list do
-      field :title, :string
-      field :authors, :string
-      field :category_name, :string
-      field :county, :string
-      field :finished
-      field :approved
-    end
-
-    create do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
-      field :source_url, :string
-      field :homepage, :string
-
-      field :approved, :boolean
-      field :finished, :boolean
-
-      field :category do
-        nested_form false
-      end
-
-      field :contestants do
-        nested_form false
-      end
-    end
-
-    edit do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
-      field :source_url, :string
-      field :homepage, :string
-
-      field :approved, :boolean
-      field :finished, :boolean
-
-      field :category do
-        nested_form false
-      end
-
-      field :contestants do
-        nested_form false
-      end
-    end
-
   end
 
 end

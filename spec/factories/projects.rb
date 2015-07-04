@@ -13,6 +13,7 @@ FactoryGirl.define do
     finished false
     category { Category.find_by(name: "web") }
     contestants { build_list(:contestant, 1) }
+    open_source true
 
     before(:create) do |project, evaluator|
       project.colaborators[0].project = project
