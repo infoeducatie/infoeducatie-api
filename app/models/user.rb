@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :rights, dependent: :destroy
   has_many :roles, through: :rights
   has_many :contestants, dependent: :destroy
+  has_many :talks, dependent: :destroy, inverse_of: :user
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true

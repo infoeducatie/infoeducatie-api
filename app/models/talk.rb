@@ -1,8 +1,8 @@
 class Talk < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, inverse_of: :talks
   validates :user, presence: true
 
-  belongs_to :edition
+  belongs_to :edition, inverse_of: :talks
   validates :edition, presence: true
 
   validates :title, presence: true

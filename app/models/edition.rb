@@ -1,6 +1,7 @@
 class Edition < ActiveRecord::Base
   has_many :contestants, dependent: :destroy
   has_many :news, dependent: :destroy
+  has_many :talks, dependent: :destroy, inverse_of: :edition
 
   validates :name, presence: true, uniqueness: true
   validates :year, presence: true
@@ -38,6 +39,9 @@ class Edition < ActiveRecord::Base
         hide
       end
       configure :news do
+        hide
+      end
+      configure :talks do
         hide
       end
     end
