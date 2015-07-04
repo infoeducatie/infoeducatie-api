@@ -5,10 +5,16 @@ module V1
 
     # GET /v1/current
     def index
-      total_counties = Project.active.joins(:contestants)
-                              .count('county', :distinct => true)
-      total_participants = Project.active.joins(:contestants)
-                                  .count(:contestant_id)
+      edition = Edition.get_current
+
+      total_counties = Contestant.where(edition: edition)
+                                 .joins(:projects).where("projects.approved": true)
+                                 .group_by(&:county).count
+
+      total_participants = Contestant.where(edition: edition)
+                                     .joins(:projects).where("projects.approved": true)
+                                     .distinct.count
+
       @current = {
         is_logged_in: false,
         :stats => {
