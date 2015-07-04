@@ -13,7 +13,7 @@ module V1
       @news = News.all.where(edition: edition)
 
       @news.map do |n|
-        n.body = "" if n.short.length < 30
+        n.body = "" if n.short.length < 50
       end
     end
 
