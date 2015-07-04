@@ -40,7 +40,9 @@ RailsAdmin.config do |config|
     edit do
       except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
-    delete
+    delete do
+      except ["Project", "FinishedProject", "UnapprovedProject"]
+    end
     show_in_app
 
     approve_project do
