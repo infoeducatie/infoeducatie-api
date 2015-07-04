@@ -4,7 +4,7 @@ class PublishToDiscourse
   def initialize(project)
     @project = project
 
-    @client = DiscourseApi::Client.new("http://community.infoeducatie.ro")
+    @client = DiscourseApi::Client.new(Settings.ui.community_url)
     @client.api_key = ENV["DISCOURSE_API"]
     @client.api_username = ENV["DISCOURSE_USER"]
   end
