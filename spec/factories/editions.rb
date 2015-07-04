@@ -14,5 +14,6 @@ FactoryGirl.define do
     travel_data_deadline "2015-06-28"
     published true
     current true
+    projects_forum_category "Lucrari 2015 Nationala"
   end
 end
