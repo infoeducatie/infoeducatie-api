@@ -1,0 +1,4 @@
+attributes :title,
+           :description,
+           :author
+
