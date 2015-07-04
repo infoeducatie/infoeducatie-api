@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resource :sign_in, only: [:create], controller: :sessions
 
     resources :news, only: [:index, :show]
+    resources :talks, only: [:index]
 
     resources :contestants, only: [:index, :show, :create] do
       collection do

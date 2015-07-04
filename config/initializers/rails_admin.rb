@@ -61,5 +61,5 @@ RailsAdmin.config do |config|
 
   config.included_models = ["FinishedProject", "UnapprovedProject", "Contestant", "User",
                             "Screenshot", "Edition", "News", "Ckeditor::Asset",
-                            "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+                            "Ckeditor::AttachmentFile", "Ckeditor::Picture", "Talk"]
 end
