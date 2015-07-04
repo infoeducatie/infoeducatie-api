@@ -47,6 +47,10 @@ class Project < ActiveRecord::Base
     category.name
   end
 
+  def screenshots_count
+    screenshots.count
+  end
+
   def discourse_url
     "#{Settings.ui.community_url}/#{discourse_topic_id}" if discourse_topic_id
   end
