@@ -52,7 +52,7 @@ class Project < ActiveRecord::Base
   end
 
   def discourse_url
-    "#{Settings.ui.community_url}/#{discourse_topic_id}" if discourse_topic_id
+    "#{Settings.ui.community_url}/t/#{discourse_topic_id}" if discourse_topic_id
   end
 
   rails_admin do
