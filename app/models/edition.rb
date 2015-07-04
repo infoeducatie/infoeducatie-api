@@ -1,7 +1,8 @@
 class Edition < ActiveRecord::Base
   has_many :contestants, dependent: :destroy
+  has_many :news, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :year, presence: true
   validates :motto, presence: true
   validates :camp_start_date, date: true
@@ -9,6 +10,7 @@ class Edition < ActiveRecord::Base
   validates :registration_start_date, presence: true, date: true
   validates :registration_end_date, presence: true, date: true
   validates :travel_data_deadline, date: true
+  validates :projects_forum_category, presence: true
 
   before_save do
     if current
@@ -33,6 +35,9 @@ class Edition < ActiveRecord::Base
     end
     edit do
       configure :contestants do
+        hide
+      end
+      configure :news do
         hide
       end
     end

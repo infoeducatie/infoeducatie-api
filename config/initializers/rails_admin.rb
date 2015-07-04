@@ -1,4 +1,5 @@
 require Rails.root.join('lib', 'rails_admin_approve_project.rb')
+require Rails.root.join('lib', 'rails_admin_pin_news.rb')
 
 RailsAdmin.config do |config|
 
@@ -26,22 +27,39 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
-    export
+    new do
+      except ["UnapprovedProject", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+    end
+    export do
+      except ["Screenshot", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+    end
     bulk_delete
-    show
-    edit
-    delete
+    show do
+      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+    end
+    edit do
+      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+    end
+    delete do
+      except ["Project", "FinishedProject", "UnapprovedProject"]
+    end
     show_in_app
 
     approve_project do
       only ['UnapprovedProject']
     end
 
+    pin_news do
+      only ['News']
+    end
+
+
     ## With an audit adapter, you can add:
     # history_index
     # history_show
   end
 
-  config.included_models = ["Project", "UnapprovedProject", "Contestant", "User", "Screenshot", "Edition", "Talk"]
+  config.included_models = ["FinishedProject", "UnapprovedProject", "Contestant", "User",
+                            "Screenshot", "Edition", "News", "Ckeditor::Asset",
+                            "Ckeditor::AttachmentFile", "Ckeditor::Picture", "Talk"]
 end

@@ -2,15 +2,15 @@ class Project < ActiveRecord::Base
   scope :active, -> { where(finished: true).where(approved: true) }
 
   belongs_to :category
-  has_many :colaborators, inverse_of: :project
+  has_many :colaborators, inverse_of: :project, dependent: :destroy
   has_many :contestants, through: :colaborators, inverse_of: :projects
-  has_many :screenshots, inverse_of: :project
+  has_many :screenshots, inverse_of: :project, dependent: :destroy
 
   accepts_nested_attributes_for :category
   accepts_nested_attributes_for :colaborators,
-    :reject_if => :all_blank,
-    :allow_destroy => true
-  accepts_nested_attributes_for :contestants
+    :reject_if => :all_blank
+  accepts_nested_attributes_for :contestants,
+    :reject_if => :all_blank
   accepts_nested_attributes_for :screenshots
 
   validates :category, presence: true
@@ -20,7 +20,10 @@ class Project < ActiveRecord::Base
   validates :description, presence: true
   validates :technical_description, presence: true
   validates :system_requirements, presence: true
-  validates :source_url, presence: true
+
+  validates :source_url, presence: true, if: Proc.new {
+    self.open_source == true
+  }
 
   validates :homepage, presence: true, if: Proc.new { |project|
     !self.category.nil? && self.category.name == "web"
@@ -47,66 +50,12 @@ class Project < ActiveRecord::Base
     category.name
   end
 
-  rails_admin do
-    list do
-      field :title, :string
-      field :authors, :string
-      field :description, :string
-      field :category_name, :string
-      field :county, :string
-      field :screenshots
-      field :approved, :boolean
-      field :finished, :boolean
-    end
+  def screenshots_count
+    screenshots.count
+  end
 
-    create do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
-      field :source_url, :string
-      field :homepage, :string
-
-      field :approved, :boolean
-      field :finished, :boolean
-
-      field :category do
-        nested_form false
-      end
-
-      field :contestants do
-        nested_form false
-      end
-
-      field :screenshots do
-        nested_form false
-      end
-    end
-
-    edit do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
-      field :source_url, :string
-      field :homepage, :string
-
-      field :approved, :boolean
-      field :finished, :boolean
-
-      field :category do
-        nested_form false
-      end
-
-      field :contestants do
-        nested_form false
-      end
-
-      field :screenshots do
-        nested_form false
-      end
-    end
-
+  def discourse_url
+    "#{Settings.ui.community_url}/t/#{discourse_topic_id}" if discourse_topic_id
   end
 
 end

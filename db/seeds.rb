@@ -9,6 +9,30 @@ end
   Category.find_or_create_by({name: category})
 end
 
+Edition.find_or_create_by({
+  year: '2015',
+  name: '2015',
+  camp_start_date: DateTime.new(2015, 8, 2),
+  camp_end_date: DateTime.new(2015, 8, 8),
+  motto: 'Persevereaza, mergi mai departe',
+  registration_start_date: DateTime.new(2015, 7, 5),
+  registration_end_date: DateTime.new(2015, 7, 28),
+  travel_data_deadline: DateTime.new(2015, 7, 28),
+  published: true,
+  current: true
+})
+
+unless User.find_by({email: 'admin@infoeducatie.ro'})
+  user = User.create({
+    email: 'admin@infoeducatie.ro',
+    password: 'secretpassword',
+    password_confirmation: 'secretpassword',
+    first_name: 'Super',
+    last_name: 'Admin'
+  })
+  user.confirm
+  user.roles << Role.find_by(name: "admin")
+end
 
 # WARNING! This seed can be used in development mode. Never uncomment this in productition.
 

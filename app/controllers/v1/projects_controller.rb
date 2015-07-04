@@ -1,7 +1,7 @@
 module V1
   class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user_from_token!, only: [:create, :finish, :screenshots]
+    before_action :authenticate_user_from_token!, only: [:create, :finish, :screenshots, :collaborators]
 
     respond_to :json
 
@@ -27,6 +27,7 @@ module V1
       if project.nil?
         render :json => {}, status: :bad_request
       else
+        current_user.increment_registration_step_number!
         project.update_attribute(:finished, true)
         render :json => {}, status: :ok
       end
@@ -40,8 +41,12 @@ module V1
         .where(id: params[:id])
         .first
 
-      @project.screenshots << params[:screenshots].map do |key, value|
+      @project.screenshots << params[:screenshots].map do |value|
         Screenshot.new(screenshot: value)
+      end
+
+      if @project.screenshots.count >= 3
+        current_user.increment_registration_step_number!
       end
 
       render :show, status: :created
@@ -61,9 +66,32 @@ module V1
       )
 
       if @project.save
+        current_user.increment_registration_step_number!
         render :show, status: :created
       else
         render json: @project.errors, status: :unprocessable_entity
+      end
+    end
+
+    # POST /v1/projects/:id/collaborators
+    def collaborators
+      project = Project.find(params[:id])
+      projects = current_user.get_current_contestant.projects
+      contestant = Contestant.find(params[:contestant_id])
+
+      if projects.include?(project) and current_user.registration_step_number == 4
+        @colaborator = Colaborator.new({
+          project: project,
+          contestant: contestant
+        })
+        if @colaborator.save
+          current_user.increment_registration_step_number!
+          render :show, status: :created
+        else
+          render json: @colaborator.errors, status: :unprocessable_entity
+        end
+      else
+        render json: { error: 'unauthorized' }, status: 401
       end
     end
 
@@ -82,7 +110,9 @@ module V1
           :system_requirements,
           :source_url,
           :homepage,
-          :category
+          :category,
+          :open_source,
+          :closed_source_reason
         )
       end
   end

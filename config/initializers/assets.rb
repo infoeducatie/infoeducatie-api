@@ -11,3 +11,6 @@ Rails.application.config.assets.precompile += %w( pages.js )
 
 # render haml templates from the assets folder
 Rails.application.assets.register_engine('.haml', Tilt::HamlTemplate)
+
+# ckeditor assets
+Rails.application.config.assets.precompile += %w( ckeditor/* )

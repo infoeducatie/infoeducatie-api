@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/internal/admin', as: 'rails_admin'
 
   devise_for :users, class_name: 'User', controllers: {
@@ -18,17 +19,23 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: :json } do
     resource :sign_in, only: [:create], controller: :sessions
+
+    resources :news, only: [:index, :show]
+
     resources :contestants, only: [:index, :show, :create] do
       collection do
         post :additional
       end
     end
+
+    post 'contestants/update_registration_step_number', to: 'contestants#update_registration_step_number'
+
     resources :projects, only: [:index, :show, :create] do
       member do
         post :finish
         post :screenshots
+        post :collaborators
       end
-
     end
 
     get "current" => "current#index"

@@ -25,11 +25,3 @@ After you have pulled the repo run:
 4. ```bundle exec rails server```
 5. Have Fun
 
-### Creating an admin user
-
-```
-rails c
-u = User.create(email: "admin@infoeducatie.ro", password: "secret", password_confirmation: "secret", first_name: "Super", last_name: "Admin")
-u.confirm!
-u.roles << Role.find_by(name: "admin")
-```

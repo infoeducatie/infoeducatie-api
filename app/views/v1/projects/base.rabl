@@ -1,6 +1,7 @@
 attributes :id,
            :title,
-           :county
+           :county,
+           :discourse_url
 
 child :contestants => :contestants do
   attributes :id, :name
@@ -14,5 +15,4 @@ node :category do |u|
   u.category.name
 end
 
-node :discourse_url do "http://community.infoeducatie.ro/ceva_id" end
 node :discourse_comments_count do 0 end

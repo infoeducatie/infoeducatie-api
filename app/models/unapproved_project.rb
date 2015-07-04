@@ -2,6 +2,8 @@ class UnapprovedProject < Project
   default_scope { where(finished: true).where(approved: false) }
 
   rails_admin do
+    parent FinishedProject
+
     list do
       field :title, :string
       field :authors, :string

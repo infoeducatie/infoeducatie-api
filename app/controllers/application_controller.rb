@@ -27,7 +27,6 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
-    headers['Access-Control-Allow-Credentials'] = 'true'
     headers['Access-Control-Max-Age'] = "1728000"
   end
 
@@ -36,7 +35,6 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Origin'] = '*'
       headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
       headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token, Authorization'
-      headers['Access-Control-Allow-Credentials'] = 'true'
       headers['Access-Control-Max-Age'] = '1728000'
       render :text => '', :content_type => 'text/plain'
     end
@@ -62,19 +60,16 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate_user_from_token!
-    auth_token = request.cookies["accesToken"]
-
-    if auth_token
-      authenticate_with_auth_token auth_token
-    else
+    unless authenticate_user_from_token
       authentication_error
     end
   end
 
-  def authenticate_with_auth_token(auth_token)
-    unless auth_token.include?(':')
-      authentication_error
-      return
+  def authenticate_user_from_token
+    auth_token = request.headers['Authorization']
+
+    if not auth_token or not auth_token.include?(':')
+      return false
     end
 
     user_id = auth_token.split(':').first
@@ -83,11 +78,14 @@ class ApplicationController < ActionController::Base
     if user && Devise.secure_compare(user.access_token, auth_token)
       sign_in user, store: false
     else
-      authentication_error
+      return false
     end
+
+    return true
   end
 
   def authentication_error
+    cors_set_access_control_headers
     render json: { error: 'unauthorized' }, status: 401
   end
 end

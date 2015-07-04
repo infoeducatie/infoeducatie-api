@@ -23,6 +23,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   # The path used after confirmation.
   def after_confirmation_path_for(resource_name, resource)
-    Settings.ui.url + "/?register_contestant=true"
+    Settings.ui.url + "/?login=true"
   end
 end

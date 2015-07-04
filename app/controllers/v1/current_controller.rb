@@ -1,14 +1,20 @@
 module V1
   class CurrentController < ApplicationController
-
+    before_action :authenticate_user_from_token
     respond_to :json
 
     # GET /v1/current
     def index
-      total_counties = Project.active.joins(:contestants)
-                              .count('county', :distinct => true)
-      total_participants = Project.active.joins(:contestants)
-                                  .count(:contestant_id)
+      edition = Edition.get_current
+
+      total_counties = Contestant.where(edition: edition)
+                                 .joins(:projects).where("projects.approved": true)
+                                 .group_by(&:county).count
+
+      total_participants = Contestant.where(edition: edition)
+                                     .joins(:projects).where("projects.approved": true)
+                                     .distinct.count
+
       @current = {
         is_logged_in: false,
         :stats => {
@@ -25,39 +31,20 @@ module V1
           user: current_user
         })
 
-        registration = {
-          has_contestant: false
-        }
-
         if !current_user.contestants.empty?
-          registration.merge!({
-            has_contestant: true,
-            has_pending_project: false,
-            has_projects: false
-          })
-
           projects = current_user.get_current_contestant.projects
 
           if !projects.empty?
-            has_pending_project = !projects.map(&:finished).all?
-            pending_project = if has_pending_project
-              projects.where(:finished => false).first
-            else
-              ""
-            end
+            pending_project = projects.find_by(:finished => false)
 
-            registration.merge!({
-              has_projects: true,
-              has_pending_project: !projects.map(&:finished).all?,
-              pending_project: pending_project,
-              projects: projects,
+            @current.merge!({
+              registration: {
+                pending_project: pending_project,
+                finished_projects: projects.where(:finished => true),
+              }
             })
           end
         end
-
-        @current.merge!({
-          registration: registration
-        })
       end
 
       @current = RecursiveOpenStruct.new @current
