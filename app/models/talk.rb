@@ -8,10 +8,15 @@ class Talk < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
 
+  def author
+    user.name
+  end
+
   rails_admin do
     list do
       field :title
-      field :description
+      field :author
+      field :edition
     end
   end
 end
