@@ -1,18 +1,15 @@
-class UnapprovedProject < Project
-  default_scope { where(finished: true).where(approved: false) }
+class FinishedProject < Project
+  default_scope { where(finished: true) }
 
   rails_admin do
-    parent FinishedProject
+    label "Projects"
 
     list do
       field :title, :string
       field :authors, :string
-      field :description, :string
       field :category_name, :string
       field :county, :string
-      field :screenshots
-      field :approved, :boolean
-      field :finished, :boolean
+      field :approved
     end
 
     create do
@@ -24,17 +21,12 @@ class UnapprovedProject < Project
       field :homepage, :string
 
       field :approved, :boolean
-      field :finished, :boolean
 
       field :category do
         nested_form false
       end
 
       field :contestants do
-        nested_form false
-      end
-
-      field :screenshots do
         nested_form false
       end
     end
@@ -48,17 +40,12 @@ class UnapprovedProject < Project
       field :homepage, :string
 
       field :approved, :boolean
-      field :finished, :boolean
 
       field :category do
         nested_form false
       end
 
       field :contestants do
-        nested_form false
-      end
-
-      field :screenshots do
         nested_form false
       end
     end
