@@ -20,7 +20,7 @@ class FinishedProject < Project
       field :open_source
       field :source_url, :string
       field :homepage, :string
-
+      field :closed_source_reason
       field :approved, :boolean
 
       field :category do

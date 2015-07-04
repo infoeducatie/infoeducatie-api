@@ -110,7 +110,9 @@ module V1
           :system_requirements,
           :source_url,
           :homepage,
-          :category
+          :category,
+          :open_source,
+          :closed_source_reason
         )
       end
   end

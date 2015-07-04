@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150704212930) do
+ActiveRecord::Schema.define(version: 20150704214856) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20150704212930) do
     t.boolean  "finished",              default: false
     t.integer  "discourse_topic_id"
     t.boolean  "open_source"
+    t.string   "closed_source_reason"
   end
 
   create_table "rights", force: :cascade do |t|
