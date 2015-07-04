@@ -1,4 +1,6 @@
 attributes :title,
            :description,
-           :author
+           :author,
+           :location,
+           :date
 

@@ -8,6 +8,8 @@ class Talk < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
 
+  validates :date, date: { allow_blank: true }
+
   def author
     user.name
   end
@@ -16,6 +18,8 @@ class Talk < ActiveRecord::Base
     list do
       field :title
       field :author
+      field :location
+      field :date
       field :edition
     end
   end
