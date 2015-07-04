@@ -2,6 +2,7 @@ class Seminar < ActiveRecord::Base
   belongs_to :user
   validates :user, presence: true
 
+  belongs_to :edition
   validates :edition, presence: true
 
   validates :title, presence: true
