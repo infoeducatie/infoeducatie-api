@@ -57,7 +57,7 @@ class Contestant < ActiveRecord::Base
   end
 
   def name
-    user.name
+    user.name if user
   end
 
   def email
