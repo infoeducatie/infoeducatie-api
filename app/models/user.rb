@@ -1,3 +1,5 @@
+require 'digest/md5'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -20,6 +22,10 @@ class User < ActiveRecord::Base
   after_create :set_default_role
 
   validates :email, presence: true, uniqueness: true
+
+  def email_md5
+    Digest::MD5.hexdigest(self.email)
+  end
 
   def admin?
     self.roles.include?(Role.find_by(name: "admin"))
@@ -55,6 +61,7 @@ class User < ActiveRecord::Base
       field :email
       field :first_name
       field :last_name
+      field :job
       field :roles
       field :password
     end
@@ -62,6 +69,7 @@ class User < ActiveRecord::Base
       field :email
       field :first_name
       field :last_name
+      field :job
       field :roles
     end
   end
