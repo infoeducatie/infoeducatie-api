@@ -10,7 +10,7 @@ module V1
         Edition.get_current
       end
 
-      @news = News.all.where(edition: edition)
+      @news = News.all.where(edition: edition).order(created_at: :desc)
 
       @news.map do |n|
         n.body = "" if n.short.length < 50
