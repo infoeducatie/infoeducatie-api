@@ -41,9 +41,6 @@ class Contestant < ActiveRecord::Base
   validates :mentoring_teacher_first_name, presence: true
   validates :mentoring_teacher_last_name, presence: true
 
-  validates :accompanying_teacher_first_name, presence: true
-  validates :accompanying_teacher_last_name, presence: true
-
   def sex_enum
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end
