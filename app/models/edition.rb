@@ -3,6 +3,9 @@ class Edition < ActiveRecord::Base
   has_many :news, dependent: :destroy
   has_many :talks, dependent: :destroy, inverse_of: :edition
 
+  has_many :attendances, dependent: :destroy, inverse_of: :edition
+  has_many :alumni, through: :attendances, inverse_of: :editions
+
   validates :name, presence: true, uniqueness: true
   validates :year, presence: true
   validates :motto, presence: true
@@ -35,15 +38,17 @@ class Edition < ActiveRecord::Base
       field :current
     end
     edit do
-      configure :contestants do
-        hide
-      end
-      configure :news do
-        hide
-      end
-      configure :talks do
-        hide
-      end
+      field :year
+      field :name
+      field :motto
+      field :projects_forum_category
+      field :camp_start_date
+      field :camp_end_date
+      field :registration_start_date
+      field :registration_end_date
+      field :travel_data_deadline
+      field :published
+      field :current
     end
   end
 end
