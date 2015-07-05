@@ -1,6 +1,8 @@
 attributes :title,
            :description,
-           :author,
            :location,
            :date
 
+child :user do
+  attributes :first_name, :last_name, :email_md5
+end
