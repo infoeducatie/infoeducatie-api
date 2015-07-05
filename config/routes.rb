@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
     get '/v1/users/sign_in', to: 'users/sessions#new', as: 'new_user_session'
     post '/v1/users/sign_in', to: 'users/sessions#create', as: 'user_session'
+    get '/v1/users/sign_out', to: 'users/sessions#destroy', as: 'destroy_user_session'
   end
 
   namespace :v1, defaults: { format: :json } do
