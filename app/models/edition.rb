@@ -9,11 +9,11 @@ class Edition < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :year, presence: true
   validates :motto, presence: true
-  validates :camp_start_date, date: true
-  validates :camp_end_date, date: true
+  validates :camp_start_date, date: { allow_blank: true }
+  validates :camp_end_date, date: { allow_blank: true }
   validates :registration_start_date, presence: true, date: true
   validates :registration_end_date, presence: true, date: true
-  validates :travel_data_deadline, date: true
+  validates :travel_data_deadline, date: { allow_blank: true }
   validates :projects_forum_category, presence: true
 
   before_save do
