@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
       field :email
       field :first_name
       field :last_name
+      field :job
       field :roles
       field :password
     end
@@ -68,6 +69,7 @@ class User < ActiveRecord::Base
       field :email
       field :first_name
       field :last_name
+      field :job
       field :roles
     end
   end
