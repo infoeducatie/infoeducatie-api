@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     resources :news, only: [:index, :show]
     resources :talks, only: [:index]
+    resources :alumni, only: [:index]
 
     resources :contestants, only: [:index, :show, :create] do
       collection do
