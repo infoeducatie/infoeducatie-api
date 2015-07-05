@@ -1,7 +1,7 @@
 class News < ActiveRecord::Base
   validates :title, presence: true
-  validates :body, presence: true, length: { in: 20..1000 }
-  validates :short, presence: true, length: { in: 20..1000 }
+  validates :body, presence: true, length: { minimum: 20 }
+  validates :short, presence: true
 
   belongs_to :edition
   validates :edition, presence: true
