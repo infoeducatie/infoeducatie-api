@@ -263,7 +263,6 @@ GEM
     minitest (5.7.0)
     multi_json (1.11.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.18)
     nenv (0.2.0)
     nested_form (0.3.2)
     net-scp (1.2.1)
@@ -440,7 +439,6 @@ DEPENDENCIES
   guard-rspec
   jbuilder (~> 2.0)
   mini_magick
-  mysql2
   oj
   pg
   pry-rails
@@ -462,3 +460,6 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   vcr
+
+BUNDLED WITH
+   1.10.5

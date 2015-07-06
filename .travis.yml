@@ -12,7 +12,6 @@ script:
 - bundle exec rake
 before_script:
 - cp config/database.travis.yml config/database.yml
-- mysql -e 'create database infoeducatie_test'
 - psql -c 'create database infoeducatie_test' -U postgres
 addons:
   code_climate:

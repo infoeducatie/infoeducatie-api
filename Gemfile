@@ -78,7 +78,6 @@ group :development, :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'factory_girl_rails', "~> 4.0"
   gem 'guard-rspec', require: false
-  gem 'mysql2'
   gem 'pry-rails'
   gem 'rspec'
   gem 'rspec-rails'
