@@ -29,8 +29,6 @@ config/initializers/secret_token.rb
 /log/*.log
 /tmp
 
-config/database.yml
-
 .DS_Store
 .env
 
