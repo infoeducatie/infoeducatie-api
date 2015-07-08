@@ -9,7 +9,6 @@ if [ -z $tag ]; then
 fi
 
 if [ `git show-ref $tag | cut -d ' ' -f1` == `git rev-parse origin/production` ]; then
-  echo "Already the latest version"
   exit 0
 fi
 
