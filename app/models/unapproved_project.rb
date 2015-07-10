@@ -11,8 +11,6 @@ class UnapprovedProject < Project
       field :category_name, :string
       field :county, :string
       field :screenshots
-      field :approved, :boolean
-      field :finished, :boolean
     end
 
     edit do
