@@ -46,6 +46,7 @@ class UnapprovedProject < Project
       field :system_requirements, :string
       field :source_url, :string
       field :homepage, :string
+      field :github_username
 
       field :approved, :boolean
       field :finished, :boolean
