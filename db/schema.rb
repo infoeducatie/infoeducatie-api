@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150705161747) do
+ActiveRecord::Schema.define(version: 20150710194812) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -157,15 +157,25 @@ ActiveRecord::Schema.define(version: 20150705161747) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "talk_users", force: :cascade do |t|
+    t.integer  "talk_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "talk_users", ["talk_id"], name: "index_talk_users_on_talk_id"
+  add_index "talk_users", ["user_id"], name: "index_talk_users_on_user_id"
+
   create_table "talks", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "edition_id"
     t.string   "location"
     t.datetime "date"
+    t.integer  "topic_id"
   end
 
   create_table "users", force: :cascade do |t|
