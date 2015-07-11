@@ -2,8 +2,8 @@ module V1
   class TalksController < ApplicationController
 
     def index
-      edition = if params.has_key?(:id)
-        Edition.find_by(id: params[:id])
+      edition = if params.has_key?(:edition)
+        Edition.find_by(id: params[:edition])
       else
         Edition.get_current
       end
