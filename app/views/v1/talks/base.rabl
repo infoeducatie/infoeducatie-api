@@ -1,8 +1,9 @@
 attributes :title,
            :description,
            :location,
-           :date
+           :date,
+           :discourse_url
 
-child :user do
-  attributes :first_name, :last_name, :email_md5, :job
+child :users do
+  attributes :name, :email_md5, :job
 end
