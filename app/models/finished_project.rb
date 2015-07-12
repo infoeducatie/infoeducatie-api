@@ -22,6 +22,7 @@ class FinishedProject < Project
       field :homepage, :string
       field :closed_source_reason
       field :approved, :boolean
+      field :github_username
 
       field :category do
         nested_form false

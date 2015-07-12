@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710194812) do
+ActiveRecord::Schema.define(version: 20150710203215) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 20150710194812) do
     t.integer  "discourse_topic_id"
     t.boolean  "open_source"
     t.string   "closed_source_reason"
+    t.string   "github_username"
   end
 
   create_table "rights", force: :cascade do |t|

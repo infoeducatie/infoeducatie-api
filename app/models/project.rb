@@ -29,6 +29,10 @@ class Project < ActiveRecord::Base
     self.open_source == false
   }
 
+  validates :github_username, presence: true, if: Proc.new {
+    self.open_source == false
+  }
+
   validates :homepage, presence: true, if: Proc.new { |project|
     !self.category.nil? && self.category.name == "web"
   }
