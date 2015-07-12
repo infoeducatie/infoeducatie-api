@@ -112,7 +112,8 @@ module V1
           :homepage,
           :category,
           :open_source,
-          :closed_source_reason
+          :closed_source_reason,
+          :github_username
         )
       end
   end
