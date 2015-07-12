@@ -4,6 +4,6 @@ FactoryGirl.define do
     description "MyText"
 
     association :edition
-    association :user
+    users { build_list(:user, 1) }
   end
 end
