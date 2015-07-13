@@ -2,13 +2,9 @@ Informatii generale
 ---------------------------
 
 - Categorie: <%= @category %>
-<% if @homepage %>
-- Homepage: <%= @homepage %>
-<% end %>
 - Judetul: <%= @county %>
-<% if @source_url %>
-- Surse: <%= @source_url %>
-<% end %>
+<% if @source_url %>- Surse: <%= @source_url %><% end %>
+<% if @homepage %>- Homepage: <%= @homepage %><% end %>
 
 Descriere
 --------------
