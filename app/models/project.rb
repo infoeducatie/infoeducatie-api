@@ -67,6 +67,6 @@ class Project < ActiveRecord::Base
   end
 
   def has_source_url
-    true
+    not source_url.blank?
   end
 end
