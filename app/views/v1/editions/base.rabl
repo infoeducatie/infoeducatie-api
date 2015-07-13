@@ -3,5 +3,8 @@ attributes :id,
            :name,
            :camp_start_date,
            :camp_end_date,
+           :registration_start_date,
+           :registration_end_date,
+           :travel_data_deadline,
            :motto,
            :current
