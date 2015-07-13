@@ -66,4 +66,7 @@ class Project < ActiveRecord::Base
     "#{Settings.ui.community_url}/t/#{discourse_topic_id}" if discourse_topic_id
   end
 
+  def has_source_url
+    true
+  end
 end

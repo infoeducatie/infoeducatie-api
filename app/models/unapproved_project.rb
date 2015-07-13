@@ -5,25 +5,24 @@ class UnapprovedProject < Project
     parent FinishedProject
 
     list do
-      field :title, :string
-      field :authors, :string
-      field :description, :string
-      field :category_name, :string
-      field :county, :string
+      field :title
+      field :authors
+      field :category_name
+      field :county
+      field :open_source
       field :screenshots
     end
 
     edit do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
-      field :source_url, :string
-      field :homepage, :string
+      field :title
+      field :description
+      field :technical_description
+      field :system_requirements
+      field :open_source
+      field :source_url
+      field :homepage
+      field :closed_source_reason
       field :github_username
-
-      field :approved, :boolean
-      field :finished, :boolean
 
       field :category do
         nested_form false

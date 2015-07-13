@@ -5,23 +5,32 @@ class FinishedProject < Project
     label "Projects"
 
     list do
-      field :title, :string
-      field :authors, :string
-      field :category_name, :string
-      field :county, :string
-      field :approved
+      field :title
+      field :authors
+      field :category_name
+      field :county
+      field :approved do
+        column_width 90
+      end
+      field :open_source do
+        label "Open"
+        column_width 60
+      end
+      field :has_source_url, :boolean do
+        label "Repository"
+        column_width 90
+      end
     end
 
     edit do
-      field :title, :string
-      field :description, :string
-      field :technical_description, :string
-      field :system_requirements, :string
+      field :title
+      field :description
+      field :technical_description
+      field :system_requirements
       field :open_source
-      field :source_url, :string
-      field :homepage, :string
+      field :source_url
+      field :homepage
       field :closed_source_reason
-      field :approved, :boolean
       field :github_username
 
       field :category do
