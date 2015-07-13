@@ -25,7 +25,8 @@ class PublishToDiscourse
       technical_description: @project.technical_description,
       system_requirements: @project.system_requirements,
       contestants: @project.contestants,
-      screenshots: @project.screenshots
+      screenshots: @project.screenshots,
+      source_url: @project.source_url
     )
 
     # 3. Render template
