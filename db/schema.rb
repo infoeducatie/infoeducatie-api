@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710203215) do
+ActiveRecord::Schema.define(version: 20150714210902) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20150710203215) do
     t.datetime "updated_at",                              null: false
     t.boolean  "current",                 default: false
     t.string   "projects_forum_category"
+    t.integer  "talks_count"
   end
 
   create_table "news", force: :cascade do |t|

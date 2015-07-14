@@ -5,6 +5,7 @@ class Edition < ActiveRecord::Base
 
   has_many :attendances, dependent: :destroy, inverse_of: :edition
   has_many :alumni, through: :attendances, inverse_of: :editions
+  has_many :projects, through: :contestants
 
   validates :name, presence: true, uniqueness: true
   validates :year, presence: true
@@ -15,6 +16,10 @@ class Edition < ActiveRecord::Base
   validates :registration_end_date, presence: true, date: true
   validates :travel_data_deadline, date: { allow_blank: true }
   validates :projects_forum_category, presence: true
+
+  def projects_count
+    projects.size
+  end
 
   before_save do
     if current

@@ -1,5 +1,5 @@
 class Talk < ActiveRecord::Base
-  belongs_to :edition, inverse_of: :talks
+  belongs_to :edition, inverse_of: :talks, counter_cache: true
   validates :edition, presence: true
 
   validates :title, presence: true
