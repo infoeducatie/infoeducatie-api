@@ -18,7 +18,23 @@ class Edition < ActiveRecord::Base
   validates :projects_forum_category, presence: true
 
   def projects_count
-    projects.size
+    Project.where(approved: true)
+           .joins(:contestants)
+           .where(contestants: { edition: id })
+           .group_by(&:id)
+           .count
+  end
+
+  def counties_count
+    Contestant.where(edition: id)
+              .joins(:projects).where("projects.approved": true)
+              .group_by(&:county).count
+  end
+
+  def contestants_count
+    Contestant.where(edition: id)
+              .joins(:projects).where("projects.approved": true)
+              .distinct.count
   end
 
   before_save do
