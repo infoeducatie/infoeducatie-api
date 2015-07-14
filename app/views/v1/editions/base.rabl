@@ -9,4 +9,6 @@ attributes :id,
            :motto,
            :current,
            :talks_count,
-           :projects_count
+           :projects_count,
+           :counties_count,
+           :contestants_count
