@@ -3,7 +3,8 @@ object @current
 attributes :stats, :is_logged_in
 
 child :edition do
-  attributes :id, :year, :name, :motto
+  attributes :id, :year, :name, :motto, :projects_count,
+  :counties_count, :contestants_count
 end
 
 child :registration => :registration do
