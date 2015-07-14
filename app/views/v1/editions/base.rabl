@@ -7,4 +7,6 @@ attributes :id,
            :registration_end_date,
            :travel_data_deadline,
            :motto,
-           :current
+           :current,
+           :talks_count,
+           :projects_count
