@@ -8,10 +8,15 @@ module V1
     # GET /v1/projects.json
     def index
       # TODO @palcu write a test for this
-      current_edition = Edition.get_current
+      edition = if params.has_key?(:edition)
+        Edition.find_by(id: params[:edition])
+      else
+        Edition.get_current
+      end
+
       @projects = Project.active
                          .joins(:contestants)
-                         .where(:contestants => { :edition => current_edition })
+                         .where(:contestants => { :edition => edition })
     end
 
     # GET /v1/projects/1.json
