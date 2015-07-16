@@ -3,8 +3,8 @@ Informatii generale
 
 - Categorie: <%= @category %>
 - Judetul: <%= @county %>
-<% if @source_url %>- Surse: <%= @source_url %><% end %>
-<% if @homepage %>- Homepage: <%= @homepage %><% end %>
+<% unless @source_url.blank? %>- Surse: <%= @source_url %><% end %>
+<% unless @homepage.blank? %>- Homepage: <%= @homepage %><% end %>
 
 Descriere
 --------------
