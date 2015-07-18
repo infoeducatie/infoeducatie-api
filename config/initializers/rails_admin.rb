@@ -40,10 +40,10 @@ RailsAdmin.config do |config|
       except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     delete do
-      except ["Project", "FinishedProject", "UnapprovedProject"]
+      except ["Project", "FinishedProject", "UnapprovedProject", "Contestant"]
     end
     bulk_delete do
-      except ["Project", "FinishedProject", "UnapprovedProject"]
+      except ["Project", "FinishedProject", "UnapprovedProject", "Contestant"]
     end
     show_in_app
 
