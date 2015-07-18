@@ -16,6 +16,7 @@ module V1
       @projects = Project.active
                          .joins(:contestants)
                          .where(:contestants => { :edition => edition })
+                         .order("contestants.county")
                          .distinct
     end
 
