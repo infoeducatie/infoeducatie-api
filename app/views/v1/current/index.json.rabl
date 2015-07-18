@@ -4,7 +4,8 @@ attributes :stats, :is_logged_in
 
 child :edition do
   attributes :id, :year, :name, :motto, :projects_count,
-  :counties_count, :contestants_count, :count
+  :counties_count, :contestants_count, :count,
+  :registration_start_date, :registration_end_date, :travel_data_deadline
 end
 
 child :registration => :registration do
