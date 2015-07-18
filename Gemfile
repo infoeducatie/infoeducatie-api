@@ -48,6 +48,8 @@ gem 'ckeditor'
 
 gem 'mini_magick'
 
+gem 'pg'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'

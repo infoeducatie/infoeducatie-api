@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150714210902) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
     t.integer  "user_id"
@@ -46,8 +49,8 @@ ActiveRecord::Schema.define(version: 20150714210902) do
     t.datetime "updated_at"
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   create_table "colaborators", force: :cascade do |t|
     t.integer  "contestant_id"
@@ -141,8 +144,8 @@ ActiveRecord::Schema.define(version: 20150714210902) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "rights", ["role_id"], name: "index_rights_on_role_id"
-  add_index "rights", ["user_id"], name: "index_rights_on_user_id"
+  add_index "rights", ["role_id"], name: "index_rights_on_role_id", using: :btree
+  add_index "rights", ["user_id"], name: "index_rights_on_user_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -150,7 +153,7 @@ ActiveRecord::Schema.define(version: 20150714210902) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "roles", ["name"], name: "index_roles_on_name", unique: true
+  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
   create_table "screenshots", force: :cascade do |t|
     t.string   "screenshot"
@@ -166,8 +169,8 @@ ActiveRecord::Schema.define(version: 20150714210902) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "talk_users", ["talk_id"], name: "index_talk_users_on_talk_id"
-  add_index "talk_users", ["user_id"], name: "index_talk_users_on_user_id"
+  add_index "talk_users", ["talk_id"], name: "index_talk_users_on_talk_id", using: :btree
+  add_index "talk_users", ["user_id"], name: "index_talk_users_on_user_id", using: :btree
 
   create_table "talks", force: :cascade do |t|
     t.string   "title"
@@ -205,8 +208,8 @@ ActiveRecord::Schema.define(version: 20150714210902) do
     t.string   "job"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
