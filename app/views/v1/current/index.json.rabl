@@ -4,7 +4,7 @@ attributes :stats, :is_logged_in
 
 child :edition do
   attributes :id, :year, :name, :motto, :projects_count,
-  :counties_count, :contestants_count
+  :counties_count, :contestants_count, :count
 end
 
 child :registration => :registration do

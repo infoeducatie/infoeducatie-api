@@ -17,6 +17,10 @@ class Edition < ActiveRecord::Base
   validates :travel_data_deadline, date: { allow_blank: true }
   validates :projects_forum_category, presence: true
 
+  def count
+    year - 1994 + 1
+  end
+
   def projects_count
     Project.where(approved: true)
            .joins(:contestants)
