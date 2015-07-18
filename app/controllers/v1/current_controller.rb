@@ -6,9 +6,16 @@ module V1
     # GET /v1/current
     def index
       edition = Edition.get_current
+      is_registration_open = false
+
+      if edition.registration_start_date <= Time.now.utc and
+         edition.registration_end_date >= Time.now.utc
+        is_registration_open = true
+      end
 
       @current = {
         is_logged_in: false,
+        is_registration_open: is_registration_open,
         :edition => Edition.get_current
       }
 
