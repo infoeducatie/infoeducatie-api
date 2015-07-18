@@ -7,7 +7,6 @@ module V1
 
     # GET /v1/projects.json
     def index
-      # TODO @palcu write a test for this
       edition = if params.has_key?(:edition)
         Edition.find_by(id: params[:edition])
       else
@@ -17,6 +16,7 @@ module V1
       @projects = Project.active
                          .joins(:contestants)
                          .where(:contestants => { :edition => edition })
+                         .distinct
     end
 
     # GET /v1/projects/1.json
