@@ -47,7 +47,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'api.infoeducatie.ro' }
 
   config.action_mailer.delivery_method = :ses
-  config.action_mailer.perform_deliveries = false if ENV['DISABLE_EMAIL']
+  config.action_mailer.perform_deliveries = false if ENV['DISABLE_EMAIL'] == "true"
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
