@@ -41,6 +41,8 @@ class Contestant < ActiveRecord::Base
   validates :mentoring_teacher_first_name, presence: true
   validates :mentoring_teacher_last_name, presence: true
 
+  before_destroy :delete_orphan_projects, prepend: true
+
   def sex_enum
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end
@@ -74,4 +76,14 @@ class Contestant < ActiveRecord::Base
       end
     end
   end
+
+  private
+    def delete_orphan_projects
+      projects.each do |project|
+        if project.contestants.count == 1
+          project.destroy
+        end
+      end
+    end
+
 end
