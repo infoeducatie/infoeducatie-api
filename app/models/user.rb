@@ -70,6 +70,9 @@ class User < ActiveRecord::Base
       field :last_name
       field :job
       field :roles
+      field :confirmed?, :boolean do
+        label "Confirmed"
+      end
     end
   end
 end
