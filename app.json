@@ -54,6 +54,9 @@
     },
     "DISCOURSE_USER": {
       "required": true
+    },
+    "DISABLE_EMAIL": {
+      "required": true
     }
   },
   "addons": [
