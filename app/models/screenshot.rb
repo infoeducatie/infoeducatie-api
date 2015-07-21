@@ -15,7 +15,7 @@ class Screenshot < ActiveRecord::Base
     list do
       field :project
     end
-    list do
+    edit do
       field :project
       field :screenshot
     end
