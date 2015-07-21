@@ -14,6 +14,9 @@ class Screenshot < ActiveRecord::Base
   rails_admin do
     list do
       field :project
+    end
+    list do
+      field :project
       field :screenshot
     end
   end
