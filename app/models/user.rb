@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 
   after_commit :update_access_token!, on: :create
   after_create :set_default_role
+  after_save :update_mailchimp
 
   validates :email, presence: true, uniqueness: true
 
@@ -64,6 +65,7 @@ class User < ActiveRecord::Base
       field :job
       field :roles
       field :password
+      field :newsletter
     end
     list do
       field :email
@@ -89,6 +91,31 @@ class User < ActiveRecord::Base
       field :alumni
       field :talks
       field :projects
+      field :newsletter
     end
   end
+
+  private
+    def update_mailchimp
+      api_key = ENV["MAILCHIMP_API_KEY"]
+      list_id = ENV["MAILCHIMP_LIST_ID"]
+
+      if api_key.blank? or list_id.blank?
+        return
+      end
+
+      mailchimp = Mailchimp::API.new(api_key)
+
+      if newsletter
+        vars = {
+            "FNAME" => first_name,
+            "LNAME" => last_name
+        }
+
+        mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
+                                  false, true)
+      else
+        mailchimp.lists.unsubscribe(list_id, {email: email}, true, false, false)
+      end
+    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714210902) do
+ActiveRecord::Schema.define(version: 20150724205856) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 20150714210902) do
     t.string   "access_token"
     t.integer  "registration_step_number", default: 1
     t.string   "job"
+    t.boolean  "newsletter"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

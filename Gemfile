@@ -50,6 +50,8 @@ gem 'mini_magick'
 
 gem 'pg'
 
+gem 'mailchimp-api', require: 'mailchimp'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
