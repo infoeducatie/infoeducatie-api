@@ -61,6 +61,12 @@ RailsAdmin.config do |config|
     # history_show
   end
 
+  config.navigation_static_links = {
+    "Zendesk InfoEducatie" => "http://infoeducatie.zendesk.com/",
+    "Zendesk Ping" => "http://ping.zendesk.com",
+    "Forum Admin" => "http://community.infoeducatie.ro/admin"
+  }
+
   config.included_models = ["FinishedProject", "UnapprovedProject", "Contestant", "User",
                             "Screenshot", "Edition", "News", "Ckeditor::Asset",
                             "Ckeditor::AttachmentFile", "Ckeditor::Picture", "Talk",
