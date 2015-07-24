@@ -56,7 +56,7 @@ class Contestant < ActiveRecord::Base
   end
 
   def name
-    "#{user.name} @ #{edition.name}" if user and edition
+    user.name if user
   end
 
   def email
