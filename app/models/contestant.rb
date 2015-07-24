@@ -56,7 +56,7 @@ class Contestant < ActiveRecord::Base
   end
 
   def name
-    user.name if user
+    "#{user.name} @ #{edition.name}" if user and edition
   end
 
   def email
@@ -73,6 +73,11 @@ class Contestant < ActiveRecord::Base
     edit do
       configure :projects do
         hide
+      end
+    end
+    show do
+      configure :projects do
+        show
       end
     end
   end

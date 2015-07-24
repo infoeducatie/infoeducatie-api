@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :alumni, dependent: :destroy, inverse_of: :user
   has_many :talk_users, dependent: :destroy
   has_many :talks, through: :talk_users
+  has_many :projects, through: :contestants, inverse_of: :users
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true
@@ -73,6 +74,21 @@ class User < ActiveRecord::Base
       field :confirmed?, :boolean do
         label "Confirmed"
       end
+    end
+    show do
+      field :first_name
+      field :last_name
+      field :email
+      field :job
+      field :current_sign_in_at
+      field :confirmed?, :boolean do
+        label "Confirmed"
+      end
+      field :roles
+      field :contestants
+      field :alumni
+      field :talks
+      field :projects
     end
   end
 end

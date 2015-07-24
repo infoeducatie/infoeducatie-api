@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   scope :active, -> { where(finished: true).where(approved: true) }
 
   belongs_to :category
+  has_many :users, through: :contestants, inverse_of: :projects
   has_many :colaborators, inverse_of: :project, dependent: :destroy
   has_many :contestants, through: :colaborators, inverse_of: :projects
   has_many :screenshots, inverse_of: :project, dependent: :destroy
@@ -42,8 +43,12 @@ class Project < ActiveRecord::Base
     colaborators.each { |c| c.project = self }
   end
 
+  def name
+    "#{title} @ #{edition.name}" if edition
+  end
+
   def edition
-    contestants.first.edition
+    contestants.first.edition if contestants.first
   end
 
   def county
@@ -68,5 +73,13 @@ class Project < ActiveRecord::Base
 
   def has_source_url
     not source_url.blank?
+  end
+
+  rails_admin do
+    show do
+      configure :user do
+        show
+      end
+    end
   end
 end

@@ -14,6 +14,10 @@ class Talk < ActiveRecord::Base
   has_many :users, through: :talk_users
   validates :users, presence: true
 
+  def name
+    "#{title} @ #{edition.name}" if edition
+  end
+
   def topic_created
     !topic_id.nil? && topic_id > 0
   end

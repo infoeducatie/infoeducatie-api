@@ -8,6 +8,10 @@ class Alumnus < ActiveRecord::Base
   validates :editions, presence: true
   validates :description, presence: true
 
+  def name
+    user.name if user
+  end
+
   rails_admin do
     list do
       field :user
