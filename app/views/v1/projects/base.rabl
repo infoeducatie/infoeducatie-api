@@ -1,6 +1,11 @@
 attributes :id,
            :title,
            :county,
+           :description,
+           :technical_description,
+           :system_requirements,
+           :source_url,
+           :homepage,
            :discourse_url
 
 child :contestants => :contestants do
