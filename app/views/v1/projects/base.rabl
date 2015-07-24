@@ -7,10 +7,6 @@ child :contestants => :contestants do
   attributes :id, :name
 end
 
-child :screenshots => :screenshots do
-  attributes :url
-end
-
 node :category do |u|
   u.category.name
 end
