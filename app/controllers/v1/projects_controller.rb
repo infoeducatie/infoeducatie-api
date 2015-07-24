@@ -24,6 +24,7 @@ module V1
 
     # GET /v1/projects/1.json
     def show
+         @project = Projects.find(params[:id])
     end
 
     # POST /v1/projects/:id/finish
