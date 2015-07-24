@@ -115,7 +115,10 @@ class User < ActiveRecord::Base
         mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
                                   false, true)
       else
-        mailchimp.lists.unsubscribe(list_id, {email: email}, true, false, false)
+        suppress(Mailchimp::EmailNotExistsError) do
+          mailchimp.lists.unsubscribe(list_id, {email: email}, true,
+                                      false, false)
+        end
       end
     end
 end
