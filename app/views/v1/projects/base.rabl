@@ -6,7 +6,6 @@ attributes :id,
            :system_requirements,
            :source_url,
            :homepage,
-           :notes
            :discourse_url
 
 child :contestants => :contestants do
