@@ -1,5 +1,4 @@
-require Rails.root.join('lib', 'rails_admin_approve_project.rb')
-require Rails.root.join('lib', 'rails_admin_pin_news.rb')
+Dir[Rails.root.join('lib/admin/*.rb')].each { |f| require f }
 
 RailsAdmin.config do |config|
 

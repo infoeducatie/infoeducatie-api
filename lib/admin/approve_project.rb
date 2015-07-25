@@ -1,9 +1,3 @@
-require 'rails_admin/config/actions'
-require 'rails_admin/config/actions/base'
-
-module RailsAdminApproveProject
-end
-
 module RailsAdmin
   module Config
     module Actions
@@ -21,13 +15,18 @@ module RailsAdmin
 
         register_instance_option :controller do
           Proc.new do
-            discourse = PublishToDiscourse.new(object)
-            discourse_topic = discourse.publish!
+            title = object.discourse_title
+            raw = object.discourse_content
+            category = object.edition.projects_forum_category
+            topic_id = object.discourse_topic_id
 
-            raise ArgumentError if discourse_topic["topic_id"].nil?
+            discourse = PublishToDiscourse.new
+            topic_id = discourse.publish(title, raw, category, topic_id)
+
+            raise ArgumentError if topic_id.nil?
 
             @object.update_attributes(
-              approved: true, discourse_topic_id: discourse_topic["topic_id"]
+              approved: true, discourse_topic_id: topic_id
             )
 
             flash[:notice] = "You have approved the project titled: #{@object.title}."

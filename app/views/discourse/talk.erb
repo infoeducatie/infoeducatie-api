@@ -1,0 +1,11 @@
+Descriere
+---------
+
+<%= @description %>
+
+<% if @users.size == 1 %>Autor<% else %>Autori<% end %>
+----------------------------------------------------------
+
+<% @users.each do |user| %>
+ - <%= user.name %> <% unless user.job.blank? %> - <%= user.job %> <% end %>
+<% end %>

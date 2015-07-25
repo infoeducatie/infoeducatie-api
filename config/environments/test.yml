@@ -1,0 +1,3 @@
+ui:
+  url: http://localhost:8080
+  community_url: "http://community.infoeducatie.ro/"

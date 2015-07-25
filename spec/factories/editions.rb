@@ -15,5 +15,6 @@ FactoryGirl.define do
     published true
     current true
     projects_forum_category "Lucrari 2015 Nationala"
+    talks_forum_category "Prezentari 2015 Nationala"
   end
 end

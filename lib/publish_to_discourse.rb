@@ -1,54 +1,76 @@
 class PublishToDiscourse
 
-  def initialize(project)
-    @project = project
-
+  def initialize
     @client = DiscourseApi::Client.new(Settings.ui.community_url)
     @client.api_key = ENV["DISCOURSE_API"]
     @client.api_username = ENV["DISCOURSE_USER"]
+
+    @client = nil if @client.api_key.blank? or @client.api_username.blank?
   end
 
-  def publish!
-    title = "#{@project.title} - #{@project.category.name.capitalize} - #{@project.contestants.first.county} - #{@project.edition.projects_forum_category}"
+  def publish(title, raw, category, topic_id = nil)
+    return 1 if @client.nil?
 
-    # prepare raw value
-    # 1. read ERB template and create ERB object
-    template_file = File.open("#{Rails.root}/app/views/discourse/template.erb")
-    erb_template = ERB.new(template_file.read)
+    unless topic_id.nil?
+      topic = @client.topic(topic_id)
+      if topic.has_key?("errors")
+        topic_id = nil
+      else
+        update(title, raw, category, topic_id)
+      end
+    end
 
-    # 2. Create necessary context
-    context = ERBContext.new(
-      category: @project.category.name.capitalize,
-      homepage: @project.homepage,
-      county: @project.county,
-      description: @project.description,
-      technical_description: @project.technical_description,
-      system_requirements: @project.system_requirements,
-      contestants: @project.contestants,
-      screenshots: @project.screenshots,
-      source_url: @project.source_url
-    )
+    topic_id = create(title, raw, category) if topic_id.nil?
+    topic_id
+  end
 
-    # 3. Render template
-    raw = erb_template.result(context.get_binding)
-
+  def create(title, raw, category)
+    return 1 if @client.nil?
     @client.create_topic(
-      category: @project.edition.projects_forum_category,
+      category: category,
       title: title,
-      raw: raw
-    )
+      raw: raw,
+      skip_validations: true
+    )["topic_id"]
   end
-end
 
-# wrap around the variables that need to populate the paiload sent to discourse
-class ERBContext
-  def initialize(hash)
-    hash.each_pair do |key, value|
-      instance_variable_set('@' + key.to_s, value)
+  def update(title, raw, category, topic_id)
+    return if @client.nil?
+
+    topic = @client.topic(topic_id)
+    return if topic.has_key?("errors")
+
+    post = topic["post_stream"]["posts"][0]
+    return if post["username"] != @client.api_username
+
+    begin
+      @client.rename_topic(topic_id, title)
+    rescue DiscourseApi::UnauthenticatedError
+      recover(topic_id)
+      @client.rename_topic(topic_id, title)
+    end
+
+    @client.edit_post(post["id"], raw)
+
+    category = @client.category(sanitize_slug(category))
+    unless category.has_key?("errors")
+      @client.recategorize_topic(topic_id, category["id"])
     end
   end
 
-  def get_binding
-    binding
+  def recover(topic_id)
+    return if @client.nil?
+    @client.put("/t/#{topic_id}/recover.json")
   end
+
+  private
+    # https://github.com/discourse/discourse/blob/master/lib/slug.rb
+    def sanitize_slug(string)
+      string.strip
+          .gsub(/\s+/, '-')
+          .gsub(/[:\/\?#\[\]@!\$&'\(\)\*\+,;=_\.~%\\`^\s|\{\}"<>]+/, '') # :/?#[]@!$&'()*+,;=_.~%\`^|{}"<>
+          .gsub(/\A-+|-+\z/, '') # remove possible trailing and preceding dashes
+          .squeeze('-') # squeeze continuous dashes to prettify slug
+          .downcase
+    end
 end

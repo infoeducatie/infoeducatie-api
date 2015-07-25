@@ -38,6 +38,14 @@ class Project < ActiveRecord::Base
     !self.category.nil? && self.category.name == "web"
   }
 
+  after_update :update_discourse
+  def update_discourse
+    discourse = PublishToDiscourse.new
+    discourse.update(discourse_title, discourse_content,
+                     edition.projects_forum_category,
+                     discourse_topic_id) if approved
+  end
+
   before_validation :initialize_colaborators, on: :create
   def initialize_colaborators
     colaborators.each { |c| c.project = self }
@@ -69,6 +77,33 @@ class Project < ActiveRecord::Base
 
   def discourse_url
     "#{Settings.ui.community_url}/t/#{discourse_topic_id}" if discourse_topic_id
+  end
+
+  def discourse_title
+    "#{title} - "\
+    "#{category.name.capitalize} - "\
+    "#{contestants.first.county} - "\
+    "#{edition.projects_forum_category}"
+  end
+
+  def discourse_content
+    template_file = File.open("#{Rails.root}/app/views/discourse/project.erb")
+    erb_template = ERB.new(template_file.read, nil, '-')
+
+    context = ERBContext.new(
+      category: category.name.capitalize,
+      homepage: homepage,
+      county: county,
+      description: description,
+      technical_description: technical_description,
+      system_requirements: system_requirements,
+      contestants: contestants,
+      screenshots: screenshots,
+      source_url: source_url,
+      open_source: open_source
+    )
+
+    erb_template.result(context.get_binding)
   end
 
   def has_source_url
