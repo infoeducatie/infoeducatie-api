@@ -16,6 +16,7 @@ class Edition < ActiveRecord::Base
   validates :registration_end_date, presence: true, date: true
   validates :travel_data_deadline, date: { allow_blank: true }
   validates :projects_forum_category, presence: true
+  validates :talks_forum_category, presence: true
 
   def count
     year - 1994 + 1
