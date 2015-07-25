@@ -73,5 +73,5 @@ RailsAdmin.config do |config|
   config.included_models = ["Project", "Contestant", "User", "Talk",
                             "Screenshot", "Edition", "News", "Ckeditor::Asset",
                             "Ckeditor::AttachmentFile", "Ckeditor::Picture",
-                            "Alumnus"]
+                            "Alumnus", "Teacher"]
 end

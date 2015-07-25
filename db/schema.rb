@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725135357) do
+ActiveRecord::Schema.define(version: 20150725195941) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20150725135357) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "alumni", ["user_id"], name: "index_alumni_on_user_id", unique: true
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "alumnus_id"
@@ -85,6 +87,8 @@ ActiveRecord::Schema.define(version: 20150725135357) do
     t.string   "accompanying_teacher_first_name"
     t.string   "accompanying_teacher_last_name"
   end
+
+  add_index "contestants", ["user_id", "edition_id"], name: "index_contestants_on_user_id_and_edition_id", unique: true
 
   create_table "editions", force: :cascade do |t|
     t.integer  "year"
@@ -180,6 +184,21 @@ ActiveRecord::Schema.define(version: 20150725135357) do
     t.integer  "edition_id"
     t.integer  "topic_id"
   end
+
+  create_table "teachers", force: :cascade do |t|
+    t.integer  "sex"
+    t.string   "phone_number"
+    t.string   "school_name"
+    t.string   "school_county"
+    t.string   "school_city"
+    t.string   "school_country"
+    t.integer  "user_id"
+    t.integer  "edition_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "teachers", ["user_id", "edition_id"], name: "index_teachers_on_user_id_and_edition_id", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                    default: "", null: false

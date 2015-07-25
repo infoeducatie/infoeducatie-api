@@ -1,5 +1,6 @@
 class Edition < ActiveRecord::Base
   has_many :contestants, dependent: :destroy
+  has_many :teachers, dependent: :destroy
   has_many :news, dependent: :destroy
   has_many :talks, dependent: :destroy, inverse_of: :edition
 
