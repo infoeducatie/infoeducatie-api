@@ -46,6 +46,12 @@ class Project < ActiveRecord::Base
                      discourse_topic_id) if approved
   end
 
+  after_destroy :delete_discourse
+  def delete_discourse
+    discourse = PublishToDiscourse.new
+    discourse.delete(discourse_topic_id)
+  end
+
   before_validation :initialize_colaborators, on: :create
   def initialize_colaborators
     colaborators.each { |c| c.project = self }

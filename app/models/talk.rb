@@ -29,6 +29,12 @@ class Talk < ActiveRecord::Base
                      topic_id)
   end
 
+  after_destroy :delete_discourse
+  def delete_discourse
+    discourse = PublishToDiscourse.new
+    discourse.delete(topic_id)
+  end
+
   def name
     "#{title} @ #{edition.name}" if edition
   end

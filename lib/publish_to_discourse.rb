@@ -63,6 +63,11 @@ class PublishToDiscourse
     @client.put("/t/#{topic_id}/recover.json")
   end
 
+  def delete(topic_id)
+    return if @client.nil?
+    @client.delete_topic(topic_id)
+  end
+
   private
     # https://github.com/discourse/discourse/blob/master/lib/slug.rb
     def sanitize_slug(string)
