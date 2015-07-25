@@ -1,7 +1,5 @@
 attributes :title,
            :description,
-           :location,
-           :date,
            :discourse_url
 
 child :users do

@@ -5,7 +5,6 @@ class Talk < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
 
-  validates :date, date: { allow_blank: true }
   validates :topic_id, numericality: { only_integer: true,
                                        greater_than: 0,
                                        allow_blank: true}
