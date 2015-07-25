@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725133436) do
+ActiveRecord::Schema.define(version: 20150725135357) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 20150725133436) do
     t.boolean  "open_source"
     t.string   "closed_source_reason"
     t.string   "github_username"
-    t.integer  "status"
+    t.integer  "status",                default: 0,     null: false
     t.float    "score",                 default: 0.0,   null: false
     t.float    "total_score",           default: 0.0,   null: false
     t.string   "prize"
