@@ -78,6 +78,7 @@ class Edition < ActiveRecord::Base
       field :travel_data_deadline
       field :published
       field :current
+      field :show_results
     end
   end
 end

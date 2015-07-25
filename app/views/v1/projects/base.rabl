@@ -3,6 +3,13 @@ attributes :id,
            :county,
            :discourse_url
 
+if root_object.edition.show_results == true
+  attributes :score,
+             :extra_score,
+             :total_score,
+             :prize
+end
+
 child :contestants => :contestants do
   attributes :id, :name
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725115206) do
+ActiveRecord::Schema.define(version: 20150725133436) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20150725115206) do
     t.string   "projects_forum_category"
     t.integer  "talks_count"
     t.string   "talks_forum_category"
+    t.boolean  "show_results"
   end
 
   create_table "news", force: :cascade do |t|
@@ -121,9 +122,7 @@ ActiveRecord::Schema.define(version: 20150725115206) do
     t.text     "system_requirements"
     t.string   "source_url"
     t.string   "homepage"
-    t.float    "final_score"
-    t.float    "extra_score"
-    t.text     "notes"
+    t.float    "extra_score",           default: 0.0,   null: false
     t.integer  "category_id"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
@@ -133,6 +132,9 @@ ActiveRecord::Schema.define(version: 20150725115206) do
     t.string   "closed_source_reason"
     t.string   "github_username"
     t.integer  "status"
+    t.float    "score",                 default: 0.0,   null: false
+    t.float    "total_score",           default: 0.0,   null: false
+    t.string   "prize"
   end
 
   create_table "rights", force: :cascade do |t|

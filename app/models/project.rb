@@ -36,6 +36,9 @@ class Project < ActiveRecord::Base
   validates :technical_description, presence: true
   validates :system_requirements, presence: true
 
+  validates :score, presence: true
+  validates :extra_score, presence: true
+
   validates :source_url, presence: true, if: Proc.new {
     self.open_source == true
   }
@@ -51,6 +54,11 @@ class Project < ActiveRecord::Base
   validates :homepage, presence: true, if: Proc.new { |project|
     !self.category.nil? && self.category.name == "web"
   }
+
+  before_save :update_total_score
+  def update_total_score
+    self.total_score = score + extra_score
+  end
 
   after_update :update_discourse
   def update_discourse
@@ -137,6 +145,7 @@ class Project < ActiveRecord::Base
       field :authors
       field :category_name
       field :county
+      field :total_score
       field :open_source do
         label "Open"
         column_width 60
@@ -165,6 +174,10 @@ class Project < ActiveRecord::Base
       field :contestants do
         nested_form false
       end
+
+      field :score
+      field :extra_score
+      field :prize
     end
   end
 
