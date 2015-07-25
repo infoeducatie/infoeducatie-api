@@ -48,7 +48,7 @@ class Talk < ActiveRecord::Base
 
   def discourse_content
     template_file = File.open("#{Rails.root}/app/views/discourse/talk.erb")
-    erb_template = ERB.new(template_file.read)
+    erb_template = ERB.new(template_file.read, nil, '-')
 
     context = ERBContext.new(
       description: description,

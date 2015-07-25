@@ -88,7 +88,7 @@ class Project < ActiveRecord::Base
 
   def discourse_content
     template_file = File.open("#{Rails.root}/app/views/discourse/project.erb")
-    erb_template = ERB.new(template_file.read)
+    erb_template = ERB.new(template_file.read, nil, '-')
 
     context = ERBContext.new(
       category: category.name.capitalize,
@@ -99,7 +99,8 @@ class Project < ActiveRecord::Base
       system_requirements: system_requirements,
       contestants: contestants,
       screenshots: screenshots,
-      source_url: source_url
+      source_url: source_url,
+      open_source: open_source
     )
 
     erb_template.result(context.get_binding)
