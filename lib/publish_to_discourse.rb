@@ -4,9 +4,13 @@ class PublishToDiscourse
     @client = DiscourseApi::Client.new(Settings.ui.community_url)
     @client.api_key = ENV["DISCOURSE_API"]
     @client.api_username = ENV["DISCOURSE_USER"]
+
+    @client = nil if @client.api_key.blank? or @client.api_username.blank?
   end
 
   def publish(title, raw, category, topic_id = nil)
+    return 1 if @client.nil?
+
     unless topic_id.nil?
       topic = @client.topic(topic_id)
       if topic.has_key?("errors")
@@ -21,6 +25,7 @@ class PublishToDiscourse
   end
 
   def create(title, raw, category)
+    return 1 if @client.nil?
     @client.create_topic(
       category: category,
       title: title,
@@ -30,6 +35,8 @@ class PublishToDiscourse
   end
 
   def update(title, raw, category, topic_id)
+    return if @client.nil?
+
     topic = @client.topic(topic_id)
     return if topic.has_key?("errors")
 
@@ -52,6 +59,7 @@ class PublishToDiscourse
   end
 
   def recover(topic_id)
+    return if @client.nil?
     @client.put("/t/#{topic_id}/recover.json")
   end
 
