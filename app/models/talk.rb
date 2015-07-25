@@ -14,6 +14,22 @@ class Talk < ActiveRecord::Base
   has_many :users, through: :talk_users
   validates :users, presence: true
 
+  after_create :create_discourse_topic
+  def create_discourse_topic
+    discourse = PublishToDiscourse.new
+    topic_id = discourse.create(discourse_title, discourse_content,
+                                edition.talks_forum_category)
+    update_attribute(:topic_id, topic_id)
+  end
+
+  after_update :update_discourse
+  def update_discourse
+    discourse = PublishToDiscourse.new
+    discourse.update(discourse_title, discourse_content,
+                     edition.talks_forum_category,
+                     topic_id)
+  end
+
   def name
     "#{title} @ #{edition.name}" if edition
   end
@@ -24,6 +40,22 @@ class Talk < ActiveRecord::Base
 
   def discourse_url
     "#{Settings.ui.community_url}/t/#{topic_id}" if topic_id
+  end
+
+  def discourse_title
+    "#{title} - #{edition.talks_forum_category}"
+  end
+
+  def discourse_content
+    template_file = File.open("#{Rails.root}/app/views/discourse/talk.erb")
+    erb_template = ERB.new(template_file.read)
+
+    context = ERBContext.new(
+      description: description,
+      users: users
+    )
+
+    erb_template.result(context.get_binding)
   end
 
   rails_admin do
