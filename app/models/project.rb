@@ -41,9 +41,9 @@ class Project < ActiveRecord::Base
   after_update :update_discourse
   def update_discourse
     discourse = PublishToDiscourse.new
-    discourse_topic = discourse.update(discourse_title, discourse_content,
-                                       edition.projects_forum_category,
-                                       discourse_topic_id) if approved
+    discourse.update(discourse_title, discourse_content,
+                     edition.projects_forum_category,
+                     discourse_topic_id) if approved
   end
 
   before_validation :initialize_colaborators, on: :create
