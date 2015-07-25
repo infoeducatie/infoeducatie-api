@@ -37,13 +37,13 @@ class PublishToDiscourse
     return if post["username"] != @client.api_username
 
     begin
-      @client.edit_post(post["id"], raw)
+      @client.rename_topic(topic_id, title)
     rescue DiscourseApi::UnauthenticatedError
       recover(topic_id)
-      @client.edit_post(post["id"], raw)
+      @client.rename_topic(topic_id, title)
     end
 
-    @client.rename_topic(topic_id, title)
+    @client.edit_post(post["id"], raw)
 
     category = @client.category(sanitize_slug(category))
     unless category.has_key?("errors")
