@@ -26,7 +26,8 @@ module RailsAdmin
             raise ArgumentError if topic_id.nil?
 
             @object.update_attributes(
-              approved: true, discourse_topic_id: topic_id
+              status: Project::STATUS_APPROVED,
+              discourse_topic_id: topic_id
             )
 
             flash[:notice] = "You have approved the project titled: #{@object.title}."

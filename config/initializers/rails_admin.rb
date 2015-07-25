@@ -27,7 +27,7 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      except ["UnapprovedProject", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     export do
       except ["Screenshot", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
@@ -39,15 +39,19 @@ RailsAdmin.config do |config|
       except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     delete do
-      except ["Project", "FinishedProject", "UnapprovedProject", "Contestant"]
+      except ["Project", "FinishedProject", "Contestant"]
     end
     bulk_delete do
-      except ["Project", "FinishedProject", "UnapprovedProject", "Contestant"]
+      except ["Project", "FinishedProject", "Contestant"]
     end
     show_in_app
 
     approve_project do
-      only ['UnapprovedProject']
+      only ['Project', 'FinishedProject']
+    end
+
+    reject_project do
+      only ['Project', 'FinishedProject']
     end
 
     pin_news do

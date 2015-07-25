@@ -1,5 +1,10 @@
 class Project < ActiveRecord::Base
-  scope :active, -> { where(finished: true).where(approved: true) }
+  STATUS_APPROVED = 1
+  STATUS_REJECTED = -1
+  STATUS_WAITING  = 0
+
+  scope :active, -> { where(finished: true)
+                      .where(status: Project::STATUS_APPROVED) }
 
   belongs_to :category
   has_many :users, through: :contestants, inverse_of: :projects
@@ -43,7 +48,7 @@ class Project < ActiveRecord::Base
     discourse = PublishToDiscourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.projects_forum_category,
-                     discourse_topic_id) if approved
+                     discourse_topic_id) if status == Project::STATUS_APPROVED
   end
 
   after_destroy :delete_discourse

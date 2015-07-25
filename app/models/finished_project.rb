@@ -9,7 +9,7 @@ class FinishedProject < Project
       field :authors
       field :category_name
       field :county
-      field :approved do
+      field :status do
         column_width 90
       end
       field :open_source do

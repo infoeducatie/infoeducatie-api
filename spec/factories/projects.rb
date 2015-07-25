@@ -6,7 +6,7 @@ FactoryGirl.define do
     system_requirements "MyText"
     source_url "MyString"
     homepage "MyString"
-    approved false
+    status 0
     final_score 1.5
     extra_score 1.5
     notes "MyText"

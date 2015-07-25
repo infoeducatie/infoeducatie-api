@@ -23,7 +23,7 @@ class Edition < ActiveRecord::Base
   end
 
   def projects_count
-    Project.where(approved: true)
+    Project.where(status: Project::STATUS_APPROVED)
            .joins(:contestants)
            .where(contestants: { edition: id })
            .group_by(&:id)
@@ -32,13 +32,15 @@ class Edition < ActiveRecord::Base
 
   def counties_count
     Contestant.where(edition: id)
-              .joins(:projects).where("projects.approved": true)
+              .joins(:projects)
+              .where("projects.status": Project::STATUS_APPROVED)
               .group_by(&:county).count
   end
 
   def contestants_count
     Contestant.where(edition: id)
-              .joins(:projects).where("projects.approved": true)
+              .joins(:projects)
+              .where("projects.status": Project::STATUS_APPROVED)
               .distinct.count
   end
 
