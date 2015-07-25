@@ -7,9 +7,7 @@ FactoryGirl.define do
     source_url "MyString"
     homepage "MyString"
     status 0
-    final_score 1.5
     extra_score 1.5
-    notes "MyText"
     finished false
     category { Category.find_by(name: "web") }
     contestants { build_list(:contestant, 1) }
