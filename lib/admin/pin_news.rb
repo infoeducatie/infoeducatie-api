@@ -1,9 +1,3 @@
-require 'rails_admin/config/actions'
-require 'rails_admin/config/actions/base'
-
-module RailsAdminPinNews
-end
-
 module RailsAdmin
   module Config
     module Actions
