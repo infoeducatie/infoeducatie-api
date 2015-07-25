@@ -24,7 +24,8 @@ class PublishToDiscourse
     @client.create_topic(
       category: category,
       title: title,
-      raw: raw
+      raw: raw,
+      skip_validations: true
     )["topic_id"]
   end
 
