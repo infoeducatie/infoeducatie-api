@@ -34,10 +34,6 @@ class Talk < ActiveRecord::Base
     "#{title} @ #{edition.name}" if edition
   end
 
-  def topic_created
-    !topic_id.nil? && topic_id > 0
-  end
-
   def discourse_url
     "#{Settings.ui.community_url}/t/#{topic_id}" if topic_id
   end
@@ -61,11 +57,21 @@ class Talk < ActiveRecord::Base
   rails_admin do
     list do
       field :title
-      field :location
-      field :date
+      field :edition
       field :edition
       field :users
-      field :topic_created, :boolean
+    end
+    edit do
+      configure :topic_id do
+        hide
+      end
+    end
+    show do
+      field :title
+      field :description
+      field :edition
+      field :users
+      field :discourse_url
     end
   end
 end
