@@ -42,6 +42,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :teachers, only: [:index, :show, :create]
+
     get "current" => "current#index"
   end
 
