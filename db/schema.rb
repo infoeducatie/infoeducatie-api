@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725195106) do
+ActiveRecord::Schema.define(version: 20150725195457) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(version: 20150725195106) do
     t.string   "accompanying_teacher_first_name"
     t.string   "accompanying_teacher_last_name"
   end
+
+  add_index "contestants", ["user_id", "edition_id"], name: "index_contestants_on_user_id_and_edition_id", unique: true
 
   create_table "editions", force: :cascade do |t|
     t.integer  "year"

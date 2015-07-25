@@ -1,6 +1,7 @@
 class Contestant < ActiveRecord::Base
   belongs_to :edition
   validates :edition, presence: true
+  validates :edition_id, uniqueness: { scope: [:user_id] }
 
   belongs_to :user
   validates :user, presence: true
