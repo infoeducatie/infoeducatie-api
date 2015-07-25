@@ -9,7 +9,7 @@ class PublishToDiscourse
   def publish(title, raw, category, topic_id = nil)
     unless topic_id.nil?
       topic = @client.topic(topic_id)
-      if topic.nil?
+      if topic.has_key?("errors")
         topic_id = nil
       else
         update(title, raw, category, topic_id)
@@ -30,7 +30,7 @@ class PublishToDiscourse
 
   def update(title, raw, category, topic_id)
     topic = @client.topic(topic_id)
-    return if topic.nil?
+    return if topic.has_key?("errors")
 
     post = topic["post_stream"]["posts"][0]
     return if post["username"] != @client.api_username
@@ -45,7 +45,7 @@ class PublishToDiscourse
     @client.rename_topic(topic_id, title)
 
     category = @client.category(sanitize_slug(category))
-    unless category.nil?
+    unless category.has_key?("errors")
       @client.recategorize_topic(topic_id, category["id"])
     end
   end
