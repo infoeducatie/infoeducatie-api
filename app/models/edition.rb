@@ -67,6 +67,7 @@ class Edition < ActiveRecord::Base
       field :name
       field :motto
       field :projects_forum_category
+      field :talks_forum_category
       field :camp_start_date
       field :camp_end_date
       field :registration_start_date
