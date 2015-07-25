@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :rights, dependent: :destroy
   has_many :roles, through: :rights
   has_many :contestants, dependent: :destroy
+  has_many :contestants, dependent: :destroy
   has_many :alumni, dependent: :destroy, inverse_of: :user
   has_many :talk_users, dependent: :destroy
   has_many :talks, through: :talk_users
