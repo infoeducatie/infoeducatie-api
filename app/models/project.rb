@@ -87,7 +87,7 @@ class Project < ActiveRecord::Base
   end
 
   def discourse_content
-    template_file = File.open("#{Rails.root}/app/views/discourse/template.erb")
+    template_file = File.open("#{Rails.root}/app/views/discourse/project.erb")
     erb_template = ERB.new(template_file.read)
 
     context = ERBContext.new(
@@ -104,7 +104,6 @@ class Project < ActiveRecord::Base
 
     erb_template.result(context.get_binding)
   end
-
 
   def has_source_url
     not source_url.blank?
