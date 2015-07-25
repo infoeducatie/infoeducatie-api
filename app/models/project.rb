@@ -3,8 +3,17 @@ class Project < ActiveRecord::Base
   STATUS_REJECTED = -1
   STATUS_WAITING  = 0
 
-  scope :active, -> { where(finished: true)
+  scope :approved, -> { where(finished: true)
                       .where(status: Project::STATUS_APPROVED) }
+
+  scope :rejected, -> { where(finished: true)
+                      .where(status: Project::STATUS_REJECTED) }
+
+  scope :waiting, -> { where(finished: true)
+                     .where(status: Project::STATUS_WAITING)}
+
+  scope :finished, -> { where(finished: true) }
+  scope :unfinished, -> { where(finished: false) }
 
   belongs_to :category
   has_many :users, through: :contestants, inverse_of: :projects
@@ -122,10 +131,41 @@ class Project < ActiveRecord::Base
   end
 
   rails_admin do
-    show do
-      configure :user do
-        show
+    list do
+      scopes [:waiting, :approved, :rejected, :unfinished]
+      field :title
+      field :authors
+      field :category_name
+      field :county
+      field :open_source do
+        label "Open"
+        column_width 60
+      end
+      field :has_source_url, :boolean do
+        label "Repository"
+        column_width 90
+      end
+    end
+
+    edit do
+      field :title
+      field :description
+      field :technical_description
+      field :system_requirements
+      field :open_source
+      field :source_url
+      field :homepage
+      field :closed_source_reason
+      field :github_username
+
+      field :category do
+        nested_form false
+      end
+
+      field :contestants do
+        nested_form false
       end
     end
   end
+
 end

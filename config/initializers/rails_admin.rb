@@ -39,19 +39,19 @@ RailsAdmin.config do |config|
       except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     delete do
-      except ["Project", "FinishedProject", "Contestant"]
+      except ["Project", "Contestant"]
     end
     bulk_delete do
-      except ["Project", "FinishedProject", "Contestant"]
+      except ["Project", "Contestant"]
     end
     show_in_app
 
     approve_project do
-      only ['Project', 'FinishedProject']
+      only ['Project']
     end
 
     reject_project do
-      only ['Project', 'FinishedProject']
+      only ['Project']
     end
 
     pin_news do
@@ -70,8 +70,8 @@ RailsAdmin.config do |config|
     "Forum Admin" => "http://community.infoeducatie.ro/admin"
   }
 
-  config.included_models = ["FinishedProject", "UnapprovedProject", "Contestant", "User",
+  config.included_models = ["Project", "Contestant", "User", "Talk",
                             "Screenshot", "Edition", "News", "Ckeditor::Asset",
-                            "Ckeditor::AttachmentFile", "Ckeditor::Picture", "Talk",
+                            "Ckeditor::AttachmentFile", "Ckeditor::Picture",
                             "Alumnus"]
 end

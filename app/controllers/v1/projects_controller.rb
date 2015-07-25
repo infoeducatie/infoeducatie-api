@@ -14,7 +14,7 @@ module V1
         Edition.get_current
       end
 
-      @projects = Project.active
+      @projects = Project.approved
                          .select("contestants.county, projects.*")
                          .joins(:contestants)
                          .where(:contestants => { :edition => edition })
