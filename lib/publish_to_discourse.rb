@@ -12,7 +12,7 @@ class PublishToDiscourse
       if topic.nil?
         topic_id = nil
       else
-        update(title, raw, topic_id)
+        update(title, raw, category, topic_id)
       end
     end
 
@@ -28,7 +28,7 @@ class PublishToDiscourse
     )["topic_id"]
   end
 
-  def update(title, raw, topic_id)
+  def update(title, raw, category, topic_id)
     topic = @client.topic(topic_id)
     return if topic.nil?
 
@@ -36,16 +36,32 @@ class PublishToDiscourse
     return if post["username"] != @client.api_username
 
     begin
-      @client.rename_topic(topic_id, title)
       @client.edit_post(post["id"], raw)
     rescue DiscourseApi::UnauthenticatedError
       recover(topic_id)
-      @client.rename_topic(topic_id, title)
       @client.edit_post(post["id"], raw)
+    end
+
+    @client.rename_topic(topic_id, title)
+
+    category = @client.category(sanitize_slug(category))
+    unless category.nil?
+      @client.recategorize_topic(topic_id, category["id"])
     end
   end
 
   def recover(topic_id)
     @client.put("/t/#{topic_id}/recover.json")
   end
+
+  private
+    # https://github.com/discourse/discourse/blob/master/lib/slug.rb
+    def sanitize_slug(string)
+      string.strip
+          .gsub(/\s+/, '-')
+          .gsub(/[:\/\?#\[\]@!\$&'\(\)\*\+,;=_\.~%\\`^\s|\{\}"<>]+/, '') # :/?#[]@!$&'()*+,;=_.~%\`^|{}"<>
+          .gsub(/\A-+|-+\z/, '') # remove possible trailing and preceding dashes
+          .squeeze('-') # squeeze continuous dashes to prettify slug
+          .downcase
+    end
 end
