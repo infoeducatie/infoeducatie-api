@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725195457) do
+ActiveRecord::Schema.define(version: 20150725195941) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -197,6 +197,8 @@ ActiveRecord::Schema.define(version: 20150725195457) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
+
+  add_index "teachers", ["user_id", "edition_id"], name: "index_teachers_on_user_id_and_edition_id", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                    default: "", null: false

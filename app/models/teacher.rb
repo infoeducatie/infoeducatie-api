@@ -4,6 +4,7 @@ class Teacher < ActiveRecord::Base
 
   belongs_to :edition
   validates :edition, presence: true
+  validates :edition_id, uniqueness: { scope: [:user_id] }
 
   validates :sex, presence: true
   validates :sex, numericality: { only_integer: true,
