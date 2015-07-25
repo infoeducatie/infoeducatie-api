@@ -1,6 +1,6 @@
 class Alumnus < ActiveRecord::Base
   belongs_to :user, inverse_of: :alumni
-  validates :user, presence: true
+  validates :user, presence: true, uniqueness: true
 
   has_many :attendances, inverse_of: :alumnus, dependent: :destroy
   has_many :editions, through: :attendances, inverse_of: :alumni
