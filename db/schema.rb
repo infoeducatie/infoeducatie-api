@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726205504) do
+ActiveRecord::Schema.define(version: 20150726212422) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20150726205504) do
     t.float    "score",                 default: 0.0,   null: false
     t.float    "total_score",           default: 0.0,   null: false
     t.string   "prize"
-    t.integer  "comments_count"
+    t.integer  "comments_count",        default: 0,     null: false
   end
 
   create_table "rights", force: :cascade do |t|
@@ -178,11 +178,11 @@ ActiveRecord::Schema.define(version: 20150726205504) do
   create_table "talks", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "edition_id"
     t.integer  "topic_id"
-    t.integer  "comments_count"
+    t.integer  "comments_count", default: 0, null: false
   end
 
   create_table "teachers", force: :cascade do |t|
