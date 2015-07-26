@@ -6,7 +6,7 @@ projects = Project.approved
                   .distinct
 
 projects.each do |project|
-  project.comments_count = discourse.replies_count(project.discourse_topic_id)
+  project.comments_count = discourse.replies_count(project.topic_id)
   project.save!
 end
 
