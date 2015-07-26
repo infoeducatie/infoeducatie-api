@@ -1,4 +1,4 @@
-class PublishToDiscourse
+class Discourse
 
   def initialize
     @client = DiscourseApi::Client.new(Settings.ui.community_url)
@@ -66,6 +66,11 @@ class PublishToDiscourse
   def delete(topic_id)
     return if @client.nil?
     @client.delete_topic(topic_id)
+  end
+
+  def replies_count(topic_id)
+    topic = @client.topic(topic_id)
+    return topic["posts_count"] - 1
   end
 
   private

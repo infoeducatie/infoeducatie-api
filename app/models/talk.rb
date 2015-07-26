@@ -15,7 +15,7 @@ class Talk < ActiveRecord::Base
 
   after_create :create_discourse_topic
   def create_discourse_topic
-    discourse = PublishToDiscourse.new
+    discourse = Discourse.new
     topic_id = discourse.create(discourse_title, discourse_content,
                                 edition.talks_forum_category)
     update_attribute(:topic_id, topic_id)
@@ -23,7 +23,7 @@ class Talk < ActiveRecord::Base
 
   after_update :update_discourse
   def update_discourse
-    discourse = PublishToDiscourse.new
+    discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.talks_forum_category,
                      topic_id)
@@ -31,7 +31,7 @@ class Talk < ActiveRecord::Base
 
   after_destroy :delete_discourse
   def delete_discourse
-    discourse = PublishToDiscourse.new
+    discourse = Discourse.new
     discourse.delete(topic_id)
   end
 

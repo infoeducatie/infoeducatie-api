@@ -62,7 +62,7 @@ class Project < ActiveRecord::Base
 
   after_update :update_discourse
   def update_discourse
-    discourse = PublishToDiscourse.new
+    discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.projects_forum_category,
                      discourse_topic_id) if status == Project::STATUS_APPROVED
@@ -70,7 +70,7 @@ class Project < ActiveRecord::Base
 
   after_destroy :delete_discourse
   def delete_discourse
-    discourse = PublishToDiscourse.new
+    discourse = Discourse.new
     discourse.delete(discourse_topic_id)
   end
 

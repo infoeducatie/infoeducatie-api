@@ -15,7 +15,7 @@ module RailsAdmin
 
         register_instance_option :controller do
           Proc.new do
-            discourse = PublishToDiscourse.new
+            discourse = Discourse.new
             discourse.delete(object.discourse_topic_id)
 
             @object.update_attributes(

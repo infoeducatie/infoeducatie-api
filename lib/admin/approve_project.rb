@@ -20,7 +20,7 @@ module RailsAdmin
             category = object.edition.projects_forum_category
             topic_id = object.discourse_topic_id
 
-            discourse = PublishToDiscourse.new
+            discourse = Discourse.new
             topic_id = discourse.publish(title, raw, category, topic_id)
 
             raise ArgumentError if topic_id.nil?
