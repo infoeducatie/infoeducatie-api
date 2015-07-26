@@ -70,6 +70,7 @@ class Discourse
 
   def replies_count(topic_id)
     topic = @client.topic(topic_id)
+    return 0 if topic["posts_count"].nil?
     return topic["posts_count"] - 1
   end
 
