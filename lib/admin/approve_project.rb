@@ -18,16 +18,15 @@ module RailsAdmin
             title = object.discourse_title
             raw = object.discourse_content
             category = object.edition.projects_forum_category
-            topic_id = object.discourse_topic_id
 
             discourse = Discourse.new
-            topic_id = discourse.publish(title, raw, category, topic_id)
+            topic_id = discourse.publish(title, raw, category, object.topic_id)
 
             raise ArgumentError if topic_id.nil?
 
             @object.update_attributes(
               status: Project::STATUS_APPROVED,
-              discourse_topic_id: topic_id
+              topic_id: topic_id
             )
 
             flash[:notice] = "You have approved the project titled: #{@object.title}."

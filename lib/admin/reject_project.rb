@@ -16,7 +16,7 @@ module RailsAdmin
         register_instance_option :controller do
           Proc.new do
             discourse = Discourse.new
-            discourse.delete(object.discourse_topic_id)
+            discourse.delete(object.topic_id)
 
             @object.update_attributes(
               status: Project::STATUS_REJECTED

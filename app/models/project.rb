@@ -65,13 +65,13 @@ class Project < ActiveRecord::Base
     discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.projects_forum_category,
-                     discourse_topic_id) if status == Project::STATUS_APPROVED
+                     topic_id) if status == Project::STATUS_APPROVED
   end
 
   after_destroy :delete_discourse
   def delete_discourse
     discourse = Discourse.new
-    discourse.delete(discourse_topic_id)
+    discourse.delete(topic_id)
   end
 
   before_validation :initialize_colaborators, on: :create
@@ -104,7 +104,7 @@ class Project < ActiveRecord::Base
   end
 
   def discourse_url
-    "#{Settings.ui.community_url}/t/#{discourse_topic_id}" if discourse_topic_id
+    "#{Settings.ui.community_url}/t/#{topic_id}" if topic_id
   end
 
   def discourse_title
