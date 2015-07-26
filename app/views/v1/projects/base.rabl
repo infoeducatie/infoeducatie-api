@@ -1,7 +1,8 @@
 attributes :id,
            :title,
            :county,
-           :discourse_url
+           :discourse_url,
+           :comments_count
 
 if root_object.edition.show_results == true
   attributes :score,
