@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725195941) do
+ActiveRecord::Schema.define(version: 20150726193312) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -80,12 +80,10 @@ ActiveRecord::Schema.define(version: 20150725195941) do
     t.boolean  "official"
     t.integer  "user_id"
     t.integer  "edition_id"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.boolean  "present_in_camp",                 default: false
-    t.boolean  "paying_camp_accommodation",       default: false
-    t.string   "accompanying_teacher_first_name"
-    t.string   "accompanying_teacher_last_name"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.boolean  "present_in_camp",              default: false
+    t.boolean  "paying_camp_accommodation",    default: false
   end
 
   add_index "contestants", ["user_id", "edition_id"], name: "index_contestants_on_user_id_and_edition_id", unique: true

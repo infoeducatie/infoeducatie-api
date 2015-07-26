@@ -24,9 +24,6 @@ FactoryGirl.define do
     mentoring_teacher_first_name "Cersei"
     mentoring_teacher_last_name "Lannister"
 
-    accompanying_teacher_first_name "Cercel"
-    accompanying_teacher_last_name "Dinescu"
-
     official false
     present_in_camp true
     paying_camp_accommodation true
