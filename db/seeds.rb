@@ -86,3 +86,8 @@ current_user = User.find_by(email: 'admin@infoeducatie.ro')
 #   project.finished = true
 #   project.status = 1
 # end
+  current_talk = Talk.find_or_create_by(title: "pehaspe e misto") do |talk|
+    talk.title = "pehaspe e misto"
+    talk.description = "valoare"
+    talk.edition = current_edition
+    talk.users = [current_user]
