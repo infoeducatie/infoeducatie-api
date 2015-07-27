@@ -9,20 +9,19 @@ end
   Category.find_or_create_by({name: category})
 end
 
-current_edition = Edition.find_or_create_by({
-  year: '2015',
-  name: '2015',
-  camp_start_date: DateTime.new(2015, 8, 2),
-  camp_end_date: DateTime.new(2015, 8, 8),
-  motto: 'Persevereaza, mergi mai departe',
-  registration_start_date: DateTime.new(2015, 7, 5),
-  registration_end_date: DateTime.new(2015, 7, 28),
-  travel_data_deadline: DateTime.new(2015, 7, 28),
-  published: true,
-  current: true,
-  projects_forum_category: "Lucrari 2015 Nationala",
-  talks_forum_category: "Prezentari 2015 Nationala"
-})
+current_edition = Edition.find_or_create_by(year: '2015') do |edition|
+  edition.name = '2015'
+  edition.camp_start_date = DateTime.new(2015, 8, 2)
+  edition.camp_end_date = DateTime.new(2015, 8, 8)
+  edition.motto = 'Persevereaza, mergi mai departe'
+  edition.registration_start_date = DateTime.new(2015, 7, 5)
+  edition.registration_end_date = DateTime.new(2015, 7, 28)
+  edition.travel_data_deadline = DateTime.new(2015, 7, 28)
+  edition.published = true
+  edition.current = true
+  edition.projects_forum_category = "Lucrari 2015 Nationala"
+  edition.talks_forum_category = "Prezentari 2015 Nationala"
+end
 
 unless User.find_by({email: 'admin@infoeducatie.ro'})
   user = User.create({
