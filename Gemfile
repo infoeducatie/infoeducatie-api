@@ -48,8 +48,6 @@ gem 'ckeditor'
 
 gem 'mini_magick'
 
-gem 'pg'
-
 gem 'mailchimp-api', require: 'mailchimp'
 
 group :doc do
