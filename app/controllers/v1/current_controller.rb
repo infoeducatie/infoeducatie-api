@@ -22,6 +22,9 @@ module V1
       unless current_user.nil?
         @current.merge!({
           is_logged_in: true,
+          is_teacher: current_user.teachers
+                                  .find_by(edition: Edition.get_current)
+                                  .present?,
           user: current_user
         })
 
