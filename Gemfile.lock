@@ -464,6 +464,3 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   vcr
-
-BUNDLED WITH
-   1.10.5
