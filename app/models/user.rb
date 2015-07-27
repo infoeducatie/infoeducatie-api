@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     self.roles.include?(Role.find_by(name: "contestant"))
   end
 
+  def get_current_teacher
+    self.teachers.find_by(:edition => Edition.get_current)
+  end
+
   def get_current_contestant
     self.contestants.find_by(:edition => Edition.get_current)
   end

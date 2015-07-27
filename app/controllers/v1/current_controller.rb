@@ -22,13 +22,12 @@ module V1
       unless current_user.nil?
         @current.merge!({
           is_logged_in: true,
-          is_teacher: current_user.teachers
-                                  .find_by(edition: Edition.get_current)
-                                  .present?,
+          is_contestant: current_user.get_current_contestant.present?,
+          is_teacher: current_user.get_current_teacher.present?,
           user: current_user
         })
 
-        if !current_user.contestants.empty?
+        if current_user.get_current_contestant.present?
           projects = current_user.get_current_contestant.projects
 
           if !projects.empty?

@@ -1,6 +1,7 @@
 object @current
 
-attributes :stats, :is_logged_in, :is_registration_open, :is_teacher
+attributes :stats, :is_logged_in, :is_registration_open, :is_teacher,
+           :is_contestant
 
 child :edition do
   attributes :id, :year, :name, :motto, :projects_count,
