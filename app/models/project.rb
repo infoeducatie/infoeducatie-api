@@ -141,7 +141,7 @@ class Project < ActiveRecord::Base
   rails_admin do
 
     list do
-      scopes [:waiting, :approved, :rejected, :unfinished]
+      scopes [:approved, :waiting, :unfinished, :rejected]
       field :title
       field :users do
         searchable [:first_name, :last_name, :email]
