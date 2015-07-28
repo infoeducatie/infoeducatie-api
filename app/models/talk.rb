@@ -69,15 +69,15 @@ class Talk < ActiveRecord::Base
     list do
       field :title
       field :edition
-      field :edition
       field :users do
         searchable [:first_name, :last_name, :email]
       end
     end
     edit do
-      configure :topic_id do
-        hide
-      end
+      field :title
+      field :description
+      field :edition
+      field :users
     end
     show do
       field :title
