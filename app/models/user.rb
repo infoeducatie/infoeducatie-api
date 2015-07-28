@@ -111,10 +111,25 @@ class User < ActiveRecord::Base
 
       mailchimp = Mailchimp::API.new(api_key)
 
+      is_teacher = "no"
+      is_contestant = "no"
+      last_edition_name = ""
+
+      if not teachers.empty?
+        is_teacher = "yes"
+        last_edition_name = teachers.last.edition.name
+      elsif not contestants.empty?
+        is_contestant = "yes"
+        last_edition_name = contestants.last.edition.name
+      end
+
       if newsletter
         vars = {
             "FNAME" => first_name,
-            "LNAME" => last_name
+            "LNAME" => last_name,
+            "TEACHER" => is_teacher,
+            "CONTESTANT" => is_contestant,
+            "LEDITION" => last_edition_name
         }
 
         mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
