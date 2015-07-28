@@ -14,7 +14,7 @@ class Screenshot < ActiveRecord::Base
   rails_admin do
     list do
       field :project do
-        searchable :name
+        searchable :title
       end
     end
     edit do
