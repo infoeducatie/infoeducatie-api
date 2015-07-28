@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :roles, through: :rights
   has_many :contestants, dependent: :destroy
   has_many :teachers, dependent: :destroy
-  has_many :alumni, dependent: :destroy, inverse_of: :user
+  has_one :alumnus, dependent: :destroy, inverse_of: :user
   has_many :talk_users, dependent: :destroy
   has_many :talks, through: :talk_users
   has_many :projects, through: :contestants, inverse_of: :users
@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
       end
       field :roles
       field :contestants
-      field :alumni
+      field :alumnus
       field :talks
       field :projects
       field :newsletter
@@ -112,7 +112,18 @@ class User < ActiveRecord::Base
 
     is_teacher = "no"
     is_contestant = "no"
-    last_edition_name = ""
+    is_alumnus = "no"
+    is_speacker = "no"
+    last_edition_name = nil
+
+    if alumnus.present?
+      is_alumnus = "yes"
+    end
+
+    if not talks.empty?
+      is_speacker = "yes"
+      last_edition_name = talks.last.edition.name
+    end
 
     if not teachers.empty?
       is_teacher = "yes"
@@ -128,8 +139,13 @@ class User < ActiveRecord::Base
           "LNAME" => last_name,
           "TEACHER" => is_teacher,
           "CONTESTANT" => is_contestant,
-          "LEDITION" => last_edition_name
+          "SPEACKER" => is_speacker,
+          "ALUMNUS" => is_alumnus,
       }
+
+      if last_edition_name.present?
+        vars.merge!({ "LEDITION" => last_edition_name })
+      end
 
       mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
                                 false, true)

@@ -1,5 +1,5 @@
 class Alumnus < ActiveRecord::Base
-  belongs_to :user, inverse_of: :alumni
+  belongs_to :user, inverse_of: :alumnus
   validates :user, presence: true, uniqueness: true
 
   has_many :attendances, inverse_of: :alumnus, dependent: :destroy
@@ -7,6 +7,11 @@ class Alumnus < ActiveRecord::Base
 
   validates :editions, presence: true
   validates :description, presence: true
+
+  after_create :update_mailchimp
+  def update_mailchimp
+    user.update_mailchimp
+  end
 
   def name
     user.name if user
