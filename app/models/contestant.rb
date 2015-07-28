@@ -44,6 +44,11 @@ class Contestant < ActiveRecord::Base
 
   before_destroy :delete_orphan_projects, prepend: true
 
+  after_create :update_mailchimp
+  def update_mailchimp
+    user.update_mailchimp
+  end
+
   def sex_enum
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end

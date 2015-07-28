@@ -100,45 +100,44 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
-    def update_mailchimp
-      api_key = ENV["MAILCHIMP_API_KEY"]
-      list_id = ENV["MAILCHIMP_LIST_ID"]
+  def update_mailchimp
+    api_key = ENV["MAILCHIMP_API_KEY"]
+    list_id = ENV["MAILCHIMP_LIST_ID"]
 
-      if api_key.blank? or list_id.blank?
-        return
-      end
+    if api_key.blank? or list_id.blank?
+      return
+    end
 
-      mailchimp = Mailchimp::API.new(api_key)
+    mailchimp = Mailchimp::API.new(api_key)
 
-      is_teacher = "no"
-      is_contestant = "no"
-      last_edition_name = ""
+    is_teacher = "no"
+    is_contestant = "no"
+    last_edition_name = ""
 
-      if not teachers.empty?
-        is_teacher = "yes"
-        last_edition_name = teachers.last.edition.name
-      elsif not contestants.empty?
-        is_contestant = "yes"
-        last_edition_name = contestants.last.edition.name
-      end
+    if not teachers.empty?
+      is_teacher = "yes"
+      last_edition_name = teachers.last.edition.name
+    elsif not contestants.empty?
+      is_contestant = "yes"
+      last_edition_name = contestants.last.edition.name
+    end
 
-      if newsletter
-        vars = {
-            "FNAME" => first_name,
-            "LNAME" => last_name,
-            "TEACHER" => is_teacher,
-            "CONTESTANT" => is_contestant,
-            "LEDITION" => last_edition_name
-        }
+    if newsletter
+      vars = {
+          "FNAME" => first_name,
+          "LNAME" => last_name,
+          "TEACHER" => is_teacher,
+          "CONTESTANT" => is_contestant,
+          "LEDITION" => last_edition_name
+      }
 
-        mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
-                                  false, true)
-      else
-        suppress(Mailchimp::EmailNotExistsError) do
-          mailchimp.lists.unsubscribe(list_id, {email: email}, true,
-                                      false, false)
-        end
+      mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
+                                false, true)
+    else
+      suppress(Mailchimp::EmailNotExistsError) do
+        mailchimp.lists.unsubscribe(list_id, {email: email}, true,
+                                    false, false)
       end
     end
+  end
 end
