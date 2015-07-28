@@ -70,7 +70,9 @@ class Talk < ActiveRecord::Base
       field :title
       field :edition
       field :edition
-      field :users
+      field :users do
+        searchable [:first_name, :last_name, :email]
+      end
     end
     edit do
       configure :topic_id do

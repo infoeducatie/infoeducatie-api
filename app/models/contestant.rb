@@ -71,7 +71,9 @@ class Contestant < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :name
+      field :user do
+        searchable [:first_name, :last_name, :email]
+      end
       field :school_name
       field :county
       field :edition

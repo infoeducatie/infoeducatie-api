@@ -139,10 +139,13 @@ class Project < ActiveRecord::Base
   end
 
   rails_admin do
+
     list do
       scopes [:waiting, :approved, :rejected, :unfinished]
       field :title
-      field :authors
+      field :users do
+        searchable [:first_name, :last_name, :email]
+      end
       field :category_name
       field :county
       field :total_score
