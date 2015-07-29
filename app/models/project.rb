@@ -94,6 +94,10 @@ class Project < ActiveRecord::Base
     end.uniq
   end
 
+  def counties_str
+    counties.join(", ")
+  end
+
   def authors
     contestants.map(&:name).join(", ")
   end
@@ -150,7 +154,9 @@ class Project < ActiveRecord::Base
         searchable [:first_name, :last_name, :email]
       end
       field :category_name
-      field :counties
+      field :counties_str do
+        label "County"
+      end
       field :total_score
       field :open_source do
         label "Open"
