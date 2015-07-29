@@ -21,7 +21,16 @@ class User < ActiveRecord::Base
 
   after_commit :update_access_token!, on: :create
   after_create :set_default_role
-  after_save :update_mailchimp
+  after_save :update_mailchimp, :update_projects_discourse
+
+  def update_projects_discourse
+    projects.each do |p|
+      p.update_discourse
+    end
+    talks.each do |t|
+      t.update_discourse
+    end
+  end
 
   validates :email, presence: true, uniqueness: true
 

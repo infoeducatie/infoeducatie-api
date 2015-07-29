@@ -62,6 +62,7 @@ class Project < ActiveRecord::Base
 
   after_update :update_discourse
   def update_discourse
+    return if topic_id.nil?
     discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.projects_forum_category,
