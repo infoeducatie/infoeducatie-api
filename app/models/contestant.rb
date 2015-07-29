@@ -87,7 +87,7 @@ class Contestant < ActiveRecord::Base
     end
     edit do
       configure :projects do
-        hide
+        nested_form false
       end
     end
     show do
