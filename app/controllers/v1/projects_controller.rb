@@ -19,7 +19,7 @@ module V1
                          .joins(:contestants)
                          .where(:contestants => { :edition => edition })
                          .order("contestants.county")
-                         .distinct
+                         .group(:id)
     end
 
     # GET /v1/projects/1.json
