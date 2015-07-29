@@ -87,8 +87,10 @@ class Project < ActiveRecord::Base
     contestants.first.edition if contestants.first
   end
 
-  def county
-    contestants.first.county
+  def counties
+    contestants.map do |contestant|
+      contestant.county
+    end.uniq
   end
 
   def authors
@@ -110,7 +112,7 @@ class Project < ActiveRecord::Base
   def discourse_title
     "#{title} - "\
     "#{category.name.capitalize} - "\
-    "#{contestants.first.county} - "\
+    "#{counties.join(" ")} - "\
     "#{edition.projects_forum_category}"
   end
 
@@ -121,7 +123,7 @@ class Project < ActiveRecord::Base
     context = ERBContext.new(
       category: category.name.capitalize,
       homepage: homepage,
-      county: county,
+      county: counties.join(" "),
       description: description,
       technical_description: technical_description,
       system_requirements: system_requirements,
@@ -147,7 +149,7 @@ class Project < ActiveRecord::Base
         searchable [:first_name, :last_name, :email]
       end
       field :category_name
-      field :county
+      field :counties
       field :total_score
       field :open_source do
         label "Open"

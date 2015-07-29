@@ -1,6 +1,6 @@
 attributes :id,
            :title,
-           :county,
+           :counties,
            :discourse_url,
            :comments_count
 
