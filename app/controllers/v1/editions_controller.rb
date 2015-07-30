@@ -6,11 +6,11 @@ module V1
                          .order(registration_start_date: :asc)
 
       if params[:has_talks] == 'true'
-        @editions.where("talks_count > 0")
+        @editions = @editions.where("talks_count > 0")
       end
 
       if params[:has_results] == 'true'
-        @editions.where(show_results: true)
+        @editions = @editions.where(show_results: true)
       end
 
       @editions = @editions.all
