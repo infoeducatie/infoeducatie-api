@@ -16,7 +16,8 @@ module V1
       @current = {
         is_logged_in: false,
         is_registration_open: is_registration_open,
-        edition: Edition.get_current
+        edition: Edition.get_current,
+        last_edition_with_results: Edition.get_last_with_results
       }
 
       unless current_user.nil?

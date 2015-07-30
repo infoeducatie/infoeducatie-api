@@ -59,6 +59,10 @@ class Edition < ActiveRecord::Base
     where(current: true, published: true).first
   end
 
+  def self.get_last_with_results
+    where(published: true, show_results: true).last
+  end
+
   rails_admin do
     list do
       field :year
