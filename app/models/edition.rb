@@ -45,6 +45,15 @@ class Edition < ActiveRecord::Base
               .distinct.count
   end
 
+  def talks_count
+    Talk.where(edition: id)
+        .count
+  end
+
+  def has_talks?
+    self.talks_count > 0
+  end
+
   before_save do
     if current
       edition = Edition.get_current
