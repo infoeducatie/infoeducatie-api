@@ -19,7 +19,13 @@ module V1
                          .joins(:contestants)
                          .where(:contestants => { :edition => edition })
                          .order("contestants.county")
-                         .group(:id)
+                         .eager_load(:category)
+                         .eager_load(contestants: [:edition, :user])
+
+     @projects.to_a.sort! do |a,b|
+       a.contestants[0].county.casecmp(b.contestants[0].county)
+     end
+
     end
 
     # GET /v1/projects/1.json
