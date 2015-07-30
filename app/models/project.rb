@@ -55,6 +55,17 @@ class Project < ActiveRecord::Base
     !self.category.nil? && self.category.name == "web"
   }
 
+  validate :all_contestants_the_same_edition
+  def all_contestants_the_same_edition
+    return if contestants.size <= 1
+    edition = contestants.first.edition
+    contestants.each do |c|
+      if c.edition != edition
+        errors.add(:contestants, "All contestants must use the same edition")
+      end
+    end
+  end
+
   before_save :update_total_score
   def update_total_score
     self.total_score = score + extra_score
