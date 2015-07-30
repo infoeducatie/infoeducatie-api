@@ -13,11 +13,13 @@ module V1
         @editions.where(show_results: true)
       end
 
-      if params[:has_contestants] == 'true'
-        @editions.where("contestants_count > 0")
+      @editions = @editions.all
+
+      if params[:has_projects] == 'true'
+        @editions.select! { |edition| edition.projects_count > 0 }
       end
 
-      @editions.all
+      @editions
     end
 
   end
