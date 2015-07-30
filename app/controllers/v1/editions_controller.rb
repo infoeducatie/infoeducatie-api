@@ -9,6 +9,10 @@ module V1
         @editions.select! { |edition| edition.has_talks? }
       end
 
+      if params[:has_results] == 'true'
+        @editions.select! { |edition| edition.show_results == true }
+      end
+
       @editions
     end
 
