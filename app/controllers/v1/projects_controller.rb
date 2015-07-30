@@ -72,6 +72,12 @@ module V1
       current_edition = Edition.get_current
       contestant = current_user.get_current_contestant
 
+      if contestant.nil?
+        render json: {error: "No contestant for this edition"},
+               status: :unprocessable_entity
+        return
+      end
+
       @project = Project.new(
         project_params.merge({
           category: category,
