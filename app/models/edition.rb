@@ -19,6 +19,10 @@ class Edition < ActiveRecord::Base
   validates :projects_forum_category, presence: true
   validates :talks_forum_category, presence: true
 
+  validates :published, presence: true, if: Proc.new { |edition|
+    self.current == true
+  }
+
   def count
     year - 1994 + 1
   end
