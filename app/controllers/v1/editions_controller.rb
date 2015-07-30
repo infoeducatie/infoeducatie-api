@@ -3,17 +3,21 @@ module V1
 
     def index
       @editions = Edition.where(published: true).order(year: :asc)
-                         .order(registration_start_date: :asc).all
+                         .order(registration_start_date: :asc)
 
       if params[:has_talks] == 'true'
-        @editions.select! { |edition| edition.has_talks? }
+        @editions.where("talks_count > 0")
       end
 
       if params[:has_results] == 'true'
-        @editions.select! { |edition| edition.show_results == true }
+        @editions.where(show_results: true)
       end
 
-      @editions
+      if params[:has_contestants] == 'true'
+        @editions.where("contestants_count > 0")
+      end
+
+      @editions.all
     end
 
   end
