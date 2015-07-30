@@ -182,6 +182,9 @@ class Project < ActiveRecord::Base
       field :category do
         nested_form false
       end
+      field :contestants do
+        nested_form false
+      end
 
       field :score
       field :extra_score
