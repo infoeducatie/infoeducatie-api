@@ -23,6 +23,8 @@ class Edition < ActiveRecord::Base
     self.current == true
   }
 
+  scope :published, -> { where(published: true) }
+
   def count
     year - 1994 + 1
   end
