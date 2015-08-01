@@ -12,7 +12,7 @@ if root_object.edition.show_results == true
 end
 
 child :contestants => :contestants do
-  attributes :id, :name
+  attributes :id, :name, :county, :school_name
 end
 
 node :category do |u|
