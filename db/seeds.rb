@@ -40,7 +40,8 @@ end
 current_user = User.find_by(email: 'admin@infoeducatie.ro')
 
 if Rails.env == "development"
-  current_contestant = Contestant.find_or_create_by(school_name: "Scoala Vietii \"Bibi zis Ciuma\"") do |contestant|
+  current_contestant = Contestant.find_or_create_by(user: current_user,
+                                                    edition: current_edition) do |contestant|
    contestant.address = "str. Muzeul Verde, nr. 11, bl. H4, sc. W, ap. 8"
    contestant.city = "Barlad"
    contestant.county = "Vaslui"
