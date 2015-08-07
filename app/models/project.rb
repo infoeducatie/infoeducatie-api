@@ -164,7 +164,9 @@ class Project < ActiveRecord::Base
       field :users do
         searchable [:first_name, :last_name, :email]
       end
-      field :category_name
+      field :category do
+        searchable [:name]
+      end
       field :counties_str do
         label "County"
       end
