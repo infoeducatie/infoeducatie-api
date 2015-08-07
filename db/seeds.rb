@@ -11,7 +11,7 @@ end
 end
 
 
-current_edition = Edition.find_or_create_by(year: '2015') do |edition|
+current_edition = Edition.find_or_create_by(name: '2015') do |edition|
   edition.name = '2015'
   edition.camp_start_date = DateTime.new(2015, 8, 2)
   edition.camp_end_date = DateTime.new(2015, 8, 8)
