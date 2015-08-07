@@ -44,6 +44,18 @@ class Contestant < ActiveRecord::Base
 
   before_destroy :delete_orphan_projects, prepend: true
 
+  after_create :update_mailchimp
+  def update_mailchimp
+    user.update_mailchimp
+  end
+
+  after_save :update_projects_discourse
+  def update_projects_discourse
+    projects.approved.each do |p|
+      p.update_discourse
+    end
+  end
+
   def sex_enum
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end
@@ -66,14 +78,16 @@ class Contestant < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :name
+      field :user do
+        searchable [:first_name, :last_name, :email]
+      end
       field :school_name
       field :county
       field :edition
     end
     edit do
       configure :projects do
-        hide
+        nested_form false
       end
     end
     show do

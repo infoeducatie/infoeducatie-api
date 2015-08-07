@@ -17,6 +17,11 @@ class Teacher < ActiveRecord::Base
   validates :school_city, presence: true
   validates :school_country, presence: true
 
+  after_create :update_mailchimp
+  def update_mailchimp
+    user.update_mailchimp
+  end
+
   def sex_enum
     [ [ :male, 1 ], [ :female, 2 ], [ :undisclosed, 3 ] ]
   end
@@ -27,7 +32,9 @@ class Teacher < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :name
+      field :user do
+        searchable [:first_name, :last_name, :email]
+      end
       field :school_name
       field :school_county
       field :edition

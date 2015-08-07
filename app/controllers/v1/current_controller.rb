@@ -16,16 +16,19 @@ module V1
       @current = {
         is_logged_in: false,
         is_registration_open: is_registration_open,
-        :edition => Edition.get_current
+        edition: Edition.get_current,
+        last_edition_with_results: Edition.get_last_with_results
       }
 
       unless current_user.nil?
         @current.merge!({
           is_logged_in: true,
+          is_contestant: current_user.get_current_contestant.present?,
+          is_teacher: current_user.get_current_teacher.present?,
           user: current_user
         })
 
-        if !current_user.contestants.empty?
+        if current_user.get_current_contestant.present?
           projects = current_user.get_current_contestant.projects
 
           if !projects.empty?

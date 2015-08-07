@@ -19,6 +19,12 @@ class Edition < ActiveRecord::Base
   validates :projects_forum_category, presence: true
   validates :talks_forum_category, presence: true
 
+  validates :published, presence: true, if: Proc.new { |edition|
+    self.current == true
+  }
+
+  scope :published, -> { where(published: true) }
+
   def count
     year - 1994 + 1
   end
@@ -57,6 +63,10 @@ class Edition < ActiveRecord::Base
 
   def self.get_current
     where(current: true, published: true).first
+  end
+
+  def self.get_last_with_results
+    where(published: true, show_results: true).last
   end
 
   rails_admin do

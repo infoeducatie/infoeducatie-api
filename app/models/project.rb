@@ -55,6 +55,17 @@ class Project < ActiveRecord::Base
     !self.category.nil? && self.category.name == "web"
   }
 
+  validate :all_contestants_the_same_edition
+  def all_contestants_the_same_edition
+    return if contestants.size <= 1
+    edition = contestants.first.edition
+    contestants.each do |c|
+      if c.edition != edition
+        errors.add(:contestants, "All contestants must use the same edition")
+      end
+    end
+  end
+
   before_save :update_total_score
   def update_total_score
     self.total_score = score + extra_score
@@ -62,6 +73,7 @@ class Project < ActiveRecord::Base
 
   after_update :update_discourse
   def update_discourse
+    return if topic_id.nil?
     discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.projects_forum_category,
@@ -87,8 +99,14 @@ class Project < ActiveRecord::Base
     contestants.first.edition if contestants.first
   end
 
-  def county
-    contestants.first.county
+  def counties
+    contestants.map do |contestant|
+      contestant.county
+    end.uniq
+  end
+
+  def counties_str
+    counties.join(", ")
   end
 
   def authors
@@ -110,7 +128,7 @@ class Project < ActiveRecord::Base
   def discourse_title
     "#{title} - "\
     "#{category.name.capitalize} - "\
-    "#{contestants.first.county} - "\
+    "#{counties.join(" ")} - "\
     "#{edition.projects_forum_category}"
   end
 
@@ -121,7 +139,7 @@ class Project < ActiveRecord::Base
     context = ERBContext.new(
       category: category.name.capitalize,
       homepage: homepage,
-      county: county,
+      county: counties.join(" "),
       description: description,
       technical_description: technical_description,
       system_requirements: system_requirements,
@@ -139,12 +157,19 @@ class Project < ActiveRecord::Base
   end
 
   rails_admin do
+
     list do
-      scopes [:waiting, :approved, :rejected, :unfinished]
+      scopes [:approved, :waiting, :unfinished, :rejected]
       field :title
-      field :authors
-      field :category_name
-      field :county
+      field :users do
+        searchable [:first_name, :last_name, :email]
+      end
+      field :category do
+        searchable [:name]
+      end
+      field :counties_str do
+        label "County"
+      end
       field :total_score
       field :open_source do
         label "Open"
@@ -170,7 +195,6 @@ class Project < ActiveRecord::Base
       field :category do
         nested_form false
       end
-
       field :contestants do
         nested_form false
       end

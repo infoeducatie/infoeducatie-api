@@ -9,7 +9,7 @@ module V1
     # GET /v1/projects.json
     def index
       edition = if params.has_key?(:edition)
-        Edition.find_by(id: params[:edition])
+        Edition.published.find_by(id: params[:edition])
       else
         Edition.get_current
       end
@@ -19,7 +19,13 @@ module V1
                          .joins(:contestants)
                          .where(:contestants => { :edition => edition })
                          .order("contestants.county")
-                         .distinct
+                         .eager_load(:category)
+                         .eager_load(contestants: [:edition, :user])
+
+     @projects.to_a.sort! do |a,b|
+       a.contestants[0].county.casecmp(b.contestants[0].county)
+     end
+
     end
 
     # GET /v1/projects/1.json
@@ -65,6 +71,12 @@ module V1
       category = Category.find_by(name: params[:project][:category])
       current_edition = Edition.get_current
       contestant = current_user.get_current_contestant
+
+      if contestant.nil?
+        render json: {error: "No contestant for this edition"},
+               status: :unprocessable_entity
+        return
+      end
 
       @project = Project.new(
         project_params.merge({

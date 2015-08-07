@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :roles, through: :rights
   has_many :contestants, dependent: :destroy
   has_many :teachers, dependent: :destroy
-  has_many :alumni, dependent: :destroy, inverse_of: :user
+  has_one :alumnus, dependent: :destroy, inverse_of: :user
   has_many :talk_users, dependent: :destroy
   has_many :talks, through: :talk_users
   has_many :projects, through: :contestants, inverse_of: :users
@@ -21,7 +21,16 @@ class User < ActiveRecord::Base
 
   after_commit :update_access_token!, on: :create
   after_create :set_default_role
-  after_save :update_mailchimp
+  after_save :update_mailchimp, :update_projects_discourse
+
+  def update_projects_discourse
+    projects.each do |p|
+      p.update_discourse
+    end
+    talks.each do |t|
+      t.update_discourse
+    end
+  end
 
   validates :email, presence: true, uniqueness: true
 
@@ -35,6 +44,10 @@ class User < ActiveRecord::Base
 
   def contestant?
     self.roles.include?(Role.find_by(name: "contestant"))
+  end
+
+  def get_current_teacher
+    self.teachers.find_by(:edition => Edition.get_current)
   end
 
   def get_current_contestant
@@ -89,37 +102,67 @@ class User < ActiveRecord::Base
       end
       field :roles
       field :contestants
-      field :alumni
+      field :alumnus
       field :talks
       field :projects
       field :newsletter
     end
   end
 
-  private
-    def update_mailchimp
-      api_key = ENV["MAILCHIMP_API_KEY"]
-      list_id = ENV["MAILCHIMP_LIST_ID"]
+  def update_mailchimp
+    api_key = ENV["MAILCHIMP_API_KEY"]
+    list_id = ENV["MAILCHIMP_LIST_ID"]
 
-      if api_key.blank? or list_id.blank?
-        return
+    if api_key.blank? or list_id.blank?
+      return
+    end
+
+    mailchimp = Mailchimp::API.new(api_key)
+
+    is_teacher = "no"
+    is_contestant = "no"
+    is_alumnus = "no"
+    is_speacker = "no"
+    last_edition_name = nil
+
+    if alumnus.present?
+      is_alumnus = "yes"
+    end
+
+    if not talks.empty?
+      is_speacker = "yes"
+      last_edition_name = talks.last.edition.name
+    end
+
+    if not teachers.empty?
+      is_teacher = "yes"
+      last_edition_name = teachers.last.edition.name
+    elsif not contestants.empty?
+      is_contestant = "yes"
+      last_edition_name = contestants.last.edition.name
+    end
+
+    if newsletter
+      vars = {
+          "FNAME" => first_name,
+          "LNAME" => last_name,
+          "TEACHER" => is_teacher,
+          "CONTESTANT" => is_contestant,
+          "SPEACKER" => is_speacker,
+          "ALUMNUS" => is_alumnus,
+      }
+
+      if last_edition_name.present?
+        vars.merge!({ "LEDITION" => last_edition_name })
       end
 
-      mailchimp = Mailchimp::API.new(api_key)
-
-      if newsletter
-        vars = {
-            "FNAME" => first_name,
-            "LNAME" => last_name
-        }
-
-        mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
-                                  false, true)
-      else
-        suppress(Mailchimp::EmailNotExistsError) do
-          mailchimp.lists.unsubscribe(list_id, {email: email}, true,
-                                      false, false)
-        end
+      mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
+                                false, true)
+    else
+      suppress(Mailchimp::EmailNotExistsError) do
+        mailchimp.lists.unsubscribe(list_id, {email: email}, true,
+                                    false, false)
       end
     end
+  end
 end

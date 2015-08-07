@@ -6,13 +6,12 @@ projects = Project.approved
                   .distinct
 
 projects.each do |project|
-  project.comments_count = discourse.replies_count(project.topic_id)
-  project.save!
+  project.update_column(:comments_count,
+                        discourse.replies_count(project.topic_id))
 end
 
 talks = Talk.where(edition: Edition.get_current)
 
 talks.each do |talk|
-  talk.comments_count = discourse.replies_count(talk.topic_id)
-  talk.save!
+  talk.update_column(:comments_count, discourse.replies_count(talk.topic_id))
 end

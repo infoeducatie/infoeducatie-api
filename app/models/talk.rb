@@ -13,7 +13,7 @@ class Talk < ActiveRecord::Base
   has_many :users, through: :talk_users
   validates :users, presence: true
 
-  after_create :create_discourse_topic
+  after_create :create_discourse_topic, :update_mailchimp
   def create_discourse_topic
     discourse = Discourse.new
     topic_id = discourse.create(discourse_title, discourse_content,
@@ -21,8 +21,15 @@ class Talk < ActiveRecord::Base
     update_attribute(:topic_id, topic_id)
   end
 
+  def update_mailchimp
+    users.each do |user|
+      user.update_mailchimp
+    end
+  end
+
   after_update :update_discourse
   def update_discourse
+    return if topic_id.nil?
     discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.talks_forum_category,
@@ -63,13 +70,15 @@ class Talk < ActiveRecord::Base
     list do
       field :title
       field :edition
-      field :edition
-      field :users
+      field :users do
+        searchable [:first_name, :last_name, :email]
+      end
     end
     edit do
-      configure :topic_id do
-        hide
-      end
+      field :title
+      field :description
+      field :edition
+      field :users
     end
     show do
       field :title
