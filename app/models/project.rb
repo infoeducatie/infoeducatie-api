@@ -105,6 +105,18 @@ class Project < ActiveRecord::Base
     end.uniq
   end
 
+  def schools
+    contestants.map do |contestant|
+      contestant.school_name
+    end.uniq
+  end
+
+  def mentoring_teachers
+    contestants.map do |contestant|
+      contestant.mentoring_teacher_name
+    end.uniq
+  end
+
   def counties_str
     counties.join(", ")
   end
