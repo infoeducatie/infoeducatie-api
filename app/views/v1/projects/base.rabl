@@ -8,11 +8,14 @@ if root_object.edition.show_results == true
   attributes :score,
              :extra_score,
              :total_score,
-             :prize
+             :prize,
+             :counties,
+             :schools,
+             :mentoring_teachers
 end
 
 child :contestants => :contestants do
-  attributes :id, :name, :county, :school_name
+  attributes :id, :name
 end
 
 node :category do |u|

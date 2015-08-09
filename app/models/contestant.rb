@@ -72,6 +72,10 @@ class Contestant < ActiveRecord::Base
     user.name if user
   end
 
+  def mentoring_teacher_name
+    mentoring_teacher_first_name + " " + mentoring_teacher_last_name
+  end
+
   def email
     user.email
   end
