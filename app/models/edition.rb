@@ -37,6 +37,10 @@ class Edition < ActiveRecord::Base
            .count
   end
 
+  def name
+    self.name
+  end
+
   def counties_count
     Contestant.where(edition: id)
               .joins(:projects)

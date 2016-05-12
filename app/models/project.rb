@@ -168,10 +168,6 @@ class Project < ActiveRecord::Base
     not source_url.blank?
   end
 
-  def name
-    self.name
-  end
- 
   rails_admin do
 
     list do
