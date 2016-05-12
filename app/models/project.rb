@@ -173,6 +173,7 @@ class Project < ActiveRecord::Base
     list do
       scopes [:approved, :waiting, :unfinished, :rejected]
       field :title
+      field :edition
       field :users do
         searchable [:first_name, :last_name, :email]
       end
