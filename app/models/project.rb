@@ -168,12 +168,18 @@ class Project < ActiveRecord::Base
     not source_url.blank?
   end
 
+  def name
+    self.name
+  end
+ 
   rails_admin do
 
     list do
       scopes [:approved, :waiting, :unfinished, :rejected]
       field :title
-      field :edition
+      field :edition do
+        searchable [:name]
+      end
       field :users do
         searchable [:first_name, :last_name, :email]
       end
