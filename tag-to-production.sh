@@ -8,10 +8,4 @@ if [ -z $tag ]; then
   exit 1
 fi
 
-if [ `git show-ref $tag | cut -d ' ' -f1` == `git rev-parse origin/production` ]; then
-  exit 0
-fi
-
-echo "Deploying tag ${tag}"
-
-git push origin $tag:production -f
+git checkout $tag
