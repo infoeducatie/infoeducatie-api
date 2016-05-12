@@ -37,7 +37,7 @@ class Edition < ActiveRecord::Base
            .count
   end
 
-  def name
+  def title
     self.name
   end
 
