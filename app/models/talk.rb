@@ -29,7 +29,7 @@ class Talk < ActiveRecord::Base
 
   after_update :update_discourse
   def update_discourse
-    return if topic_id.nil?
+    return if topic_id.nil? || edition.nil?
     discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.talks_forum_category,

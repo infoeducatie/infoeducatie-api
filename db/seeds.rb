@@ -2,17 +2,18 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 ['registered', 'contestant', 'alumni', 'speaker', "teacher", "admin"].each do |role|
-  Role.find_or_create_by({name: role})
+  Role.find_or_create_by!({name: role})
 end
 
 
 ['web', 'utilitar', 'educational', 'multimedia', 'roboti'].each do |category|
-  Category.find_or_create_by({name: category})
+  Category.find_or_create_by!({name: category})
 end
 
 
-current_edition = Edition.find_or_create_by(name: '2015') do |edition|
+current_edition = Edition.find_or_create_by!(name: '2015') do |edition|
   edition.name = '2015'
+  edition.year = '2015'
   edition.camp_start_date = DateTime.new(2015, 8, 2)
   edition.camp_end_date = DateTime.new(2015, 8, 8)
   edition.motto = 'Persevereaza, mergi mai departe'
@@ -40,7 +41,7 @@ end
 current_user = User.find_by(email: 'admin@infoeducatie.ro')
 
 if Rails.env == "development"
-  current_contestant = Contestant.find_or_create_by(user: current_user,
+  current_contestant = Contestant.find_or_create_by!(user: current_user,
                                                     edition: current_edition) do |contestant|
    contestant.address = "str. Muzeul Verde, nr. 11, bl. H4, sc. W, ap. 8"
    contestant.city = "Barlad"
@@ -57,6 +58,7 @@ if Rails.env == "development"
    contestant.phone_number = "123123123"
 
    contestant.grade = "IX"
+   contestant.school_name = "CNAV"
    contestant.school_county = "Vaslui"
    contestant.school_city = "Negresti"
    contestant.school_country = "Romania"
@@ -74,7 +76,7 @@ if Rails.env == "development"
   end
 
 
-  current_project = Project.find_or_create_by(title: "Catalog Scolar by R0b3rT") do  |project|
+  current_project = Project.find_or_create_by!(title: "Catalog Scolar by R0b3rT") do  |project|
     project.category = Category.find_by(name: 'web')
     project.contestants = [current_contestant]
     project.title = "Catalog Scolar by R0b3rT"
@@ -91,7 +93,7 @@ if Rails.env == "development"
   end
 
 
-  current_talk = Talk.find_or_create_by(title: "pehaspe e misto") do |talk|
+  current_talk = Talk.find_or_create_by!(title: "pehaspe e misto") do |talk|
     talk.title = "pehaspe e misto"
     talk.description = "valoare"
     talk.edition = current_edition

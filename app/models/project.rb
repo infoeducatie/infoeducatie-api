@@ -16,6 +16,7 @@ class Project < ActiveRecord::Base
   scope :unfinished, -> { where(finished: false) }
 
   belongs_to :category
+  belongs_to :edition
   has_many :users, through: :contestants, inverse_of: :projects
   has_many :colaborators, inverse_of: :project, dependent: :destroy
   has_many :contestants, through: :colaborators, inverse_of: :projects
@@ -57,8 +58,8 @@ class Project < ActiveRecord::Base
 
   validate :all_contestants_the_same_edition
   def all_contestants_the_same_edition
-    return if contestants.size <= 1
-    edition = contestants.first.edition
+    return if contestants.size == 0
+    self.edition = contestants.first.edition
     contestants.each do |c|
       if c.edition != edition
         errors.add(:contestants, "All contestants must use the same edition")
@@ -93,10 +94,6 @@ class Project < ActiveRecord::Base
 
   def name
     "#{title} @ #{edition.name}" if edition
-  end
-
-  def edition
-    contestants.first.edition if contestants.first
   end
 
   def counties

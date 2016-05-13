@@ -6,7 +6,7 @@ class Edition < ActiveRecord::Base
 
   has_many :attendances, dependent: :destroy, inverse_of: :edition
   has_many :alumni, through: :attendances, inverse_of: :editions
-  has_many :projects, through: :contestants
+  has_many :projects
 
   validates :name, presence: true, uniqueness: true
   validates :year, presence: true
@@ -35,10 +35,6 @@ class Edition < ActiveRecord::Base
            .where(contestants: { edition: id })
            .group_by(&:id)
            .count
-  end
-
-  def title
-    self.name
   end
 
   def counties_count

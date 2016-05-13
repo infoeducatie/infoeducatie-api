@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726212620) do
+ActiveRecord::Schema.define(version: 20160513060226) do
 
   create_table "alumni", force: :cascade do |t|
     t.text     "description"
@@ -138,7 +138,10 @@ ActiveRecord::Schema.define(version: 20150726212620) do
     t.float    "total_score",           default: 0.0,   null: false
     t.string   "prize"
     t.integer  "comments_count",        default: 0,     null: false
+    t.integer  "edition_id",                            null: false
   end
+
+  add_index "projects", ["edition_id"], name: "index_projects_on_edition_id"
 
   create_table "rights", force: :cascade do |t|
     t.integer  "user_id"
