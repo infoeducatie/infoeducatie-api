@@ -20,3 +20,9 @@ After you have pulled the repo run:
 3. `rake db:migrate`
 3. `rake db:seed`
 4. `rails server`
+
+#### Resetare la trecerea de la o editie la alta
+ ```
+ User.joins("contestants":"edition").where("contestants":{"edition":1}).each {|u| u.update_attribute(:registration_step_number, 1)}
+ ```
+ 
