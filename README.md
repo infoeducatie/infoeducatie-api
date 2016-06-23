@@ -22,7 +22,9 @@ After you have pulled the repo run:
 4. `rails server`
 
 #### Resetare la trecerea de la o editie la alta
+1. Se face conectarea la server(putty) pe un user care are acces la docker
+2. 
+
  ```
  User.joins("contestants":"edition").where("contestants":{"edition":1}).each {|u| u.update_attribute(:registration_step_number, 1)}
  ```
- 
