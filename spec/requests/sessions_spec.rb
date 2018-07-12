@@ -16,7 +16,7 @@ RSpec.describe "V1::Sessions", type: :request do
     end
 
     context "when resource has invalid email" do
-      it "reponds with 422" do
+      it "responds with 422" do
         post "/v1/sign_in", "user[email]" => "trex", "user[password]" => @user.password
         expect(response).to have_http_status(422)
 
@@ -26,7 +26,7 @@ RSpec.describe "V1::Sessions", type: :request do
     end
 
     context "when resource has invalid password" do
-      it "reponds with 422" do
+      it "responds with 422" do
         post "/v1/sign_in", "user[email]" => @user.email, "user[password]" => "trex"
         expect(response).to have_http_status(422)
 
