@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+RAILS_ENV="production"
+if [ "$DOCKER_TAG" = "staging" ]; then
+    RAILS_ENV="staging"
+elif [ "$DOCKER_TAG" = "development" ]; then
+    RAILS_ENV="development"
+fi
+
+docker build --build-arg RAILS_ENV=${RAILS_ENV} -t "${IMAGE_NAME}" .
