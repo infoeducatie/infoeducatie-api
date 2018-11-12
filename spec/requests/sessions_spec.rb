@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "V1::Sessions", type: :request do
   describe "POST /v1/sign_in" do
 
-    before { @user = FactoryGirl.create(:confirmed_user) }
+    before { @user = FactoryBot.create(:confirmed_user) }
 
     context "when resource is valid" do
       it "responds with 200" do

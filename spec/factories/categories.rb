@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   #factory :web_category, class: Category do
   #  name "web"
   #end

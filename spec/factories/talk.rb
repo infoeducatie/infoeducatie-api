@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :talk do
-    title "MyString"
-    description "MyText"
+    title { "MyString" }
+    description { "MyText" }
     association :edition
     users { build_list(:user, 1) }
   end

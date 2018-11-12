@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Contestants", type: :request do
   let!(:valid_user) {
-    FactoryGirl.create(:confirmed_user)
+    FactoryBot.create(:confirmed_user)
   }
 
   let!(:valid_edition) {
-    FactoryGirl.create(:edition)
+    FactoryBot.create(:edition)
   }
 
   let(:valid_headers) {
@@ -16,7 +16,7 @@ RSpec.describe "Contestants", type: :request do
   describe "GET /v1/contestants.json" do
     context "list all contestants" do
       it "Render all the contestants" do
-        contestant = FactoryGirl.create(:contestant)
+        contestant = FactoryBot.create(:contestant)
 
         get "/v1/contestants", {}, valid_headers
         expect(response).to have_http_status(200)
@@ -30,7 +30,7 @@ RSpec.describe "Contestants", type: :request do
   describe "POST /v1/contestants.json" do
     context "resource is valid" do
       it "creates a contestant" do
-        contestant_attributes = FactoryGirl.attributes_for(:contestant)
+        contestant_attributes = FactoryBot.attributes_for(:contestant)
 
         post "/v1/contestants", { :contestant => contestant_attributes }, valid_headers
 
@@ -45,7 +45,7 @@ RSpec.describe "Contestants", type: :request do
 
     context "resource is invalid" do
       it "responds with 422 when address is missing" do
-        contestant_attributes = FactoryGirl.attributes_for(:contestant)
+        contestant_attributes = FactoryBot.attributes_for(:contestant)
         contestant_attributes[:sex] = "male"
         contestant_attributes[:address] = ""
 

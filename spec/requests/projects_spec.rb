@@ -4,11 +4,11 @@ RSpec.describe "V1::Projects", type: :request do
 
   describe "POST /v1/projects/:id/finish" do
     let!(:valid_user) {
-      FactoryGirl.create(:confirmed_user)
+      FactoryBot.create(:confirmed_user)
     }
 
     let!(:valid_edition) {
-      FactoryGirl.create(:edition)
+      FactoryBot.create(:edition)
     }
 
     let(:valid_headers) {
@@ -17,7 +17,7 @@ RSpec.describe "V1::Projects", type: :request do
 
     context "when resource is valid" do
       it "responds with 200" do
-        project = FactoryGirl.create(:project)
+        project = FactoryBot.create(:project)
         valid_user.contestants << project.contestants.first
 
         post "/v1/projects/#{project.id}/finish", {}, valid_headers
@@ -34,7 +34,7 @@ RSpec.describe "V1::Projects", type: :request do
     }
 
     let!(:valid_user_with_contestant) {
-      FactoryGirl.create(:valid_user_with_contestant)
+      FactoryBot.create(:valid_user_with_contestant)
     }
 
     let(:valid_headers) {
@@ -44,7 +44,7 @@ RSpec.describe "V1::Projects", type: :request do
     context "when resource is valid" do
       it "responds with 200" do
         contestant = valid_user_with_contestant.contestants.first
-        project_attributes = FactoryGirl.attributes_for(
+        project_attributes = FactoryBot.attributes_for(
                               :project_without_contestant_category)
 
         params = {
@@ -66,7 +66,7 @@ RSpec.describe "V1::Projects", type: :request do
     context "when resource is invalid" do
       it "responds with 422 when category is invalid" do
         contestant = valid_user_with_contestant.contestants.first
-        project_attributes = FactoryGirl.attributes_for(
+        project_attributes = FactoryBot.attributes_for(
                               :project_without_contestant_category)
         params = {
           :project => project_attributes,
@@ -81,7 +81,7 @@ RSpec.describe "V1::Projects", type: :request do
 
       it "responds with 422 when category is web and homepage is missing" do
         contestant = valid_user_with_contestant.contestants.first
-        project_attributes = FactoryGirl.attributes_for(
+        project_attributes = FactoryBot.attributes_for(
                               :project_without_contestant_category)
         project_attributes[:homepage] = ""
         params = {
