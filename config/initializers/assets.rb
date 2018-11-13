@@ -26,8 +26,8 @@ class TiltProcessor
 end
 
 Rails.application.config.assets.configure do |env|
-  env.register_mime_type 'text/html',  extensions: ['.haml']
-  env.register_preprocessor 'text/html', TiltProcessor.new(Tilt::HamlTemplate)
+  env.register_mime_type 'text/haml',  extensions: ['.haml']
+  env.register_preprocessor 'text/haml', TiltProcessor.new(Tilt::HamlTemplate)
 end
 
 # ckeditor assets
