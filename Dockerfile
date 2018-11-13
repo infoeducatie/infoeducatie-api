@@ -1,4 +1,4 @@
-FROM ruby:2.2.1
+FROM ruby:2.2.6
 
 RUN apt-get update -qq && apt-get install -y build-essential
 
@@ -21,7 +21,6 @@ RUN mkdir $APP_HOME/
 WORKDIR $APP_HOME/
 
 ADD Gemfile* $APP_HOME/
-RUN bundle config --global silence_root_warning 1
 RUN bundle install
 
 ADD . $APP_HOME/
