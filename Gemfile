@@ -27,15 +27,12 @@ gem 'discourse_api'
 gem 'ckeditor'
 gem 'mini_magick'
 gem 'mailchimp-api', require: 'mailchimp'
+gem 'pg', '~> 0.21'
+gem 'rails_12factor'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0'
-end
-
-group :production, :staging do
-  gem 'rails_12factor'
-  gem 'pg'
 end
 
 group :development do
@@ -61,5 +58,4 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'simplecov', require: false
-  gem 'sqlite3'
 end
