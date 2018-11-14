@@ -51,7 +51,7 @@ Rails.application.routes.draw do
   get "/422", :to => "errors#error_404"
   get "/500", :to => "errors#error_500"
 
-  root :to => redirect("http://infoeducatie.ro/")
+  root :to => redirect(Settings.ui.url)
 
   match '*unmatched_route', :to => 'errors#error_404', via: [:get, :put, :patch, :post,
          :delete, :copy, :head, :options, :link, :unlink, :purge, :lock, :unlock, :propfind]
