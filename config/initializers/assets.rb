@@ -10,7 +10,25 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( pages.js )
 
 # render haml templates from the assets folder
-Rails.application.assets.register_engine('.haml', Tilt::HamlTemplate)
+class TiltProcessor
+  def initialize(klass)
+    @klass = klass
+  end
+
+  def call(input)
+    filename = input[:filename]
+    data     = input[:data]
+    context  = input[:environment].context_class.new(input)
+
+    data = @klass.new(filename) { data }.render(context, {})
+    context.metadata.merge(data: data.to_str)
+  end
+end
+
+Rails.application.config.assets.configure do |env|
+  env.register_mime_type 'text/haml',  extensions: ['.haml']
+  env.register_preprocessor 'text/haml', TiltProcessor.new(Tilt::HamlTemplate)
+end
 
 # ckeditor assets
 Rails.application.config.assets.precompile += %w( ckeditor/* )

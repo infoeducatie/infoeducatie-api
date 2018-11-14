@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Teachers", type: :request do
   let!(:valid_user) {
-    FactoryGirl.create(:confirmed_user)
+    FactoryBot.create(:confirmed_user)
   }
 
   let!(:valid_edition) {
-    FactoryGirl.create(:edition)
+    FactoryBot.create(:edition)
   }
 
   let(:valid_headers) {
@@ -16,7 +16,7 @@ RSpec.describe "Teachers", type: :request do
   describe "GET /v1/teachers.json" do
     context "list all teachers" do
       it "Render all the teachers" do
-        teacher = FactoryGirl.create(:teacher)
+        teacher = FactoryBot.create(:teacher)
 
         get "/v1/teachers", {}, valid_headers
         expect(response).to have_http_status(200)
@@ -30,7 +30,7 @@ RSpec.describe "Teachers", type: :request do
   describe "POST /v1/teachers.json" do
     context "resource is valid" do
       it "creates a teacher" do
-        teacher_attributes = FactoryGirl.attributes_for(:teacher)
+        teacher_attributes = FactoryBot.attributes_for(:teacher)
 
         post "/v1/teachers", { :teacher => teacher_attributes }, valid_headers
 
@@ -45,7 +45,7 @@ RSpec.describe "Teachers", type: :request do
 
     context "resource is invalid" do
       it "responds with 422 when address is missing" do
-        teacher_attributes = FactoryGirl.attributes_for(:teacher)
+        teacher_attributes = FactoryBot.attributes_for(:teacher)
         teacher_attributes[:school_name] = ""
 
         post "/v1/teachers", { :teacher => teacher_attributes }, valid_headers

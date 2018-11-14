@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :role_name do |n|
     "Role #{n}"
   end
