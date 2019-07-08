@@ -29,6 +29,7 @@ gem 'mini_magick'
 gem 'mailchimp-api', require: 'mailchimp'
 gem 'pg', '~> 0.21'
 gem 'rails_12factor'
+gem 'xmlrpc'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
