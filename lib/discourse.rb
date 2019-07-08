@@ -64,6 +64,7 @@ class Discourse
   end
 
   def delete(topic_id)
+    return if topic_id.nil?
     return if @client.nil?
     suppress(DiscourseApi::UnauthenticatedError) do
       @client.delete_topic(topic_id)
