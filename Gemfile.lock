@@ -318,15 +318,15 @@ GEM
     mime-types-data (3.2018.0812)
     mini_magick (4.9.2)
     mini_mime (1.0.1)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
     nenv (0.3.0)
     nested_form (0.3.2)
     net-ssh (5.0.2)
-    nokogiri (1.8.5)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.10)
+      mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -489,7 +489,10 @@ GEM
     vcr (4.0.0)
     warden (1.2.7)
       rack (>= 1.0)
+    webrick (1.7.0)
     xml-simple (1.1.5)
+    xmlrpc (0.3.2)
+      webrick
 
 PLATFORMS
   ruby
@@ -536,6 +539,7 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   vcr
+  xmlrpc
 
 RUBY VERSION
    ruby 2.2.6p396
