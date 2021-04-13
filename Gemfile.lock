@@ -344,7 +344,7 @@ GEM
       activesupport (>= 3.0.0)
     rabl (0.11.8)
       activesupport (>= 2.3.14)
-    rack (1.6.11)
+    rack (1.6.13)
     rack-pjax (0.8.0)
       nokogiri (~> 1.5)
       rack (~> 1.1)
@@ -489,7 +489,10 @@ GEM
     vcr (4.0.0)
     warden (1.2.7)
       rack (>= 1.0)
+    webrick (1.7.0)
     xml-simple (1.1.5)
+    xmlrpc (0.3.2)
+      webrick
 
 PLATFORMS
   ruby
@@ -536,6 +539,7 @@ DEPENDENCIES
   unicorn
   unicorn-rails
   vcr
+  xmlrpc
 
 RUBY VERSION
    ruby 2.2.6p396
