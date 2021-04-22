@@ -21,12 +21,10 @@ module V1
       }
 
       unless current_user.nil?
-        @current.merge!({
-          is_logged_in: true,
-          is_contestant: current_user.get_current_contestant.present?,
-          is_teacher: current_user.get_current_teacher.present?,
-          user: current_user
-        })
+        @current[:is_logged_in] = true
+        @current[:is_contestant] = current_user.get_current_contestant.present?
+        @current[:is_teacher] = current_user.get_current_teacher.present?
+        @current[:user] = current_user
 
         if current_user.get_current_contestant.present?
           projects = current_user.get_current_contestant.projects
@@ -34,12 +32,10 @@ module V1
           if !projects.empty?
             pending_project = projects.find_by(:finished => false)
 
-            @current.merge!({
-              registration: {
-                pending_project: pending_project,
-                finished_projects: projects.where(:finished => true),
-              }
-            })
+            @current[:registration] = {
+              pending_project: pending_project,
+              finished_projects: projects.where(:finished => true),
+            }
           end
         end
       end
