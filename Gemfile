@@ -11,7 +11,7 @@ gem 'unicorn'
 gem 'unicorn-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'devise', '~> 3.5.0'
-gem 'rails_admin', '~> 0.6.7'
+gem 'rails_admin', '~> 1.4.3'
 gem 'active_model_serializers', '~> 0.9.3'
 gem "pundit"
 gem 'net-ssh'
