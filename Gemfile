@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.4.10'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.10'
 gem 'rabl', '~> 0.11.0'
 gem 'oj'
 gem 'jbuilder', '~> 2.0'
