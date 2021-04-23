@@ -36,6 +36,8 @@ module V1
               pending_project: pending_project,
               finished_projects: projects.where(:finished => true),
             }
+
+            @current[:registration] = RecursiveOpenStruct.new(@current[:registration])
           end
         end
       end
