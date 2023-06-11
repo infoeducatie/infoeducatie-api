@@ -13,18 +13,11 @@ class Talk < ActiveRecord::Base
   has_many :users, through: :talk_users
   validates :users, presence: true
 
-  after_create :create_discourse_topic, :update_mailchimp
   def create_discourse_topic
     discourse = Discourse.new
     topic_id = discourse.create(discourse_title, discourse_content,
                                 edition.talks_forum_category)
     update_attribute(:topic_id, topic_id)
-  end
-
-  def update_mailchimp
-    users.each do |user|
-      user.update_mailchimp
-    end
   end
 
   after_update :update_discourse

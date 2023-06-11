@@ -57,12 +57,6 @@
     },
     "DISABLE_EMAIL": {
       "required": true
-    },
-    "MAILCHIMP_API_KEY": {
-      "required": true
-    },
-    "MAILCHIMP_LIST_ID": {
-      "required": true
     }
   },
   "addons": [
