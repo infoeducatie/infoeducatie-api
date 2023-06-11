@@ -1,0 +1,57 @@
+name: Run tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    env:
+      AWS_S3_BUCKET: data.staging.infoeducatie.ro
+      AWS_S3_HOST: http://data.staging.infoeducatie.ro
+      AWS_S3_KEY: ""
+      AWS_S3_REGION: 'eu-central-1'
+      AWS_S3_SECRET: ''
+      AWS_SES_ACCESS_KEY: ''
+      AWS_SES_ENDPOINT: email.eu-west-1.amazonaws.com
+      AWS_SES_SECRET_KEY: ''
+      DATABASE_URL: postgres://postgres:@localhost:5432/postgres
+      DISABLE_EMAIL: true
+      DISCOURSE_API: ''
+      DISCOURSE_USER: muflonel
+      RACK_ENV: production
+      RAILS_ENV: production
+      LANG: en_US.UTF-8
+      SECRET_KEY_BASE: ''
+      SENTRY_DSN: ''
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          # Opens tcp port 5432 on the host and service container
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+        with:
+          ruby-version: '2.4.10'
+      - name: Install dependencies
+        run: bundle install
+      - name: Set up database schema
+        run: bundle exec rake db:migrate --trace
+      - name: Load test data into database
+        run: bundle exec rake db:seed
+      - name: Run tests
+        run: bundle exec rake
+
