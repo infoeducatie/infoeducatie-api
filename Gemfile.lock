@@ -307,9 +307,6 @@ GEM
     lumberjack (1.0.13)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    mailchimp-api (2.0.6)
-      excon (>= 0.16.0)
-      json (>= 1.7.7)
     memoist (0.16.0)
     method_source (0.9.2)
     mime-types (3.2.2)
@@ -515,7 +512,6 @@ DEPENDENCIES
   fog (~> 1.31.0)
   guard-rspec
   jbuilder (~> 2.0)
-  mailchimp-api
   mini_magick
   net-ssh
   oj

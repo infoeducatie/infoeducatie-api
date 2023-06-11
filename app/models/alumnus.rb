@@ -8,11 +8,6 @@ class Alumnus < ActiveRecord::Base
   validates :editions, presence: true
   validates :description, presence: true
 
-  after_create :update_mailchimp
-  def update_mailchimp
-    user.update_mailchimp
-  end
-
   def name
     user.name if user
   end

@@ -44,11 +44,6 @@ class Contestant < ActiveRecord::Base
 
   before_destroy :delete_orphan_projects, prepend: true
 
-  after_create :update_mailchimp
-  def update_mailchimp
-    user.update_mailchimp
-  end
-
   after_save :update_projects_discourse
   def update_projects_discourse
     projects.approved.each do |p|

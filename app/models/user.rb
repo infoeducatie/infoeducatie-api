@@ -21,7 +21,6 @@ class User < ActiveRecord::Base
 
   after_commit :update_access_token!, on: :create
   after_create :set_default_role
-  after_save :update_mailchimp, :update_projects_discourse
 
   def update_projects_discourse
     projects.each do |p|
@@ -106,63 +105,6 @@ class User < ActiveRecord::Base
       field :talks
       field :projects
       field :newsletter
-    end
-  end
-
-  def update_mailchimp
-    api_key = ENV["MAILCHIMP_API_KEY"]
-    list_id = ENV["MAILCHIMP_LIST_ID"]
-
-    if api_key.blank? or list_id.blank?
-      return
-    end
-
-    mailchimp = Mailchimp::API.new(api_key)
-
-    is_teacher = "no"
-    is_contestant = "no"
-    is_alumnus = "no"
-    is_speacker = "no"
-    last_edition_name = nil
-
-    if alumnus.present?
-      is_alumnus = "yes"
-    end
-
-    if not talks.empty?
-      is_speacker = "yes"
-      last_edition_name = talks.last.edition.name
-    end
-
-    if not teachers.empty?
-      is_teacher = "yes"
-      last_edition_name = teachers.last.edition.name
-    elsif not contestants.empty?
-      is_contestant = "yes"
-      last_edition_name = contestants.last.edition.name
-    end
-
-    if newsletter
-      vars = {
-          "FNAME" => first_name,
-          "LNAME" => last_name,
-          "TEACHER" => is_teacher,
-          "CONTESTANT" => is_contestant,
-          "SPEACKER" => is_speacker,
-          "ALUMNUS" => is_alumnus,
-      }
-
-      if last_edition_name.present?
-        vars.merge!({ "LEDITION" => last_edition_name })
-      end
-
-      mailchimp.lists.subscribe(list_id, { email: email }, vars, :html,
-                                false, true)
-    else
-      suppress(Mailchimp::EmailNotExistsError) do
-        mailchimp.lists.unsubscribe(list_id, {email: email}, true,
-                                    false, false)
-      end
     end
   end
 end
