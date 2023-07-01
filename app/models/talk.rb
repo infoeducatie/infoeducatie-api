@@ -44,7 +44,10 @@ class Talk < ActiveRecord::Base
   end
 
   def discourse_title
-    "#{title} - #{edition.talks_forum_category}"
+    discourse = Discourse.new
+    discourse_category = discourse.category(edition.talks_forum_category)
+
+    "#{title} - #{discourse_category['name']}"
   end
 
   def discourse_content
