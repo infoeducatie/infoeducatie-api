@@ -135,10 +135,13 @@ class Project < ActiveRecord::Base
   end
 
   def discourse_title
+    discourse = Discourse.new
+    discourse_category = discourse.category(edition.projects_forum_category)
+
     "#{title} - "\
     "#{category.name.capitalize} - "\
     "#{counties.join(" ")} - "\
-    "#{edition.projects_forum_category}"
+    "#{discourse_category['name']}"
   end
 
   def discourse_content

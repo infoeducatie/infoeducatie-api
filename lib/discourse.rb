@@ -34,7 +34,7 @@ class Discourse
     )["topic_id"]
   end
 
-  def update(title, raw, category, topic_id)
+  def update(title, raw, category_id, topic_id)
     return if @client.nil?
 
     topic = @client.topic(topic_id)
@@ -51,11 +51,7 @@ class Discourse
     end
 
     @client.edit_post(post["id"], raw)
-
-    category = @client.category(sanitize_slug(category))
-    unless category.has_key?("errors")
-      @client.recategorize_topic(topic_id, category["id"])
-    end
+    @client.recategorize_topic(topic_id, category_id)
   end
 
   def recover(topic_id)
@@ -77,14 +73,7 @@ class Discourse
     return topic["posts_count"] - 1
   end
 
-  private
-    # https://github.com/discourse/discourse/blob/master/lib/slug.rb
-    def sanitize_slug(string)
-      string.strip
-          .gsub(/\s+/, '-')
-          .gsub(/[:\/\?#\[\]@!\$&'\(\)\*\+,;=_\.~%\\`^\s|\{\}"<>]+/, '') # :/?#[]@!$&'()*+,;=_.~%\`^|{}"<>
-          .gsub(/\A-+|-+\z/, '') # remove possible trailing and preceding dashes
-          .squeeze('-') # squeeze continuous dashes to prettify slug
-          .downcase
-    end
+  def category(category_id)
+    return @client.category(category_id)
+  end
 end
