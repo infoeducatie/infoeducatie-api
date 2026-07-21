@@ -1,0 +1,38 @@
+<% editor_id = "#{form.dom_id(field)}_items" %>
+<% help_id = "#{form.dom_id(field)}_help" %>
+
+<div class="controls col-sm-10 ie-screenshot-editor" data-screenshot-editor>
+  <div class="ie-screenshot-editor__toolbar">
+    <div class="ie-screenshot-editor__intro">
+      <strong class="ie-screenshot-editor__title">Attached images</strong>
+      <span id="<%= help_id %>" class="ie-screenshot-editor__help"><%= field.help %></span>
+    </div>
+
+    <%= form.link_to_add(
+          '<i class="icon-plus icon-white" aria-hidden="true"></i> Add screenshot'.html_safe,
+          field.name,
+          class: "btn btn-info ie-screenshot-editor__add",
+          data: {
+            target: "##{editor_id}",
+            screenshot_add: true
+          }
+        ) %>
+  </div>
+
+  <%= form.errors_for(field) %>
+
+  <div id="<%= editor_id %>"
+       class="ie-screenshot-editor__grid"
+       data-screenshot-items
+       aria-describedby="<%= help_id %>">
+    <%= form.fields_for field.name do |screenshot_form| %>
+      <%= render partial: "rails_admin/main/screenshot_editor_item",
+                 locals: { form: screenshot_form } %>
+    <% end %>
+  </div>
+
+  <div class="ie-screenshot-editor__empty" data-screenshot-empty>
+    <i class="icon-picture" aria-hidden="true"></i>
+    <span>No screenshots attached. Add the first image to this project.</span>
+  </div>
+</div>

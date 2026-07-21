@@ -57,5 +57,12 @@ class Screenshot < ActiveRecord::Base
         help "JPEG, PNG or WebP, up to 10 MB."
       end
     end
+
+    nested do
+      field :screenshot do
+        html_attributes accept: "image/jpeg,image/png,image/webp"
+      end
+      exclude_fields :project
+    end
   end
 end

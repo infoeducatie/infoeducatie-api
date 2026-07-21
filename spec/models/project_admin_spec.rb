@@ -17,11 +17,13 @@ RSpec.describe Project, type: :model do
 
       expect(field).not_to be_nil
       expect(field.nested_form[:allow_destroy]).to eq(true)
+      expect(field.partial).to eq(:form_screenshot_editor)
 
-      screenshot_field = field.associated_model_config.edit.fields.detect do |admin_field|
+      screenshot_field = field.associated_model_config.nested.fields.detect do |admin_field|
         admin_field.name == :screenshot
       end
       expect(screenshot_field.html_attributes[:accept]).to eq("image/jpeg,image/png,image/webp")
+      expect(field.associated_model_config.nested.fields.map(&:name)).not_to include(:project)
     end
   end
 end

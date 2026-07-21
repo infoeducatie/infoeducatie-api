@@ -1,0 +1,85 @@
+<% screenshot = form.object %>
+<% has_file = screenshot.respond_to?(:url) && screenshot.url.present? %>
+<% previewable = has_file && screenshot.previewable? %>
+<% filename = screenshot.respond_to?(:filename) ? screenshot.filename : nil %>
+<% marked_for_destruction = screenshot.respond_to?(:marked_for_destruction?) && screenshot.marked_for_destruction? %>
+
+<%= form.hidden_field :_destroy,
+                      value: marked_for_destruction ? "1" : "0",
+                      data: { screenshot_destroy: true } %>
+<%= form.hidden_field :screenshot_cache if screenshot.respond_to?(:screenshot_cache) %>
+
+<article class="ie-screenshot-card<%= " is-removed" if marked_for_destruction %>"
+         data-screenshot-card
+         data-persisted="<%= screenshot.persisted? %>">
+  <div class="ie-screenshot-card__preview">
+    <% if previewable %>
+      <%= image_tag screenshot.url,
+                    alt: filename.present? ? "Preview of #{filename}" : "Project screenshot preview",
+                    class: "ie-screenshot-card__image",
+                    data: { screenshot_image: true } %>
+    <% else %>
+      <img class="ie-screenshot-card__image"
+           data-screenshot-image
+           alt="Selected screenshot preview"
+           style="display: none;">
+    <% end %>
+
+    <div class="ie-screenshot-card__placeholder<%= " is-hidden" if previewable %><%= " is-unsupported" if has_file && !previewable %>"
+         data-screenshot-placeholder>
+      <i class="<%= has_file ? "icon-file" : "icon-picture" %>" aria-hidden="true"></i>
+      <span><%= has_file ? "Preview unavailable" : "Choose an image" %></span>
+    </div>
+
+    <% if previewable %>
+      <%= link_to screenshot.url,
+                  class: "ie-screenshot-card__open",
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                  title: "Open saved image" do %>
+        <i class="icon-external-link" aria-hidden="true"></i>
+        <span>Open original</span>
+      <% end %>
+    <% end %>
+
+    <div class="ie-screenshot-card__removed" data-screenshot-removed-message>
+      <i class="icon-trash" aria-hidden="true"></i>
+      <strong><%= screenshot.persisted? ? "Will be removed" : "Will not be added" %></strong>
+      <span>Save the project to apply this change.</span>
+    </div>
+  </div>
+
+  <div class="ie-screenshot-card__body">
+    <div class="ie-screenshot-card__meta">
+      <strong data-screenshot-filename title="<%= filename %>">
+        <%= filename.presence || "New screenshot" %>
+      </strong>
+      <span data-screenshot-status><%= has_file ? "Saved image" : "Select a file to upload" %></span>
+    </div>
+
+    <div class="ie-screenshot-card__actions">
+      <label class="btn btn-default ie-screenshot-card__upload">
+        <i class="icon-upload-alt" aria-hidden="true"></i>
+        <span data-screenshot-upload-label><%= has_file ? "Replace" : "Choose image" %></span>
+        <%= form.file_field :screenshot,
+                            accept: "image/jpeg,image/png,image/webp",
+                            class: "ie-screenshot-card__file-input",
+                            data: { screenshot_file: true } %>
+      </label>
+
+      <button type="button"
+              class="btn btn-link ie-screenshot-card__remove"
+              data-screenshot-remove>
+        <i class="icon-trash" aria-hidden="true"></i>
+        Remove
+      </button>
+
+      <button type="button"
+              class="btn btn-link ie-screenshot-card__undo"
+              data-screenshot-undo>
+        <i class="icon-undo" aria-hidden="true"></i>
+        Undo
+      </button>
+    </div>
+  </div>
+</article>

@@ -226,7 +226,8 @@ class Project < ActiveRecord::Base
       end
 
       field :screenshots do
-        help "Preview, add, replace or remove project screenshots."
+        partial :form_screenshot_editor
+        help "JPEG, PNG or WebP. Maximum 10 MB per image."
       end
 
       field :score
