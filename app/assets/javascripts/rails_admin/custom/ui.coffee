@@ -1,15 +1,16 @@
 $ = jQuery
 
-originalInsertFields = window.nestedFormEvents.insertFields
+installScreenshotInsertFields = ->
+  originalInsertFields = window.nestedFormEvents.insertFields
 
-window.nestedFormEvents.insertFields = (content, association, link) ->
-  target = $(link).data('target')
-  isScreenshotEditor = association == 'screenshots' && $(link).data('screenshot-add')
+  window.nestedFormEvents.insertFields = (content, association, link) ->
+    target = $(link).data('target')
+    isScreenshotEditor = association == 'screenshots' && $(link).data('screenshot-add')
 
-  if isScreenshotEditor && target
-    $(content).appendTo($(target))
-  else
-    originalInsertFields.call(window.nestedFormEvents, content, association, link)
+    if isScreenshotEditor && target
+      $(content).appendTo($(target))
+    else
+      originalInsertFields.call(window.nestedFormEvents, content, association, link)
 
 refreshScreenshotEditor = (editor) ->
   editor = $(editor)
@@ -72,7 +73,9 @@ $(document).on 'click', '[data-screenshot-undo]', ->
   field.removeClass('is-removed')
   refreshScreenshotEditor(field.closest('[data-screenshot-editor]'))
 
-$(document).ready -> initializeScreenshotEditors(document)
+$(document).ready ->
+  installScreenshotInsertFields()
+  initializeScreenshotEditors(document)
 
 $(document).on 'rails_admin.dom_ready', (event, content) ->
   initializeScreenshotEditors(content || document)
