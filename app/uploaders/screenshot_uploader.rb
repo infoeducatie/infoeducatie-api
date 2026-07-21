@@ -2,6 +2,10 @@
 
 class ScreenshotUploader < CarrierWave::Uploader::Base
 
+  ALLOWED_EXTENSIONS = %w(jpeg jpg png webp).freeze
+  ALLOWED_CONTENT_TYPES = %r{\Aimage/(jpeg|png|webp)\z}.freeze
+  MAX_FILE_SIZE = 10.megabytes
+
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -38,11 +42,17 @@ class ScreenshotUploader < CarrierWave::Uploader::Base
   #   process :resize_to_fit => [50, 50]
   # end
 
-  # Add a white list of extensions which are allowed to be uploaded.
-  # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_whitelist
+    ALLOWED_EXTENSIONS
+  end
+
+  def content_type_whitelist
+    ALLOWED_CONTENT_TYPES
+  end
+
+  def size_range
+    1.byte..MAX_FILE_SIZE
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

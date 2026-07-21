@@ -1,0 +1,81 @@
+.ie-screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+  max-width: 1100px;
+}
+
+.ie-screenshot-gallery__item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  color: #25313c;
+  background: #f7f9fa;
+  border: 1px solid #d8dee3;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.ie-screenshot-gallery__item--link:hover,
+.ie-screenshot-gallery__item--link:focus {
+  color: #17232d;
+  border-color: #16817a;
+  box-shadow: 0 2px 8px rgba(23, 35, 45, 0.16);
+  text-decoration: none;
+}
+
+.ie-screenshot-gallery__item--link:focus {
+  outline: 2px solid #16817a;
+  outline-offset: 2px;
+}
+
+.ie-screenshot-gallery__image,
+.ie-screenshot-gallery__file {
+  width: 100%;
+  height: 150px;
+  background: #ffffff;
+}
+
+.ie-screenshot-gallery__item--unsupported {
+  border-color: #c98b31;
+}
+
+.ie-screenshot-gallery__item--unsupported .ie-screenshot-gallery__file {
+  color: #8a5a17;
+  background: #fffaf0;
+}
+
+.ie-screenshot-gallery__image {
+  display: block;
+  object-fit: contain;
+}
+
+.ie-screenshot-gallery__file {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #65727d;
+  font-size: 38px;
+}
+
+.ie-screenshot-gallery__label {
+  overflow: hidden;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.screenshots_field .tab-content .ie-screenshot-gallery {
+  grid-template-columns: minmax(210px, 360px);
+  margin-bottom: 12px;
+}
+
+@media (max-width: 767px) {
+  .ie-screenshot-gallery {
+    grid-template-columns: 1fr;
+  }
+}

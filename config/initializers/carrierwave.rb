@@ -9,7 +9,11 @@ CarrierWave.configure do |config|
     :region                => ENV['AWS_S3_REGION']
   } if ENV['AWS_S3_KEY']
 
-  config.asset_host = ENV['AWS_S3_HOST'] if ENV['AWS_S3_HOST']
+  if ENV['AWS_S3_HOST']
+    asset_host = ENV['AWS_S3_HOST']
+    asset_host = asset_host.sub(/\Ahttp:\/\//i, 'https://') if Rails.env.production?
+    config.asset_host = asset_host
+  end
   config.fog_directory  = ENV['AWS_S3_BUCKET']
   config.fog_public = true
 

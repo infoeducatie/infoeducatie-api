@@ -1,0 +1,38 @@
+<% available_screenshots = screenshots.select { |screenshot| screenshot.url.present? } %>
+
+<% if available_screenshots.any? %>
+  <div class="ie-screenshot-gallery" role="list">
+    <% available_screenshots.each_with_index do |screenshot, index| %>
+      <% label = "Screenshot #{index + 1}" %>
+      <% if screenshot.previewable? %>
+        <%= link_to screenshot.url,
+                    class: "ie-screenshot-gallery__item ie-screenshot-gallery__item--link",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    role: "listitem",
+                    title: "Open #{label.downcase}" do %>
+          <%= image_tag screenshot.url,
+                        alt: label,
+                        class: "ie-screenshot-gallery__image",
+                        loading: "lazy" %>
+          <span class="ie-screenshot-gallery__label">
+            <%= screenshot.filename.presence || label %>
+          </span>
+        <% end %>
+      <% else %>
+        <div class="ie-screenshot-gallery__item ie-screenshot-gallery__item--unsupported"
+             role="listitem"
+             title="Replace or remove this unsupported attachment">
+          <span class="ie-screenshot-gallery__file" aria-hidden="true">
+            <i class="icon-file"></i>
+          </span>
+          <span class="ie-screenshot-gallery__label">
+            Unsupported: <%= screenshot.filename.presence || label %>
+          </span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <span class="text-muted">No screenshots attached.</span>
+<% end %>

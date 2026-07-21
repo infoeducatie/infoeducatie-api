@@ -27,7 +27,9 @@ class Project < ActiveRecord::Base
     :reject_if => :all_blank
   accepts_nested_attributes_for :contestants,
     :reject_if => :all_blank
-  accepts_nested_attributes_for :screenshots
+  accepts_nested_attributes_for :screenshots,
+    allow_destroy: true,
+    reject_if: :all_blank
 
   validates :category, presence: true
   validates :contestants, presence: true
@@ -170,6 +172,15 @@ class Project < ActiveRecord::Base
 
   rails_admin do
 
+    configure :screenshots do
+      pretty_value do
+        bindings[:view].render(
+          partial: "rails_admin/main/screenshot_gallery",
+          locals: { screenshots: bindings[:object].screenshots }
+        )
+      end
+    end
+
     list do
       scopes [:approved, :waiting, :unfinished, :rejected]
       field :title
@@ -212,6 +223,10 @@ class Project < ActiveRecord::Base
       end
       field :contestants do
         nested_form false
+      end
+
+      field :screenshots do
+        help "Preview, add, replace or remove project screenshots."
       end
 
       field :score
