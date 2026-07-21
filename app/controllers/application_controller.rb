@@ -1,91 +1,37 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  include Pundit
-  protect_from_forgery with: :null_session
+  include Pundit::Authorization
 
-  # We don't need CSRF authenticity because our requests come only from the API
-  skip_before_filter :verify_authenticity_token
-
-  before_filter :cors_preflight_check
-  after_filter :cors_set_access_control_headers
+  protect_from_forgery with: :exception
 
   before_action :set_locale
 
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
-  end
-
-  def ensure_json_request
-    return if params[:format] == "json" || request.headers["Accept"] =~ /json/
-
-    render :json => {:status => 404, :error => "Not Found"},
-           :status => :not_found
-  end
-
-  def cors_set_access_control_headers
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-    headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
-    headers['Access-Control-Max-Age'] = "1728000"
-  end
-
-  def cors_preflight_check
-    if request.method == 'OPTIONS'
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token, Authorization'
-      headers['Access-Control-Max-Age'] = '1728000'
-      render :text => '', :content_type => 'text/plain'
-    end
-  end
-
-  #rescue_from StandardError do |exception|
-  #  self.response_body = nil
-  #  if exception.instance_of? ActiveRecord::RecordNotFound
-  #    render :json => {:status => 404, :error => "Not Found"},
-  #           :status => :not_found
-  #  elsif Rails.env.production?
-  #    render :json => {:status => 500, :error => "We're sorry, but something went wrong."},
-  #           :status => :internal_server_error
-  #  else
-  #    raise exception
-  #  end
-  #end
-
-  #rescue_from ActionController::ParameterMissing do |exception|
-  #  render :json => {:status => 400, :error => "Required parameter missing: #{exception.param}"},
-  #         :status => :bad_request
-  #end
-
   private
+
+  def set_locale
+    requested_locale = params[:locale].to_s
+    available_locale = I18n.available_locales.find { |locale| locale.to_s == requested_locale }
+    I18n.locale = available_locale || I18n.default_locale
+  end
+
   def authenticate_user_from_token!
-    unless authenticate_user_from_token
-      authentication_error
-    end
+    authentication_error unless authenticate_user_from_token
   end
 
   def authenticate_user_from_token
-    auth_token = request.headers['Authorization']
+    auth_token = request.headers["Authorization"].to_s.sub(/\ABearer\s+/i, "")
+    user_id, separator, = auth_token.partition(":")
+    return false if separator.empty?
 
-    if not auth_token or not auth_token.include?(':')
-      return false
-    end
+    user = User.find_by(id: user_id)
+    return false if user&.access_token.blank?
+    return false unless user.access_token.bytesize == auth_token.bytesize
+    return false unless ActiveSupport::SecurityUtils.secure_compare(user.access_token, auth_token)
 
-    user_id = auth_token.split(':').first
-    user = User.where(id: user_id).first
-
-    if user && Devise.secure_compare(user.access_token, auth_token)
-      sign_in user, store: false
-    else
-      return false
-    end
-
-    return true
+    sign_in(:user, user, store: false)
+    true
   end
 
   def authentication_error
-    cors_set_access_control_headers
-    render json: { error: 'unauthorized' }, status: 401
+    render json: {error: "unauthorized"}, status: :unauthorized
   end
 end

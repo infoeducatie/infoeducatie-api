@@ -1,8 +1,8 @@
 module V1
-  class ProjectsController < ApplicationController
+  class ProjectsController < ApiController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
     before_action :authenticate_user_from_token!, only: [:create, :finish, :screenshots, :collaborators]
-    before_action :check_registration_open, only: [:create, :finish, :screenshots, :collaborators]
+    before_action :require_registration_open, only: [:create, :finish, :screenshots, :collaborators]
 
     respond_to :json
 
@@ -137,12 +137,5 @@ module V1
         )
       end
 
-      def check_registration_open
-        edition = Edition.get_current
-        if edition.registration_start_date > Time.now.utc and
-           edition.registration_end_date < Time.now.utc
-            render json: { error: 'unauthorized' }, status: 401
-        end
-      end
   end
 end

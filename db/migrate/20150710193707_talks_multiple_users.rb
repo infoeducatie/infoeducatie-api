@@ -1,4 +1,4 @@
-class TalksMultipleUsers < ActiveRecord::Migration
+class TalksMultipleUsers < ActiveRecord::Migration[4.2]
   def change
     create_table :talk_users do |t|
       t.integer :talk_id

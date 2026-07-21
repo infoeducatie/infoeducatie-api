@@ -1,2 +1,2 @@
-extends "v1/teachers/base.rabl"
+extends "v1/teachers/base"
 object @teacher

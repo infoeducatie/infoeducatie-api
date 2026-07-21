@@ -1,4 +1,4 @@
-class AddCampRelatedFieldsToContestants < ActiveRecord::Migration
+class AddCampRelatedFieldsToContestants < ActiveRecord::Migration[4.2]
   def change
     add_column :contestants, :present_in_camp, :boolean, default: false
     add_column :contestants, :paying_camp_accommodation, :boolean, default: false

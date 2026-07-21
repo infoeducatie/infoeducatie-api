@@ -10,17 +10,26 @@ module RailsAdmin
         end
 
         register_instance_option :link_icon do
-          'icon-exclamation-sign'
+          'fas fa-thumbtack'
+        end
+
+        register_instance_option :http_methods do
+          %i[get post]
         end
 
         register_instance_option :controller do
           Proc.new do
-            News.update_all("pinned = 0")
-            @object.reload
-            @object.update_attribute(:pinned, true)
-            flash[:notice] = "You have pinned the news titled: #{@object.title}."
+            if request.get?
+              render @action.template_name
+            else
+              News.transaction do
+                News.where.not(id: @object.id).update_all(pinned: false)
+                @object.update!(pinned: true)
+              end
 
-            redirect_to back_or_index
+              flash[:success] = "You have pinned the news titled: #{@object.title}."
+              redirect_to index_path
+            end
           end
         end
 

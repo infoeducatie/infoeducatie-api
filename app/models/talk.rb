@@ -1,4 +1,6 @@
 class Talk < ActiveRecord::Base
+  DISCOURSE_SYNC_ATTRIBUTES = %w[title description edition_id].freeze
+
   belongs_to :edition, inverse_of: :talks, counter_cache: true
   validates :edition, presence: true
 
@@ -13,27 +15,40 @@ class Talk < ActiveRecord::Base
   has_many :users, through: :talk_users
   validates :users, presence: true
 
-  after_create :create_discourse_topic
+  after_commit :create_discourse_topic, on: :create
+
   def create_discourse_topic
     discourse = Discourse.new
     topic_id = discourse.create(discourse_title, discourse_content,
                                 edition.talks_forum_category)
-    update_attribute(:topic_id, topic_id)
+    update_column(:topic_id, topic_id) if topic_id.present?
+  rescue DiscourseApi::DiscourseError => error
+    report_discourse_error("create", error)
   end
 
-  after_update :update_discourse
+  after_commit :update_discourse, on: :update, if: :discourse_sync_required?
+
+  def discourse_sync_required?
+    topic_id.present? && (previous_changes.keys & DISCOURSE_SYNC_ATTRIBUTES).any?
+  end
+
   def update_discourse
-    return if topic_id.nil? || edition.nil?
+    return false if topic_id.nil? || edition.nil?
+
     discourse = Discourse.new
     discourse.update(discourse_title, discourse_content,
                      edition.talks_forum_category,
                      topic_id)
+  rescue DiscourseApi::DiscourseError => error
+    report_discourse_error("sync", error)
   end
 
-  after_destroy :delete_discourse
+  after_commit :delete_discourse, on: :destroy
+
   def delete_discourse
-    discourse = Discourse.new
-    discourse.delete(topic_id)
+    Discourse.new.delete(topic_id)
+  rescue DiscourseApi::DiscourseError => error
+    report_discourse_error("delete", error)
   end
 
   def name
@@ -52,15 +67,26 @@ class Talk < ActiveRecord::Base
   end
 
   def discourse_content
-    template_file = File.open("#{Rails.root}/app/views/discourse/talk.erb")
-    erb_template = ERB.new(template_file.read, nil, '-')
+    template = Rails.root.join("app/views/discourse/talk.erb").read
+    erb_template = ERB.new(template, trim_mode: "-")
 
-    context = ERBContext.new(
+    context = ErbContext.new(
       description: description,
       users: users
     )
 
     erb_template.result(context.get_binding)
+  end
+
+  private
+
+  def report_discourse_error(operation, error)
+    Rails.logger.error(
+      "Talk Discourse #{operation} failed for talk=#{id}: " \
+      "#{error.class}: #{error.message}"
+    )
+    Sentry.capture_exception(error)
+    false
   end
 
   rails_admin do

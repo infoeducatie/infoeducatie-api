@@ -22,7 +22,10 @@ class News < ActiveRecord::Base
       field :title
       field :pinned
       field :edition
-      field :body, :ck_editor
+      field :body do
+        partial :form_rich_text_editor
+        help "Formatted article content. Images are uploaded securely when attached."
+      end
     end
   end
 end

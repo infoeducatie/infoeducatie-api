@@ -6,24 +6,30 @@
 
 ### Prerequisites
 
-Check out:
-* [rbenv](https://github.com/sstephenson/rbenv)
-* [rvm](https://rvm.io/)
+* Ruby 4.0.6
+* PostgreSQL
+* ImageMagick
 
 ### Getting Started
 
 After you have pulled the repo run:
 
 1. `bundle install`
-3. `rake db:migrate`
-3. `rake db:seed`
-4. `rails server`
+2. `bin/rails db:prepare`
+3. `bin/rails db:seed`
+4. `bin/rails server`
 
 ### Docker
 
-There are two docker images built from the source. A production one and a staging one. They are published on [Docker Hub](https://hub.docker.com/r/infoeducatie/infoeducatie-api/).
+Start the application and PostgreSQL with:
 
-When new code is pushed to any of the two branches the corresponding images are built.
+```sh
+docker compose up --build
+```
+
+Successful `master` builds are published to GitHub Container Registry. See
+[the Rails 8 upgrade runbook](docs/rails-8-upgrade.md) before promoting this
+release to staging or production.
 
 ### New contest edition
 

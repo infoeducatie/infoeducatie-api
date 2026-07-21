@@ -18,7 +18,7 @@ RSpec.describe "Teachers", type: :request do
       it "Render all the teachers" do
         teacher = FactoryBot.create(:teacher)
 
-        get "/v1/teachers", {}, valid_headers
+        get "/v1/teachers", headers: valid_headers
         expect(response).to have_http_status(200)
 
         body = JSON.parse(response.body)
@@ -32,7 +32,9 @@ RSpec.describe "Teachers", type: :request do
       it "creates a teacher" do
         teacher_attributes = FactoryBot.attributes_for(:teacher)
 
-        post "/v1/teachers", { :teacher => teacher_attributes }, valid_headers
+        post "/v1/teachers",
+          params: {teacher: teacher_attributes},
+          headers: valid_headers
 
         expect(response).to have_http_status(201)
         body = JSON.parse(response.body)
@@ -48,9 +50,28 @@ RSpec.describe "Teachers", type: :request do
         teacher_attributes = FactoryBot.attributes_for(:teacher)
         teacher_attributes[:school_name] = ""
 
-        post "/v1/teachers", { :teacher => teacher_attributes }, valid_headers
+        post "/v1/teachers",
+          params: {teacher: teacher_attributes},
+          headers: valid_headers
 
         expect(response).to have_http_status(422)
+      end
+    end
+
+    context "when registration is closed" do
+      it "rejects the teacher" do
+        valid_edition.update!(
+          registration_start_date: 2.days.ago,
+          registration_end_date: 1.day.ago
+        )
+
+        expect {
+          post "/v1/teachers",
+            params: {teacher: FactoryBot.attributes_for(:teacher)},
+            headers: valid_headers
+        }.not_to change(Teacher, :count)
+
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

@@ -1,5 +1,5 @@
 module V1
-  class AlumniController < ApplicationController
+  class AlumniController < ApiController
 
     def index
       @alumni = Alumnus.all

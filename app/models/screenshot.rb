@@ -9,8 +9,7 @@ class Screenshot < ActiveRecord::Base
   mount_uploader :screenshot, ScreenshotUploader
   validates_presence_of :screenshot
 
-  after_save :update_project_discourse
-  after_destroy :update_project_discourse
+  after_commit :update_project_discourse, on: %i[create update destroy]
 
   def update_project_discourse
     return unless project && project.status == Project::STATUS_APPROVED

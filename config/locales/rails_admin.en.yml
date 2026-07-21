@@ -85,6 +85,18 @@ en:
         breadcrumb: "Edit"
         link: "Edit this %{model_label}"
         done: "updated"
+      approve_project:
+        title: "Approve project '%{object_label}'"
+        menu: "Approve"
+        breadcrumb: "Approve"
+      reject_project:
+        title: "Reject project '%{object_label}'"
+        menu: "Reject"
+        breadcrumb: "Reject"
+      pin_news:
+        title: "Pin article '%{object_label}'"
+        menu: "Pin"
+        breadcrumb: "Pin"
       delete:
         title: "Delete %{model_label} '%{object_label}'"
         menu: "Delete"

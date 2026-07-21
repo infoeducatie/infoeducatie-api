@@ -1,7 +1,8 @@
 module V1
-  class ContestantsController < ApplicationController
+  class ContestantsController < ApiController
     before_action :set_contestant, only: [:show, :edit, :update, :destroy]
     before_action :authenticate_user_from_token!, only: [:create, :update_registration_step_number]
+    before_action :require_registration_open, only: [:create, :update_registration_step_number]
 
     respond_to :json
 
@@ -26,7 +27,7 @@ module V1
     def update_registration_step_number
       current_user.update_attribute(:registration_step_number,
                                     params[:step_number])
-      render :status => 202, :nothing => true
+      render json: {}, status: :accepted
     end
 
     # POST /v1/contestants.json

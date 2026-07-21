@@ -38,4 +38,10 @@ FactoryBot.define do
       user.contestants << contestant
     }
   end
+
+  factory :admin_user, parent: :confirmed_user do
+    after(:create) do |user|
+      user.roles << Role.find_by!(name: "admin")
+    end
+  end
 end

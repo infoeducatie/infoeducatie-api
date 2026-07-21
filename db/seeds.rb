@@ -27,20 +27,23 @@ current_edition = Edition.find_or_create_by!(name: '2015') do |edition|
 end
 
 
-unless User.find_by({email: 'admin@infoeducatie.ro'})
-  user = User.create({
-    email: 'admin@infoeducatie.ro',
-    password: 'secretpassword',
-    password_confirmation: 'secretpassword',
-    first_name: 'Super',
-    last_name: 'Admin'
-  })
-  user.confirm
-  user.roles << Role.find_by(name: "admin")
-end
-current_user = User.find_by(email: 'admin@infoeducatie.ro')
+admin_email = ENV.fetch("ADMIN_EMAIL", "admin@infoeducatie.ro")
+admin_password = ENV["ADMIN_PASSWORD"]
 
-if Rails.env == "development"
+if admin_password.present? && !User.exists?(email: admin_email)
+  user = User.create!(
+    email: admin_email,
+    password: admin_password,
+    password_confirmation: admin_password,
+    first_name: "Super",
+    last_name: "Admin"
+  )
+  user.confirm
+  user.roles << Role.find_by!(name: "admin")
+end
+current_user = User.find_by(email: admin_email)
+
+if Rails.env.development? && current_user
   current_contestant = Contestant.find_or_create_by!(user: current_user,
                                                     edition: current_edition) do |contestant|
    contestant.address = "str. Muzeul Verde, nr. 11, bl. H4, sc. W, ap. 8"

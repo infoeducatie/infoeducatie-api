@@ -1,5 +1,5 @@
 module V1
-  class CurrentController < ApplicationController
+  class CurrentController < ApiController
     before_action :authenticate_user_from_token
     respond_to :json
 

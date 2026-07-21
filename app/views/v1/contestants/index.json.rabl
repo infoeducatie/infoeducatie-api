@@ -1,2 +1,2 @@
-extends "v1/contestants/base.rabl"
+extends "v1/contestants/base"
 collection @contestants

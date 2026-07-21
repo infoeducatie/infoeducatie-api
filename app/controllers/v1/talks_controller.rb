@@ -1,5 +1,5 @@
 module V1
-  class TalksController < ApplicationController
+  class TalksController < ApiController
 
     def index
       edition = if params.has_key?(:edition)

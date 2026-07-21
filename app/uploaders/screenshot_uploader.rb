@@ -42,11 +42,11 @@ class ScreenshotUploader < CarrierWave::Uploader::Base
   #   process :resize_to_fit => [50, 50]
   # end
 
-  def extension_whitelist
+  def extension_allowlist
     ALLOWED_EXTENSIONS
   end
 
-  def content_type_whitelist
+  def content_type_allowlist
     ALLOWED_CONTENT_TYPES
   end
 

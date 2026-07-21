@@ -10,21 +10,31 @@ module RailsAdmin
         end
 
         register_instance_option :link_icon do
-          'icon-remove'
+          'fas fa-times'
+        end
+
+        register_instance_option :http_methods do
+          %i[get post]
         end
 
         register_instance_option :controller do
           Proc.new do
-            discourse = Discourse.new
-            discourse.delete(object.topic_id)
+            if request.get?
+              render @action.template_name
+            else
+              Discourse.new.delete(object.topic_id)
+              @object.update!(status: Project::STATUS_REJECTED)
 
-            @object.update_attributes(
-              status: Project::STATUS_REJECTED
+              flash[:success] = "You have rejected the project titled: #{@object.title}."
+              redirect_to index_path
+            end
+          rescue DiscourseApi::DiscourseError => error
+            Rails.logger.error(
+              "Project rejection failed for project=#{@object.id}: " \
+              "#{error.class}: #{error.message}"
             )
-
-            flash[:notice] = "You have rejected the project titled: #{@object.title}."
-
-            redirect_to back_or_index
+            flash[:error] = "The Discourse topic could not be removed. No changes were made."
+            redirect_to index_path
           end
         end
 

@@ -1,31 +1,24 @@
-require File.expand_path('../boot', __FILE__)
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Infoeducatie
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    config.load_defaults 8.1
 
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
-
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :ro
-#
-    config.autoload_paths << Rails.root.join('lib')
-
-    config.active_record.raise_in_transactional_callbacks = true
-
-    config.autoload_paths += %W["#{Rails.root}/app/validators/"]
-
+    config.autoload_lib(ignore: %w[admin])
     config.middleware.use Rack::Deflater
+
+    # Rails 4 did not implicitly validate every belongs_to association. Models
+    # that require an association already declare an explicit validation.
+    config.active_record.belongs_to_required_by_default = false
+
+    config.i18n.available_locales = %i[en ro]
+    config.i18n.default_locale = :en
+    config.time_zone = "Bucharest"
+
+    config.generators.system_tests = nil
   end
 end

@@ -1,4 +1,4 @@
-extends "v1/projects/base.rabl"
+extends "v1/projects/base"
 object @project
 
 child :screenshots => :screenshots do

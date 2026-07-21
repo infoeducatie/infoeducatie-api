@@ -1,5 +1,5 @@
 module V1
-  class EditionsController < ApplicationController
+  class EditionsController < ApiController
 
     def index
       @editions = Edition.published.order(year: :asc)

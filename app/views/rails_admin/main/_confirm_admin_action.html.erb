@@ -1,0 +1,14 @@
+<section class="ie-admin-confirmation">
+  <h4><%= title %></h4>
+  <p><%= message %></p>
+
+  <%= form_with url: request.path, method: :post, local: true do %>
+    <div class="form-actions">
+      <button type="submit" class="btn <%= button_class %>" data-disable-with="Working...">
+        <i class="fas <%= icon %>" aria-hidden="true"></i>
+        <%= button_label %>
+      </button>
+      <%= link_to "Cancel", index_path, class: "btn btn-default" %>
+    </div>
+  <% end %>
+</section>

@@ -1,4 +1,4 @@
-class AlumniCreateTable < ActiveRecord::Migration
+class AlumniCreateTable < ActiveRecord::Migration[4.2]
   def change
     create_table :alumni do |t|
       t.text :description

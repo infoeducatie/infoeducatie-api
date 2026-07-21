@@ -1,4 +1,4 @@
-class ProjectsGithubUsername < ActiveRecord::Migration
+class ProjectsGithubUsername < ActiveRecord::Migration[4.2]
   def change
     add_column :projects, :github_username, :string
   end

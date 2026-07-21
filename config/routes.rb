@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get "/up", to: "rails/health#show", as: :rails_health_check
 
-  mount Ckeditor::Engine => '/ckeditor'
+  post "/internal/admin/editor_images",
+    to: "admin/editor_images#create",
+    as: :admin_editor_images
   mount RailsAdmin::Engine => '/internal/admin', as: 'rails_admin'
 
   devise_for :users, class_name: 'User', controllers: {

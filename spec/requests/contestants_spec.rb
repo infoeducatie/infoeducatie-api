@@ -18,7 +18,7 @@ RSpec.describe "Contestants", type: :request do
       it "Render all the contestants" do
         contestant = FactoryBot.create(:contestant)
 
-        get "/v1/contestants", {}, valid_headers
+        get "/v1/contestants", headers: valid_headers
         expect(response).to have_http_status(200)
 
         body = JSON.parse(response.body)
@@ -32,7 +32,9 @@ RSpec.describe "Contestants", type: :request do
       it "creates a contestant" do
         contestant_attributes = FactoryBot.attributes_for(:contestant)
 
-        post "/v1/contestants", { :contestant => contestant_attributes }, valid_headers
+        post "/v1/contestants",
+          params: {contestant: contestant_attributes},
+          headers: valid_headers
 
         expect(response).to have_http_status(201)
         body = JSON.parse(response.body)
@@ -49,10 +51,42 @@ RSpec.describe "Contestants", type: :request do
         contestant_attributes[:sex] = "male"
         contestant_attributes[:address] = ""
 
-        post "/v1/contestants", { :contestant => contestant_attributes }, valid_headers
+        post "/v1/contestants",
+          params: {contestant: contestant_attributes},
+          headers: valid_headers
 
         expect(response).to have_http_status(422)
       end
+    end
+
+    context "when registration is closed" do
+      it "rejects the contestant" do
+        valid_edition.update!(
+          registration_start_date: 2.days.ago,
+          registration_end_date: 1.day.ago
+        )
+
+        expect {
+          post "/v1/contestants",
+            params: {contestant: FactoryBot.attributes_for(:contestant)},
+            headers: valid_headers
+        }.not_to change(Contestant, :count)
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe "POST /v1/contestants/update_registration_step_number" do
+    it "returns valid JSON for the legacy frontend" do
+      post "/v1/contestants/update_registration_step_number",
+        params: {step_number: 4},
+        headers: valid_headers
+
+      expect(response).to have_http_status(:accepted)
+      expect(response.media_type).to eq("application/json")
+      expect(JSON.parse(response.body)).to eq({})
+      expect(valid_user.reload.registration_step_number).to eq(4)
     end
   end
 

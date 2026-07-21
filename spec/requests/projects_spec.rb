@@ -20,7 +20,7 @@ RSpec.describe "V1::Projects", type: :request do
         project = FactoryBot.create(:project)
         valid_user.contestants << project.contestants.first
 
-        post "/v1/projects/#{project.id}/finish", {}, valid_headers
+        post "/v1/projects/#{project.id}/finish", headers: valid_headers
 
         expect(response).to have_http_status(200)
       end
@@ -52,7 +52,7 @@ RSpec.describe "V1::Projects", type: :request do
         }
         params[:project][:category] = "web"
 
-        post "/v1/projects", params, valid_headers
+        post "/v1/projects", params: params, headers: valid_headers
 
         expect(response).to have_http_status(201)
         body = JSON.parse(response.body)
@@ -73,7 +73,9 @@ RSpec.describe "V1::Projects", type: :request do
           :category => "random"
         }
 
-        post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
+        post "/v1/projects?contestant_id=#{contestant.id}",
+          params: params,
+          headers: valid_headers
         expect(response).to have_http_status(422)
 
         body = JSON.parse(response.body)
@@ -89,10 +91,35 @@ RSpec.describe "V1::Projects", type: :request do
           :category => "web"
         }
 
-        post "/v1/projects?contestant_id=#{contestant.id}", params, valid_headers
+        post "/v1/projects?contestant_id=#{contestant.id}",
+          params: params,
+          headers: valid_headers
         expect(response).to have_http_status(422)
 
         body = JSON.parse(response.body)
+      end
+    end
+
+    context "when registration is closed" do
+      it "rejects the project" do
+        edition = Edition.get_current
+        edition.update!(
+          registration_start_date: 2.days.ago,
+          registration_end_date: 1.day.ago
+        )
+        project_attributes = FactoryBot.attributes_for(
+          :project_without_contestant_category
+        )
+        project_attributes[:category] = "web"
+
+        expect {
+          post "/v1/projects",
+            params: {project: project_attributes},
+            headers: valid_headers
+        }.not_to change(Project, :count)
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq("error" => "unauthorized")
       end
     end
   end

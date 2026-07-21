@@ -1,4 +1,4 @@
-class AccompanyingTecherName < ActiveRecord::Migration
+class AccompanyingTecherName < ActiveRecord::Migration[4.2]
   def change
     add_column :contestants, :accompanying_teacher_first_name, :string
     add_column :contestants, :accompanying_teacher_last_name, :string

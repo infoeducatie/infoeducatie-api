@@ -1,0 +1,8 @@
+<%= render partial: "confirm_admin_action",
+           locals: {
+             title: "Reject project?",
+             message: "#{@object.title} will be marked as rejected and its Discourse topic will be removed when present.",
+             button_label: "Reject project",
+             button_class: "btn-danger",
+             icon: "fa-times"
+           } %>

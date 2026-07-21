@@ -1,0 +1,4 @@
+bin/* text eol=lf
+Dockerfile text eol=lf
+Gemfile.lock text eol=lf
+*.sh text eol=lf

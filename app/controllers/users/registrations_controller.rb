@@ -1,9 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  skip_forgery_protection only: :create, if: -> { request.format.json? }
 
-  skip_before_filter :verify_authenticity_token
-
-  before_filter :configure_sign_up_params, only: [:create]
-  before_filter :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   # def new
@@ -23,7 +22,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         respond_with resource do |format|
           format.html { redirect_to after_sign_up_path_for(resource) }
           format.json {
-            render json: resource, serializer: UserSerializer, root: false
+            render json: registration_payload(resource)
           }
         end
       else
@@ -31,7 +30,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         expire_data_after_sign_in!
         respond_with resource, location: after_inactive_sign_up_path_for(resource) do |format|
           format.json {
-            render json: resource, serializer: UserSerializer, root: false
+            render json: registration_payload(resource)
           }
         end
       end
@@ -77,16 +76,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # You can put the params you want to permit in the empty array.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up).push(:first_name,
-                                                  :last_name,
-                                                  :newsletter)
+    devise_parameter_sanitizer.permit(
+      :sign_up,
+      keys: %i[first_name last_name newsletter]
+    )
   end
 
   # You can put the params you want to permit in the empty array.
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update).push(:first_name,
-                                                         :last_name,
-                                                         :newsletter)
+    devise_parameter_sanitizer.permit(
+      :account_update,
+      keys: %i[first_name last_name newsletter]
+    )
+  end
+
+  def registration_payload(user)
+    {unconfirmed_email: user.unconfirmed_email, user_id: user.id}
   end
 
   # The path used after sign up.

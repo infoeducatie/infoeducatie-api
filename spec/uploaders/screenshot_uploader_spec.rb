@@ -4,9 +4,9 @@ RSpec.describe ScreenshotUploader do
   subject(:uploader) { described_class.new }
 
   it "accepts only supported image extensions and content types" do
-    expect(uploader.extension_whitelist).to match_array(%w(jpeg jpg png webp))
-    expect("image/png").to match(uploader.content_type_whitelist)
-    expect("application/x-msdownload").not_to match(uploader.content_type_whitelist)
+    expect(uploader.extension_allowlist).to match_array(%w(jpeg jpg png webp))
+    expect("image/png").to match(uploader.content_type_allowlist)
+    expect("application/x-msdownload").not_to match(uploader.content_type_allowlist)
   end
 
   it "limits uploaded screenshots to 10 MB" do

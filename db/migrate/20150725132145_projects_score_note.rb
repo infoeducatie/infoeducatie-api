@@ -1,4 +1,4 @@
-class ProjectsScoreNote < ActiveRecord::Migration
+class ProjectsScoreNote < ActiveRecord::Migration[4.2]
   def change
     remove_column :projects, :final_score
     remove_column :projects, :notes

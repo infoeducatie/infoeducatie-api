@@ -1,47 +1,88 @@
 class Discourse
+  class NotConfiguredError < StandardError; end
 
-  def initialize
-    @client = DiscourseApi::Client.new(Settings.ui.community_url)
-    @client.api_key = ENV["DISCOURSE_API"]
-    @client.api_username = ENV["DISCOURSE_USER"]
+  def initialize(client = nil)
+    @client = client || configured_client
+  end
 
-    @client = nil if @client.api_key.blank? or @client.api_username.blank?
+  def configured?
+    @client.present?
   end
 
   def publish(title, raw, category, topic_id = nil)
-    return 1 if @client.nil?
+    raise NotConfiguredError, "Discourse API credentials are not configured" unless configured?
 
-    unless topic_id.nil?
-      topic = @client.topic(topic_id)
-      if topic.has_key?("errors")
-        topic_id = nil
-      else
-        update(title, raw, category, topic_id)
+    if topic_id.present?
+      begin
+        topic = @client.topic(topic_id)
+        update_topic(title, raw, category, topic_id, topic)
+        return topic_id
+      rescue DiscourseApi::NotFoundError
+        # A stale local topic ID is replaced below.
       end
     end
 
-    topic_id = create(title, raw, category) if topic_id.nil?
-    topic_id
+    create(title, raw, category)
   end
 
   def create(title, raw, category)
-    return 1 if @client.nil?
-    @client.create_topic(
+    return unless configured?
+
+    response = @client.create_topic(
       category: category,
       title: title,
       raw: raw,
       skip_validations: true
-    )["topic_id"]
+    )
+    response["topic_id"] || response[:topic_id]
   end
 
   def update(title, raw, category_id, topic_id)
-    return if @client.nil?
+    return false unless configured?
 
     topic = @client.topic(topic_id)
-    return if topic.has_key?("errors")
+    update_topic(title, raw, category_id, topic_id, topic)
+  rescue DiscourseApi::NotFoundError
+    false
+  end
 
-    post = topic["post_stream"]["posts"][0]
-    return if post["username"] != @client.api_username
+  def recover(topic_id)
+    return unless configured?
+
+    @client.put("/t/#{topic_id}/recover.json")
+  end
+
+  def delete(topic_id)
+    return false if topic_id.blank? || !configured?
+
+    @client.delete_topic(topic_id)
+    true
+  rescue DiscourseApi::NotFoundError, DiscourseApi::UnauthenticatedError
+    false
+  end
+
+  def replies_count(topic_id)
+    return 0 unless configured?
+
+    topic = @client.topic(topic_id)
+    [topic.fetch("posts_count", 1) - 1, 0].max
+  rescue DiscourseApi::NotFoundError
+    0
+  end
+
+  def category(category_id)
+    return {"name" => category_id.to_s} unless configured?
+
+    @client.category(category_id)
+  rescue DiscourseApi::NotFoundError
+    {"name" => category_id.to_s}
+  end
+
+  private
+
+  def update_topic(title, raw, category_id, topic_id, topic)
+    post = topic.dig("post_stream", "posts")&.first
+    return false unless post && post["username"] == @client.api_username
 
     begin
       @client.rename_topic(topic_id, title)
@@ -52,28 +93,18 @@ class Discourse
 
     @client.edit_post(post["id"], raw)
     @client.recategorize_topic(topic_id, category_id)
+    true
   end
 
-  def recover(topic_id)
-    return if @client.nil?
-    @client.put("/t/#{topic_id}/recover.json")
-  end
+  def configured_client
+    api_key = ENV["DISCOURSE_API"]
+    api_username = ENV["DISCOURSE_USER"]
+    return if api_key.blank? || api_username.blank?
 
-  def delete(topic_id)
-    return if topic_id.nil?
-    return if @client.nil?
-    suppress(DiscourseApi::UnauthenticatedError) do
-      @client.delete_topic(topic_id)
-    end
-  end
-
-  def replies_count(topic_id)
-    topic = @client.topic(topic_id)
-    return 0 if topic["posts_count"].nil?
-    return topic["posts_count"] - 1
-  end
-
-  def category(category_id)
-    return @client.category(category_id)
+    DiscourseApi::Client.new(
+      Settings.ui.community_url,
+      api_key,
+      api_username
+    )
   end
 end

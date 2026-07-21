@@ -27,7 +27,7 @@
 
     <div class="ie-screenshot-card__placeholder<%= " is-hidden" if previewable %><%= " is-unsupported" if has_file && !previewable %>"
          data-screenshot-placeholder>
-      <i class="<%= has_file ? "icon-file" : "icon-picture" %>" aria-hidden="true"></i>
+      <i class="fas <%= has_file ? "fa-file" : "fa-image" %>" aria-hidden="true"></i>
       <span><%= has_file ? "Preview unavailable" : "Choose an image" %></span>
     </div>
 
@@ -37,13 +37,13 @@
                   target: "_blank",
                   rel: "noopener noreferrer",
                   title: "Open saved image" do %>
-        <i class="icon-external-link" aria-hidden="true"></i>
+        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
         <span>Open original</span>
       <% end %>
     <% end %>
 
     <div class="ie-screenshot-card__removed" data-screenshot-removed-message>
-      <i class="icon-trash" aria-hidden="true"></i>
+      <i class="fas fa-trash" aria-hidden="true"></i>
       <strong><%= screenshot.persisted? ? "Will be removed" : "Will not be added" %></strong>
       <span>Save the project to apply this change.</span>
     </div>
@@ -59,7 +59,7 @@
 
     <div class="ie-screenshot-card__actions">
       <label class="btn btn-default ie-screenshot-card__upload">
-        <i class="icon-upload-alt" aria-hidden="true"></i>
+        <i class="fas fa-upload" aria-hidden="true"></i>
         <span data-screenshot-upload-label><%= has_file ? "Replace" : "Choose image" %></span>
         <%= form.file_field :screenshot,
                             accept: "image/jpeg,image/png,image/webp",
@@ -70,14 +70,14 @@
       <button type="button"
               class="btn btn-link ie-screenshot-card__remove"
               data-screenshot-remove>
-        <i class="icon-trash" aria-hidden="true"></i>
+        <i class="fas fa-trash" aria-hidden="true"></i>
         Remove
       </button>
 
       <button type="button"
               class="btn btn-link ie-screenshot-card__undo"
               data-screenshot-undo>
-        <i class="icon-undo" aria-hidden="true"></i>
+        <i class="fas fa-undo" aria-hidden="true"></i>
         Undo
       </button>
     </div>

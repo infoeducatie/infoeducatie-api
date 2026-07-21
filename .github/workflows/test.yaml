@@ -2,55 +2,73 @@ name: Run tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: test-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
-    env:
-      AWS_S3_BUCKET: data.staging.infoeducatie.ro
-      AWS_S3_HOST: http://data.staging.infoeducatie.ro
-      AWS_S3_KEY: ""
-      AWS_S3_REGION: 'eu-central-1'
-      AWS_S3_SECRET: ''
-      AWS_SES_ACCESS_KEY: ''
-      AWS_SES_ENDPOINT: email.eu-west-1.amazonaws.com
-      AWS_SES_SECRET_KEY: ''
-      DATABASE_URL: postgres://postgres:@localhost:5432/postgres
-      DISABLE_EMAIL: true
-      DISCOURSE_API: ''
-      DISCOURSE_USER: muflonel
-      RACK_ENV: production
-      RAILS_ENV: production
-      LANG: en_US.UTF-8
-      SECRET_KEY_BASE: ''
-      SENTRY_DSN: ''
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RAILS_ENV: test
+      RACK_ENV: test
+      DB_HOST: 127.0.0.1
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DISABLE_EMAIL: "true"
+      DISCOURSE_API: ""
+      DISCOURSE_USER: ""
+      SECRET_KEY_BASE: test-only-secret-key-base
     services:
-      db:
-        image: postgres
+      postgres:
+        image: postgres:18-alpine
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: infoeducatie_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
-          # Opens tcp port 5432 on the host and service container
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
+          --health-cmd "pg_isready -U postgres -d infoeducatie_test"
+          --health-interval 5s
           --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.4.10'
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-      - name: Set up database schema
-        run: bundle exec rake db:migrate --trace
-      - name: Load test data into database
-        run: bundle exec rake db:seed
-      - name: Run tests
-        run: bundle exec rake
+          --health-retries 10
 
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Install system packages
+        run: sudo apt-get update && sudo apt-get install --yes imagemagick
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@a30dfa457ad68707b8b910ac3a244714b61c0626 # v1
+        with:
+          ruby-version: 4.0.6
+          bundler-cache: true
+
+      - name: Load database schema
+        run: bundle exec rails db:schema:load
+
+      - name: Run regression suite
+        run: bundle exec rspec
+
+      - name: Verify eager loading
+        run: bundle exec rails zeitwerk:check
+
+      - name: Scan Rails code
+        run: bundle exec brakeman --no-pager --quiet
+
+      - name: Scan gem advisories
+        run: bundle exec bundle-audit check --update
+
+      - name: Build production image
+        run: docker build --tag infoeducatie-api:test .

@@ -38,11 +38,11 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    self.roles.include?(Role.find_by(name: "admin"))
+    roles.exists?(name: "admin")
   end
 
   def contestant?
-    self.roles.include?(Role.find_by(name: "contestant"))
+    roles.exists?(name: "contestant")
   end
 
   def get_current_teacher
@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def set_default_role
-    self.roles << Role.find_by(name: "registered")
+    roles << Role.find_by!(name: "registered")
   end
 
   def name

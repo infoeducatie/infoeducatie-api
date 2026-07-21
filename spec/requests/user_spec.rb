@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "V1::Users", type: :request do
+  def register_user(attributes)
+    post "/v1/users", params: {user: attributes}, as: :json
+  end
+
   describe "POST /v1/users" do
 
     let(:valid_email) { "test@user.ro" }
@@ -16,7 +20,13 @@ RSpec.describe "V1::Users", type: :request do
 
     context "when resource is valid" do
       it "responds with 200" do
-        post "/v1/users", "user[email]" => valid_email, "user[password]" => valid_password, "user[password_confirmation]" => valid_password, "user[first_name]" => valid_first_name, "user[last_name]" => valid_last_name, format: 'json'
+        register_user(
+          email: valid_email,
+          password: valid_password,
+          password_confirmation: valid_password,
+          first_name: valid_first_name,
+          last_name: valid_last_name
+        )
 
         expect(response).to have_http_status(200)
 
@@ -29,7 +39,11 @@ RSpec.describe "V1::Users", type: :request do
 
     context "when resource has invalid email" do
       it "responds with 422" do
-        post "/v1/users", "user[email]" => invalid_email , "user[password]" => valid_password, "user[password_confirmation]" => valid_password, format: 'json'
+        register_user(
+          email: invalid_email,
+          password: valid_password,
+          password_confirmation: valid_password
+        )
 
         expect(response).to have_http_status(422)
 
@@ -40,7 +54,11 @@ RSpec.describe "V1::Users", type: :request do
 
     context "when resource has empty email" do
       it "responds with 422" do
-        post "/v1/users", "user[email]" => empty_email, "user[password]" => valid_password, "user[password_confirmation]" => valid_password, format: 'json'
+        register_user(
+          email: empty_email,
+          password: valid_password,
+          password_confirmation: valid_password
+        )
 
         expect(response).to have_http_status(422)
 
@@ -51,7 +69,11 @@ RSpec.describe "V1::Users", type: :request do
 
     context "when resource has invalid password" do
       it "responds with 422" do
-        post "/v1/users", "user[email]" => valid_email, "user[password]" => valid_password, "user[password_confirmation]" => invalid_password, format: 'json'
+        register_user(
+          email: valid_email,
+          password: valid_password,
+          password_confirmation: invalid_password
+        )
 
         expect(response).to have_http_status(422)
 
@@ -62,7 +84,11 @@ RSpec.describe "V1::Users", type: :request do
 
     context "when resource has empty password" do
       it "responds with 422" do
-        post "/v1/users", "user[email]" => valid_email, "user[password]" => empty_password, "user[password_confirmation]" => valid_password, format: 'json'
+        register_user(
+          email: valid_email,
+          password: empty_password,
+          password_confirmation: valid_password
+        )
 
         expect(response).to have_http_status(422)
 
@@ -73,7 +99,11 @@ RSpec.describe "V1::Users", type: :request do
 
     context "when resource has empty confirmation password" do
       it "responds with 422" do
-        post "/v1/users", "user[email]" => valid_email, "user[password]" => valid_password, "user[password_confirmation]" => empty_password , format: 'json'
+        register_user(
+          email: valid_email,
+          password: valid_password,
+          password_confirmation: empty_password
+        )
 
         expect(response).to have_http_status(422)
 

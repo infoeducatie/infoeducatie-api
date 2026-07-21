@@ -1,61 +1,52 @@
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-source 'https://rubygems.org'
-ruby '2.4.10'
+source "https://rubygems.org"
 
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
-gem 'rails', '4.2.10'
-gem 'rabl', '~> 0.11.0'
-gem 'oj'
-gem 'jbuilder', '~> 2.0'
-gem 'unicorn'
-gem 'unicorn-rails'
-gem 'uglifier', '>= 1.3.0'
-gem 'devise', '~> 3.5.0'
-gem 'rails_admin', '~> 0.6.7'
-gem 'active_model_serializers', '~> 0.9.3'
-gem 'pundit'
-gem 'net-ssh'
-gem 'aws-ses', '~> 0.6.0', :require => 'aws/ses'
-gem 'sentry-raven'
-gem 'date_validator'
-gem 'rails_config'
-gem 'config'
-gem 'carrierwave'
-gem 'fog', '~> 1.31.0'
-gem 'recursive-open-struct', '~> 0.6.3'
-gem 'discourse_api', '0.38.0'
-gem 'ckeditor'
-gem 'mini_magick'
-gem 'pg', '~> 0.21'
-gem 'rails_12factor'
-gem 'xmlrpc'
+ruby "4.0.6"
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', '~> 0.4.0'
-end
+gem "rails", "~> 8.1.3"
+gem "puma", "~> 8.0"
+gem "bootsnap", "~> 1.24", require: false
+
+# RailsAdmin 3 supports Sprockets directly and the application extends its
+# asset bundle with project-specific admin behavior and styling.
+gem "sprockets-rails", "~> 3.5"
+gem "sassc-rails", "~> 2.1"
+
+gem "config", "~> 5.6"
+gem "date_validator", "~> 0.12"
+gem "devise", "~> 5.0"
+gem "discourse_api", "~> 2.1"
+gem "dotenv-rails", "~> 3.2"
+gem "fog-aws", "~> 3.33"
+gem "carrierwave", "~> 3.1"
+gem "mini_magick", "~> 5.3"
+gem "net-ssh", "~> 7.3"
+gem "oj", "~> 3.17"
+gem "pg", "~> 1.6"
+gem "pundit", "~> 2.5"
+gem "rabl", "~> 0.17"
+gem "rack-cors", "~> 3.0"
+gem "rails_admin", "~> 3.3"
+gem "recursive-open-struct", "~> 2.1"
+gem "responders", "~> 3.2"
+gem "sentry-rails", "~> 6.6"
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  # Spring speeds up development by keeping your application running in the
-  # background. Read more: https://github.com/rails/spring
-  gem 'spring'
-end
-
-group :test do
-  gem 'faker', '~> 1.4.1'
-  gem 'database_cleaner', '~> 1.4.0'
-  gem 'vcr', require: false
+  gem "better_errors", "~> 2.10"
+  gem "binding_of_caller", "~> 1.0"
+  gem "debug", "~> 1.11"
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'factory_bot_rails'
-  gem 'guard-rspec', require: false
-  gem 'pry-rails'
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'simplecov', require: false
+  gem "brakeman", "~> 7.1", require: false
+  gem "bundler-audit", "~> 0.9", require: false
+  gem "factory_bot_rails", "~> 6.5"
+  gem "pry-rails", "~> 0.3"
+  gem "rspec-rails", "~> 8.0"
+  gem "simplecov", "~> 1.0", require: false
+end
+
+group :test do
+  gem "database_cleaner-active_record", "~> 2.2"
+  gem "faker", "~> 3.8"
+  gem "vcr", "~> 6.4", require: false
 end

@@ -1,11 +1,35 @@
-db:
-  image: postgres
-web:
-  build: .
-  command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-  ports:
-    - "3000:3000"
-  links:
-    - db
-  env_file: .env
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: infoeducatie_production
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d infoeducatie_production"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
+  web:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/infoeducatie_production
+      RAILS_ENV: production
+      RACK_ENV: production
+      RAILS_FORCE_SSL: "false"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-local-compose-secret-key-base}
+    command: sh -c "bundle exec rails db:prepare && bundle exec puma -C config/puma.rb"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

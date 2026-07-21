@@ -1,7 +1,8 @@
 module V1
-  class TeachersController < ApplicationController
+  class TeachersController < ApiController
     before_action :set_teacher, only: [:show]
     before_action :authenticate_user_from_token!, only: [:create]
+    before_action :require_registration_open, only: [:create]
 
     respond_to :json
 

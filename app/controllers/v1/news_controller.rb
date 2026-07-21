@@ -1,5 +1,5 @@
 module V1
-  class NewsController < ApplicationController
+  class NewsController < ApiController
     respond_to :json
 
     # GET /v1/news.json

@@ -1,21 +1,28 @@
-defaults: &defaults
+default: &default
   adapter: postgresql
-  username: <%= ENV['USER'] || "postgres" %>
-  password:
-  database: infoeducatie_<%= Rails.env %>
-  min_messages: ERROR
-  pool: 5
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   timeout: 5000
-  host: localhost
+  min_messages: warning
 
 development:
-  <<: *defaults
-
-staging:
-  <<: *defaults
+  <<: *default
+  database: infoeducatie_development
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  username: <%= ENV.fetch("DB_USER", ENV.fetch("USER", "postgres")) %>
+  password: <%= ENV["DB_PASSWORD"] %>
 
 test:
-  <<: *defaults
+  <<: *default
+  database: infoeducatie_test
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  username: <%= ENV.fetch("DB_USER", ENV.fetch("USER", "postgres")) %>
+  password: <%= ENV["DB_PASSWORD"] %>
+
+staging:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
 
 production:
-  <<: *defaults
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>

@@ -1,0 +1,8 @@
+<%= render partial: "confirm_admin_action",
+           locals: {
+             title: "Approve project?",
+             message: "#{@object.title} will be published or updated on Discourse and marked as approved.",
+             button_label: "Approve project",
+             button_class: "btn-success",
+             icon: "fa-check"
+           } %>

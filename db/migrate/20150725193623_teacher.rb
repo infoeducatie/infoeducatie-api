@@ -1,4 +1,4 @@
-class Teacher < ActiveRecord::Migration
+class Teacher < ActiveRecord::Migration[4.2]
   def change
     create_table :teachers do |t|
       t.integer  "sex"

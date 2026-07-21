@@ -9,7 +9,7 @@
     </div>
 
     <%= form.link_to_add(
-          '<i class="icon-plus icon-white" aria-hidden="true"></i> Add screenshot'.html_safe,
+          '<i class="fas fa-plus" aria-hidden="true"></i> Add screenshot'.html_safe,
           field.name,
           class: "btn btn-info ie-screenshot-editor__add",
           data: {
@@ -32,7 +32,11 @@
   </div>
 
   <div class="ie-screenshot-editor__empty" data-screenshot-empty>
-    <i class="icon-picture" aria-hidden="true"></i>
+    <i class="fas fa-image" aria-hidden="true"></i>
     <span>No screenshots attached. Add the first image to this project.</span>
   </div>
+
+  <ul class="nav collapse d-none" aria-hidden="true"></ul>
 </div>
+
+<div class="tab-content collapse d-none" aria-hidden="true"></div>

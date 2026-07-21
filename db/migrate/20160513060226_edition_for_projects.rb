@@ -1,4 +1,4 @@
-class EditionForProjects < ActiveRecord::Migration
+class EditionForProjects < ActiveRecord::Migration[4.2]
   def change
     add_column :projects, :edition_id, :integer
     add_index :projects, :edition_id

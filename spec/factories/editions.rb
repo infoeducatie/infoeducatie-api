@@ -9,8 +9,8 @@ FactoryBot.define do
     camp_start_date { "2015-06-28" }
     camp_end_date { "2015-06-28" }
     motto { "MyString" }
-    registration_start_date { "2015-06-28 01:46:03" }
-    registration_end_date { "2015-06-28 01:46:03" }
+    registration_start_date { 1.day.ago }
+    registration_end_date { 1.day.from_now }
     travel_data_deadline { "2015-06-28" }
     published { true }
     current { true }

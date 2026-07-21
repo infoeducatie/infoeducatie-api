@@ -2,6 +2,10 @@ class Project < ActiveRecord::Base
   STATUS_APPROVED = 1
   STATUS_REJECTED = -1
   STATUS_WAITING  = 0
+  DISCOURSE_SYNC_ATTRIBUTES = %w[
+    title description technical_description system_requirements source_url
+    homepage open_source closed_source_reason category_id edition_id
+  ].freeze
 
   scope :approved, -> { where(finished: true)
                       .where(status: Project::STATUS_APPROVED) }
@@ -17,9 +21,9 @@ class Project < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :edition
-  has_many :users, through: :contestants, inverse_of: :projects
   has_many :colaborators, inverse_of: :project, dependent: :destroy
   has_many :contestants, through: :colaborators, inverse_of: :projects
+  has_many :users, through: :contestants, inverse_of: :projects
   has_many :screenshots, inverse_of: :project, dependent: :destroy
 
   accepts_nested_attributes_for :category
@@ -74,19 +78,45 @@ class Project < ActiveRecord::Base
     self.total_score = score + extra_score
   end
 
-  after_update :update_discourse
-  def update_discourse
-    return if topic_id.nil?
-    discourse = Discourse.new
-    discourse.update(discourse_title, discourse_content,
-                     edition.projects_forum_category,
-                     topic_id) if status == Project::STATUS_APPROVED
+  after_commit :update_discourse, on: :update, if: :discourse_sync_required?
+
+  def discourse_sync_required?
+    status == STATUS_APPROVED && topic_id.present? &&
+      (previous_changes.keys & DISCOURSE_SYNC_ATTRIBUTES).any?
   end
 
-  after_destroy :delete_discourse
-  def delete_discourse
+  def update_discourse
+    return false if topic_id.nil?
+
     discourse = Discourse.new
-    discourse.delete(topic_id)
+    return false unless status == STATUS_APPROVED
+
+    discourse.update(
+      discourse_title,
+      discourse_content,
+      edition.projects_forum_category,
+      topic_id
+    )
+  rescue DiscourseApi::DiscourseError => error
+    Rails.logger.error(
+      "Project Discourse sync failed for project=#{id}: " \
+      "#{error.class}: #{error.message}"
+    )
+    Sentry.capture_exception(error)
+    false
+  end
+
+  after_commit :delete_discourse, on: :destroy
+
+  def delete_discourse
+    Discourse.new.delete(topic_id)
+  rescue DiscourseApi::DiscourseError => error
+    Rails.logger.error(
+      "Project Discourse delete failed for project=#{id}: " \
+      "#{error.class}: #{error.message}"
+    )
+    Sentry.capture_exception(error)
+    false
   end
 
   before_validation :initialize_colaborators, on: :create
@@ -147,10 +177,10 @@ class Project < ActiveRecord::Base
   end
 
   def discourse_content
-    template_file = File.open("#{Rails.root}/app/views/discourse/project.erb")
-    erb_template = ERB.new(template_file.read, nil, '-')
+    template = Rails.root.join("app/views/discourse/project.erb").read
+    erb_template = ERB.new(template, trim_mode: "-")
 
-    context = ERBContext.new(
+    context = ErbContext.new(
       category: category.name.capitalize,
       homepage: homepage,
       county: counties.join(" "),
