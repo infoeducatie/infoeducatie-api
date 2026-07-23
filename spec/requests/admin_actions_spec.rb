@@ -20,6 +20,36 @@ RSpec.describe "RailsAdmin actions", type: :request do
     expect(response.body).to include(project.title)
   end
 
+  describe "user management" do
+    it "renders the new user form with Devise password guidance" do
+      get "/internal/admin/user/new"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("8-128 characters")
+    end
+
+    it "creates a user" do
+      email = "new-user@example.com"
+
+      expect {
+        post "/internal/admin/user/new",
+          params: {
+            user: {
+              email: email,
+              first_name: "New",
+              last_name: "User",
+              password: "TestP4ssW0rd"
+            }
+          }
+      }.to change(User, :count).by(1)
+
+      expect(response).to have_http_status(:redirect)
+      expect(User.find_by!(email: email).roles.pluck(:name)).to include(
+        "registered"
+      )
+    end
+  end
+
   describe "project approval" do
     let!(:project) { create(:project, finished: true) }
 

@@ -87,7 +87,14 @@ class User < ActiveRecord::Base
       field :last_name
       field :job
       field :roles
-      field :password
+      field :password do
+        # RailsAdmin 3.3 cannot render Devise 5's callable length validators.
+        help do
+          range = User.password_length
+          "#{range.min}-#{range.max} characters. " \
+            "Leave blank when editing to keep the current password."
+        end
+      end
       field :newsletter
     end
     list do
