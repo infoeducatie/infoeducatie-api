@@ -97,6 +97,14 @@ en:
         title: "Pin article '%{object_label}'"
         menu: "Pin"
         breadcrumb: "Pin"
+      issue_api_credential:
+        title: "Issue API key"
+        menu: "Issue API key"
+        breadcrumb: "Issue API key"
+      revoke_api_credential:
+        title: "Revoke API key '%{object_label}'"
+        menu: "Revoke"
+        breadcrumb: "Revoke"
       delete:
         title: "Delete %{model_label} '%{object_label}'"
         menu: "Delete"

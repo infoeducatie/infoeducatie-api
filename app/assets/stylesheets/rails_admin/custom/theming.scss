@@ -424,3 +424,156 @@
     min-height: 240px;
   }
 }
+
+.ie-api-key-panel {
+  width: 100%;
+  max-width: 780px;
+}
+
+.ie-api-key-panel__header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d8dee3;
+}
+
+.ie-api-key-panel__header h4,
+.ie-api-key-secret__heading h4 {
+  margin: 0 0 6px;
+  color: #26333d;
+}
+
+.ie-api-key-panel__header p,
+.ie-api-key-secret__heading p {
+  max-width: 680px;
+  margin: 0;
+  color: #687681;
+  line-height: 1.5;
+}
+
+.ie-api-key-form {
+  display: grid;
+  gap: 20px;
+}
+
+.ie-api-key-form .form-group,
+.ie-api-key-form .form-actions {
+  margin: 0;
+}
+
+.ie-api-key-scopes {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ie-api-key-scopes legend {
+  margin: 0;
+  color: #26333d;
+  border: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ie-api-key-scope {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  background: #f7f9fa;
+  border: 1px solid #d8dee3;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ie-api-key-scope:hover {
+  border-color: #16817a;
+}
+
+.ie-api-key-scope input {
+  margin-top: 3px;
+}
+
+.ie-api-key-scope span {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.ie-api-key-scope code {
+  width: fit-content;
+  color: #155f5a;
+}
+
+.ie-api-key-scope small {
+  color: #687681;
+  font-weight: 400;
+}
+
+.ie-api-key-form__expiry {
+  max-width: 360px;
+}
+
+.ie-api-key-panel--result {
+  display: grid;
+  gap: 20px;
+}
+
+.ie-api-key-secret {
+  padding: 20px;
+  background: #f7f9fa;
+  border: 1px solid #cbd4da;
+  border-radius: 6px;
+}
+
+.ie-api-key-secret__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.ie-api-key-secret__value {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+}
+
+.ie-api-key-secret__status {
+  min-height: 20px;
+  margin: 6px 0 0;
+  color: #176f69;
+  font-size: 12px;
+}
+
+.ie-api-key-secret__status.is-error {
+  color: #a23a35;
+}
+
+.ie-api-key-summary {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.ie-api-key-summary dt,
+.ie-api-key-summary dd {
+  margin: 0;
+}
+
+.ie-api-key-summary dd {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 767px) {
+  .ie-api-key-secret__heading {
+    flex-direction: column;
+  }
+
+  .ie-api-key-summary {
+    grid-template-columns: 1fr;
+  }
+}

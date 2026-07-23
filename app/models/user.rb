@@ -13,6 +13,16 @@ class User < ActiveRecord::Base
   has_many :talk_users, dependent: :destroy
   has_many :talks, through: :talk_users
   has_many :projects, through: :contestants, inverse_of: :users
+  has_many :created_api_credentials,
+    class_name: "ApiCredential",
+    foreign_key: :created_by_id,
+    inverse_of: :created_by,
+    dependent: :nullify
+  has_many :revoked_api_credentials,
+    class_name: "ApiCredential",
+    foreign_key: :revoked_by_id,
+    inverse_of: :revoked_by,
+    dependent: :nullify
 
   # discourse_id needs to be unique
   validates :discourse_id, uniqueness: true, :allow_nil => true

@@ -159,3 +159,15 @@ en:
         default_col_sep: ","
         col_sep: "Column separator"
         col_sep_help: "Leave blank for default ('%{value}')" # value is default_col_sep
+
+ro:
+  admin:
+    actions:
+      issue_api_credential:
+        title: "Genereaza cheie API"
+        menu: "Genereaza cheie API"
+        breadcrumb: "Genereaza cheie API"
+      revoke_api_credential:
+        title: "Revoca cheia API '%{object_label}'"
+        menu: "Revoca"
+        breadcrumb: "Revoca"

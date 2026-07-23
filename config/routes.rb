@@ -47,6 +47,11 @@ Rails.application.routes.draw do
 
     resources :teachers, only: [:index, :show, :create]
 
+    namespace :integrations do
+      resources :competitions, only: [:index]
+      get :competition_data, to: "competition_data#show"
+    end
+
     get "current" => "current#index"
   end
 

@@ -168,6 +168,58 @@
     refreshScreenshotEditor($field.closest("[data-screenshot-editor]"));
   });
 
+  $(document).on("click", "[data-copy-api-token]", function () {
+    var input = document.querySelector("[data-api-token]");
+    var status = document.querySelector("[data-api-token-copy-status]");
+    if (!input) return;
+
+    function reportCopy(message, isError) {
+      if (!status) return;
+      status.textContent = message;
+      status.classList.toggle("is-error", Boolean(isError));
+    }
+
+    function fallbackCopy() {
+      input.focus();
+      input.select();
+      input.setSelectionRange(0, input.value.length);
+
+      try {
+        if (!document.execCommand("copy")) throw new Error("Copy failed");
+        reportCopy("Copied to clipboard.", false);
+      } catch (_error) {
+        reportCopy("Select and copy the key manually.", true);
+      }
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(input.value)
+        .then(function () {
+          reportCopy("Copied to clipboard.", false);
+        })
+        .catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+
+  $(document).on("submit", ".ie-api-key-form", function (event) {
+    var form = this;
+    var button = form.querySelector('button[type="submit"]');
+
+    if (form.dataset.submitting === "true") {
+      event.preventDefault();
+      return;
+    }
+
+    form.dataset.submitting = "true";
+    if (button) {
+      button.disabled = true;
+      button.innerHTML =
+        '<i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i> Issuing key...';
+    }
+  });
+
   $(function () {
     initializeScreenshotEditors(document);
     initializeRichTextEditors(document);

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2016_05_13_060226) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_23_090000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,28 @@ ActiveRecord::Schema[8.1].define(version: 2016_05_13_060226) do
   end
 
   add_index "alumni", ["user_id"], name: "index_alumni_on_user_id", unique: true, using: :btree
+
+  create_table "api_credentials", force: :cascade do |t|
+    t.string   "name",                                      null: false
+    t.text     "description"
+    t.string   "token_identifier",                          null: false
+    t.string   "secret_digest",                             null: false
+    t.jsonb    "scopes",                    default: [],    null: false
+    t.datetime "expires_at",                                null: false
+    t.datetime "revoked_at"
+    t.integer  "created_by_id"
+    t.integer  "revoked_by_id"
+    t.datetime "last_used_at"
+    t.string   "last_used_ip",              limit: 45
+    t.bigint   "use_count",                 default: 0,     null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "api_credentials", ["created_by_id"], name: "index_api_credentials_on_created_by_id", using: :btree
+  add_index "api_credentials", ["revoked_at", "expires_at"], name: "index_api_credentials_on_revoked_at_and_expires_at", using: :btree
+  add_index "api_credentials", ["revoked_by_id"], name: "index_api_credentials_on_revoked_by_id", using: :btree
+  add_index "api_credentials", ["token_identifier"], name: "index_api_credentials_on_token_identifier", unique: true, using: :btree
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "alumnus_id"
@@ -236,4 +258,6 @@ ActiveRecord::Schema[8.1].define(version: 2016_05_13_060226) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "api_credentials", "users", column: "created_by_id", on_delete: :nullify
+  add_foreign_key "api_credentials", "users", column: "revoked_by_id", on_delete: :nullify
 end

@@ -31,6 +31,10 @@ Successful `master` builds are published to GitHub Container Registry. See
 [the Rails 8 upgrade runbook](docs/rails-8-upgrade.md) before promoting this
 release to staging or production.
 
+Service-to-service exports use scoped, expiring API credentials managed from
+RailsAdmin. See the [integration API guide](docs/integration-api.md) for key
+rotation, scopes, endpoint contracts, and personal-data safeguards.
+
 ### New contest edition
 
 Due to a missing feature after creating a new edition, all the existing users need to be updated.

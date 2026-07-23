@@ -8,16 +8,18 @@
 * `discourse_api` 2.1
 * PostgreSQL 18 in local development and CI
 
-The application schema is unchanged by this release. Existing migrations were
-only annotated with their original Rails version so a fresh Rails 8 database can
-replay them correctly.
+The Rails upgrade preserved the existing tables. The integration API adds one
+additive `api_credentials` table for scoped service credentials and their audit
+metadata.
 
 ## Required configuration
 
-Set `DATABASE_URL`, `SECRET_KEY_BASE`, the `AWS_S3_*` values, and the `SMTP_*`
-values from `.env.example`. Set `DISCOURSE_API` and `DISCOURSE_USER` to a current
-Discourse API key and its owner. Project approval deliberately fails without
-those credentials so an approved project can never receive a fake topic ID.
+Set `DATABASE_URL`, `SECRET_KEY_BASE`, `API_KEY_PEPPER`, the `AWS_S3_*` values,
+and the `SMTP_*` values from `.env.example`. Generate `API_KEY_PEPPER` as an
+independent high-entropy secret before issuing the first integration key. Set
+`DISCOURSE_API` and `DISCOURSE_USER` to a current Discourse API key and its
+owner. Project approval deliberately fails without those credentials so an
+approved project can never receive a fake topic ID.
 
 Set `CORS_ALLOWED_ORIGINS` to a comma-separated list of exact HTTPS frontend
 origins. Keep `RAILS_ASSUME_SSL=true` behind the production TLS proxy. Enable
@@ -35,6 +37,8 @@ origins. Keep `RAILS_ASSUME_SSL=true` behind the production TLS proxy. Enable
    and confirm topic creation, update, recategorization, and deletion.
 8. Create and edit news with text and an uploaded image. Confirm the uploaded URL
    is readable after a container restart.
+9. Issue a short-lived integration key, verify both integration endpoints,
+   revoke it, and confirm subsequent requests return `401`.
 
 Upgrade Discourse only after the new API has passed this rehearsal against the
 existing Discourse version. Then repeat step 7 against the upgraded staging
@@ -43,7 +47,8 @@ instance before touching production.
 ## Production rollout
 
 1. Record the current application image digest and take a fresh database backup.
-2. Confirm S3 credentials, Discourse credentials, SMTP, CORS, and `SECRET_KEY_BASE`.
+2. Confirm S3 credentials, Discourse credentials, SMTP, CORS,
+   `SECRET_KEY_BASE`, and `API_KEY_PEPPER`.
 3. Deploy one new application instance and run `bundle exec rails db:migrate`.
 4. Check `/up` and the logs, then complete the staging smoke paths once.
 5. Shift traffic gradually and monitor HTTP 5xx, Sentry, database connections,
@@ -54,7 +59,9 @@ makes failures attributable and rollback practical.
 
 ## Rollback
 
-Restore the previous application image digest and restart Puma. Because this
-release does not change the database structure, no down migration is required.
-If data was damaged independently of the application deployment, stop writes and
-restore the verified PostgreSQL backup using the normal infrastructure procedure.
+Restore the previous application image digest and restart Puma. The additive
+`api_credentials` table can remain in place because older images do not access
+it, so no down migration is required for an application rollback. Do not issue
+or rotate integration keys until the new image is restored. If data was damaged
+independently of the application deployment, stop writes and restore the
+verified PostgreSQL backup using the normal infrastructure procedure.

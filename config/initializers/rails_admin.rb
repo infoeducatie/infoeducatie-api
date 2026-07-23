@@ -28,24 +28,26 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+      except ["ApiCredential", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     export do
-      except ["Screenshot", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+      except ["ApiCredential", "Screenshot", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     show do
       except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     edit do
-      except ["Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+      except ["ApiCredential", "Ckeditor::Asset", "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
     end
     delete do
-      except ["Project", "Contestant"]
+      except ["ApiCredential", "Project", "Contestant"]
     end
     bulk_delete do
-      except ["Project", "Contestant"]
+      except ["ApiCredential", "Project", "Contestant"]
     end
-    show_in_app
+    show_in_app do
+      except ["ApiCredential"]
+    end
 
     approve_project do
       only ['Project']
@@ -59,6 +61,13 @@ RailsAdmin.config do |config|
       only ['News']
     end
 
+    issue_api_credential do
+      only ["ApiCredential"]
+    end
+
+    revoke_api_credential do
+      only ["ApiCredential"]
+    end
 
     ## With an audit adapter, you can add:
     # history_index
@@ -71,7 +80,7 @@ RailsAdmin.config do |config|
     "Forum Admin" => "http://community.infoeducatie.ro/admin"
   }
 
-  config.included_models = ["Project", "Contestant", "User", "Talk",
+  config.included_models = ["ApiCredential", "Project", "Contestant", "User", "Talk",
                             "Screenshot", "Edition", "News", "Ckeditor::Asset",
                             "Ckeditor::AttachmentFile", "Ckeditor::Picture",
                             "Alumnus", "Teacher"]
