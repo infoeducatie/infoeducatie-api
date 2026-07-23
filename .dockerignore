@@ -3,6 +3,7 @@
 .github
 .env
 coverage
+docs
 log/*
 tmp/*
 vendor/bundle

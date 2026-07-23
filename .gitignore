@@ -42,3 +42,6 @@ config/environments/*.local.yml
 # Local browser-test artifacts
 /.playwright-cli/
 /output/playwright/
+
+# Local documentation and integration handoff artifacts
+/docs/

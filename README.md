@@ -27,13 +27,10 @@ Start the application and PostgreSQL with:
 docker compose up --build
 ```
 
-Successful `master` builds are published to GitHub Container Registry. See
-[the Rails 8 upgrade runbook](docs/rails-8-upgrade.md) before promoting this
-release to staging or production.
+Successful `master` builds are published to GitHub Container Registry.
 
 Service-to-service exports use scoped, expiring API credentials managed from
-RailsAdmin. See the [integration API guide](docs/integration-api.md) for key
-rotation, scopes, endpoint contracts, and personal-data safeguards.
+RailsAdmin.
 
 ### New contest edition
 
