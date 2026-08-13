@@ -27,6 +27,18 @@ Start the application and PostgreSQL with:
 docker compose up --build
 ```
 
+The local Compose setup seeds an entirely fictional 2026 dataset: first-place
+projects and participants from every category, results, news and alumni. Names,
+schools, biographies, scores, URLs and required private fields are all invented.
+Set `SEED_DEMO_DATA=false` to start with only the core roles, categories and
+current edition.
+
+The adjacent UI repository runs with `npm run dev` at
+<http://localhost:3001> and connects to this local API automatically. RailsAdmin
+is available at <http://localhost:3000/internal/admin> with the local defaults
+`admin@example.test` / `infoedu-local-admin`. Override `ADMIN_EMAIL` and
+`ADMIN_PASSWORD` in `.env` if needed.
+
 Successful `master` builds are published to GitHub Container Registry.
 
 Service-to-service exports use scoped, expiring API credentials managed from

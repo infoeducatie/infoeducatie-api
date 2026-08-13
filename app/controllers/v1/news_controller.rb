@@ -11,10 +11,7 @@ module V1
       end
 
       @news = News.all.where(edition: edition).order(created_at: :desc)
-
-      @news.map do |n|
-        n.body = "" if n.short.length < 50
-      end
+      @collapse_short_news_bodies = true
     end
 
     # GET /v1/show/1.json

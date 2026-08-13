@@ -23,7 +23,6 @@ module RailsAdmin
               render @action.template_name
             else
               News.transaction do
-                News.where.not(id: @object.id).update_all(pinned: false)
                 @object.update!(pinned: true)
               end
 

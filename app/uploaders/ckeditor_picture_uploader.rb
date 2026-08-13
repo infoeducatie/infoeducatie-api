@@ -5,7 +5,7 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   ALLOWED_CONTENT_TYPES = %r{\Aimage/(jpeg|png|webp)\z}.freeze
   MAX_FILE_SIZE = 10.megabytes
 
-  if Rails.env.test?
+  if Rails.env.test? || ENV["AWS_S3_BUCKET"].blank?
     storage :file
   else
     storage :fog

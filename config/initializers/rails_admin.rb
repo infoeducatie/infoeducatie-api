@@ -34,7 +34,7 @@ RailsAdmin.config do |config|
     new do
       except ["ApiCredential", "RoboticsCompetition", "RoboticsTeam",
               "RoboticsTurn", "RoboticsTimeEntry", "Ckeditor::Asset",
-              "Ckeditor::AttachmentFile", "Ckeditor::Picture"]
+              "Ckeditor::AttachmentFile", "Ckeditor::Picture", "ContentPage"]
     end
     export do
       except ["ApiCredential", "Screenshot", "RoboticsCompetition",
@@ -53,16 +53,18 @@ RailsAdmin.config do |config|
     delete do
       except ["ApiCredential", "Project", "Contestant",
               "RoboticsCompetition", "RoboticsTeam", "RoboticsTurn",
-              "RoboticsTimeEntry"]
+              "RoboticsTimeEntry", "ContentPage"]
     end
     bulk_delete do
       except ["ApiCredential", "Project", "Contestant",
               "RoboticsCompetition", "RoboticsTeam", "RoboticsTurn",
-              "RoboticsTimeEntry"]
+              "RoboticsTimeEntry", "ContentPage"]
     end
     show_in_app do
       except ["ApiCredential", "RoboticsCompetition", "RoboticsTeam",
-              "RoboticsTurn", "RoboticsTimeEntry"]
+              "RoboticsTurn", "RoboticsTimeEntry", "SponsorTier", "Sponsor",
+              "JuryCategory", "JuryMember", "JudgingCriterion", "PhotoAlbum",
+              "ContentPage", "BlogPost"]
     end
 
     approve_project do
@@ -112,8 +114,8 @@ RailsAdmin.config do |config|
 
   config.navigation_static_label = "External tools"
   config.navigation_static_links = {
-    "InfoEducație website" => "https://infoeducatie.ro",
-    "Community admin" => "https://community.infoeducatie.ro/admin",
+    "InfoEducație website" => Settings.ui.url,
+    "Community admin" => "#{Settings.ui.community_url.to_s.delete_suffix("/")}/admin",
     "InfoEducație support" => "https://infoeducatie.zendesk.com/",
     "Ping support" => "https://ping.zendesk.com"
   }
@@ -121,7 +123,9 @@ RailsAdmin.config do |config|
   config.included_models = ["ApiCredential", "Project", "Contestant", "User", "Talk",
                             "Screenshot", "Edition", "News", "Ckeditor::Asset",
                             "Ckeditor::AttachmentFile", "Ckeditor::Picture",
-                            "Alumnus", "Teacher", "RoboticsCompetition",
+                            "Alumnus", "SponsorTier", "Sponsor", "JuryCategory", "JuryMember",
+                            "JudgingCriterion", "PhotoAlbum", "ContentPage", "BlogPost",
+                            "Teacher", "RoboticsCompetition",
                             "RoboticsTeam", "RoboticsTurn",
                             "RoboticsTimeEntry"]
 
@@ -135,6 +139,14 @@ RailsAdmin.config do |config|
     "News" => ["Community", "fas fa-newspaper", 70],
     "Talk" => ["Community", "fas fa-microphone", 80],
     "Alumnus" => ["Community", "fas fa-user-check", 90],
+    "SponsorTier" => ["Community", "fas fa-layer-group", 100],
+    "Sponsor" => ["Community", "fas fa-handshake", 110],
+    "JuryCategory" => ["Community", "fas fa-gavel", 120],
+    "JuryMember" => ["Community", "fas fa-user-tie", 130],
+    "JudgingCriterion" => ["Community", "fas fa-file-pdf", 140],
+    "PhotoAlbum" => ["Community", "fas fa-images", 150],
+    "ContentPage" => ["Community", "fas fa-file-alt", 160],
+    "BlogPost" => ["Community", "fas fa-pen-nib", 170],
     "ApiCredential" => ["Security", "fas fa-key", 100],
     "Ckeditor::Asset" => ["Editor media", "fas fa-photo-video", 110],
     "Ckeditor::AttachmentFile" => ["Editor media", "fas fa-paperclip", 120],

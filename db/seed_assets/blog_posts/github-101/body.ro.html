@@ -1,0 +1,52 @@
+<p>Pentru a veni în întâmpinarea celor care nu sunt familiarizați cu sistemul de versionare Git am pregătit acest tutorial care vă va arăta pașii care trebuie urmați pentru a încărca proiectele voastre pe GitHub.</p>
+<h2>0. Concepte de bază</h2>
+<p>Înainte de a începe tutorialul este util să răspundem la câteva întrebări și să definim câteva noțiuni.</p>
+<h4>Ce este un sistem de versionare?</h4>
+<p>Un sistem de versionare este un mod de management al fișierelor care permite păstrarea istoricului tuturor modificărilor aduse fișierelor urmărite. O introducere a tipurilor de sisteme de versionare poate fi citită aici: <a href="http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">git-scm.com</a>
+În continuare vom discuta despre sisteme de versionare din perspectiva folosirii lor în cadrul proiectelor software.</p>
+<h4>Ce este github.com?</h4>
+<p>GitHub este un serviciu de hosting al proiectelor git (un proiect git este numit <code>repository</code>). Acesta permite păstrarea unei copii a proiectului online și vizualizarea tuturor fișierelor și a modificărilor aduse acestora.</p>
+<h4>Care sunt avantajele folosirii unui sistem de versionare?</h4>
+<ul>
+<li>este salvat istoricul tuturor modificărilor, astfel că se poate reveni oricând la o versiune mai veche dacă se descoperă introducerea unor defecte în ultima versiune</li>
+<li>prin folosirea unui serviciu de hosting, codul sursă are mereu o copie de siguranță online</li>
+<li>cea mai recentă versiune a codului sursă este mereu disponibilă tuturor dezvoltatorilor, făcând astfel colaborarea și sincronizarea mult mai ușoară decât în cazul trimiterii de fișiere conținând cod sursă dezvoltatorilor interesați de proiect.</li>
+</ul>
+<h4>Dicționar de termeni</h4>
+<ul>
+<li><code>git</code> - sistem de versionare</li>
+<li><code>repository</code> - un „proiect” git ce conține toate fișierele și istoricul modificărilor</li>
+<li><code>commit</code> - un set de modicări/adăugări/ștergeri a unui sau a mai multor fișiere din cadrul repository-ului</li>
+</ul>
+<h2>1. Crearea contului GitHub</h2>
+<p>Primul pas este crearea unui cont <a href="https://github.com/"><strong>GitHub</strong></a>, completând un username, adresa de email și o parolă. La următorul pas va trebui să selectați tipul de cont dorit. Implicit este selectat contul gratuit, care permite doar crearea de repository-uri publice. Apăsați „<strong>Finish sign up</strong>”.</p>
+<p>Acesta este un moment bun pentru a valida adresa de email aleasă: tot ce trebuie să faceți este să accesați link-ul din interiorul email-ului primit de la GitHub.</p>
+<h2>2. Crearea unui repository</h2>
+<p>Pagina de start a GitHub va conține acum rubrica <em><strong>GitHub Bootcamp</strong></em>, o colecție de resurse suplimentare despre utilizarea GitHub. Noi ne vom axa pe crearea unui repository. Pentru aceasta dați click pe <strong>+ New Repository</strong></p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/01-dashboard.png" alt="GitHub homepage"></p>
+<p>Următorul pas este alegerea unui nume pentru repository. În câmpul „<em>Description</em>” puteți adăuga o scurtă descriere a proiectului. Nu uitați să bifați „<strong>Initialize this repository with a README</strong>”. Opțional puteți alege, în partea de jos a paginii, adăugarea unui fișier .gitignore și/sau a unei licențe.</p>
+<p>Fișierul .gitignore este folosit de git pentru a ignora fișierele pe care nu le doriți în repository, de exemplu: fișiere generate la compilare, fișiere private, etc. Mai multe detalii puteți găsi aici: <a href="https://help.github.com/articles/ignoring-files/">help.github.com</a>.</p>
+<p>Licența folosită determină condițiile în care o altă persoană poate folosi proiectul vostru. Un ghid alegerea unei licențe poate fi găsit aici: <a href="http://choosealicense.com/">choosealicense.com</a>.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/02-new-repo.png" alt="Crearea unui nou repository"></p>
+<p>După apăsarea butonului „<strong>Create Repository</strong>” veți ajunge pe pagina repository-ului nou creat.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/03-repo-created.png" alt="Repository-ul a fost creat"></p>
+<h2>3. Instalarea și configurarea GitHub for Windows</h2>
+<p>În continuare vom descăra și instala aplicația GitHub for Windows de la adresa <a href="https://windows.github.com/">windows.github.com</a>. După instalare va trebui să vă autentificați în aplicație cu username-ul/adresa de mail și parola alese la crearea contului de GitHub.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/04-github-setup.png" alt="Autentificare GitHub for Windows"></p>
+<p>În următorul pas va trebui să configurați identitatea voastră. Scrieți numele întreg și adresa de email. Acestea vor fi publice tuturor persoanelor care au acces la repository.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/05-github-setup-2.png" alt="Configurarea GitHub for Windows"></p>
+<p>La ultimul pas puteți apăsa pe „<strong>Skip</strong>”, deoarece încă nu aveți niciun repository local.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/06-github-setup-3.png" alt="Importarea repo"></p>
+<h2>4. Crearea primul commit</h2>
+<p>Acum vom clona (crea o copie locală) repository-ul creat anterior. Din aplicație vom da click pe „<strong>+</strong>”, vom selecta tab-ul „<strong>Clone</strong>”, contul și repository-ul pe care dorim să-l clonăm, iar în final vom apăsa „<strong>Clone &lt;repo-name&gt;</strong>”. Pe ecran va apărea o fereastră pentru selectarea directorului unde se va face clonarea.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/07-github-clone.png" alt="Clonarea unui repository"></p>
+<p>Acum puteți adăuga fișierele sursă în folderul în care ați clonat repository-ul. În acest exemplu este vorba de fișierul <em>hello.c</em>.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/08-add-source-files.png" alt="Adăugarea fișierelor sursă"></p>
+<p>Reveniniți în aplicația GitHub for Windows și selectați repository-ul. Veți observa pe coloana centrală că a detectat modificarea unor fișiere („<em>Uncommitted changes</em>”). Dați click pe Show pentru a vedea lista lor.</p>
+<p>În coloana din dreapta vor apărea toate fișierele noi apărute în directorul repository-ului (ex: <em>hello.c</em>), precum și fișierele existente care au fost modificate de la ultimul commit (ex: <em>README.md</em>). Pentru a adăuga toate fișierele în repository bifați „<em>Files to commit</em>”. Dacă doriți un control mai fin asupra fișierelor puteți expanda fiecare fișier și selecta doar anumite linii. La final scrieți un mesaj de commit în câmpul Summary de pe coloana centrală și dați click pe commit.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/09-commit.png" alt="Crearea unui commit"></p>
+<p>Ultimul pas este sincronizarea repository-ului local cu GitHub. Tot ce trebuie făcut este să dați click pe „<strong>Sync</strong>”.</p>
+<p><strong>Important!</strong> După fiecare commit este necesară sincronizarea cu GitHub pentru ca modificările să fie disponibile și online.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/10-push.png" alt="Sincronizarea cu GitHub"></p>
+<p>Acum modificările create în ultimul commit vor fi vizibile tuturor persoanelor cu acces la repository.</p>
+<p><img src="https://raw.githubusercontent.com/infoeducatie/blog.infoeducatie.ro/gh-pages/assets/images/github-101/11-done.png" alt="Done"></p>

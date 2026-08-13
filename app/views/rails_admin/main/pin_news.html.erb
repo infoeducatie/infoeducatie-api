@@ -1,7 +1,7 @@
 <%= render partial: "confirm_admin_action",
            locals: {
              title: "Pin this article?",
-             message: "#{@object.title} will replace the currently pinned article.",
+             message: "#{@object.title} will replace the pinned article for #{@object.edition.name}.",
              button_label: "Pin article",
              button_class: "btn-primary",
              icon: "fa-thumbtack"

@@ -77,6 +77,14 @@ class User < ActiveRecord::Base
     self.first_name + " " + self.last_name
   end
 
+  def localized_job(locale)
+    if locale.to_s.downcase.start_with?("en")
+      job_en.presence || job
+    else
+      job
+    end
+  end
+
   def increment_registration_step_number!
     self.update_column(:registration_step_number,
                        self.registration_step_number + 1)
@@ -125,6 +133,11 @@ class User < ActiveRecord::Base
       field :job do
         html_attributes autocomplete: "organization-title"
       end
+      field :job_en do
+        label "Job (English)"
+        help "Optional. Romanian content is used when the English translation is blank."
+        html_attributes autocomplete: "organization-title"
+      end
       field :roles
       field :password do
         html_attributes autocomplete: "new-password"
@@ -142,6 +155,9 @@ class User < ActiveRecord::Base
       field :first_name
       field :last_name
       field :job
+      field :job_en do
+        label "Job (English)"
+      end
       field :roles
       field :confirmed?, :boolean do
         label "Confirmed"
@@ -152,6 +168,9 @@ class User < ActiveRecord::Base
       field :last_name
       field :email
       field :job
+      field :job_en do
+        label "Job (English)"
+      end
       field :current_sign_in_at
       field :confirmed?, :boolean do
         label "Confirmed"

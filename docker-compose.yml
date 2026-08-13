@@ -11,7 +11,7 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
   web:
     build: .
@@ -19,17 +19,29 @@ services:
       - path: .env
         required: false
     environment:
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.test}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-infoedu-local-admin}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3001,http://127.0.0.1:3001}
       DATABASE_URL: postgres://postgres:postgres@db:5432/infoeducatie_production
+      DISABLE_EMAIL: ${DISABLE_EMAIL:-true}
       RAILS_ENV: production
       RACK_ENV: production
+      RAILS_ASSUME_SSL: "false"
       RAILS_FORCE_SSL: "false"
+      RAILS_SERVE_STATIC_FILES: "true"
+      SEED_DEMO_DATA: "true"
       SECRET_KEY_BASE: ${SECRET_KEY_BASE:-local-compose-secret-key-base}
-    command: sh -c "bundle exec rails db:prepare && bundle exec puma -C config/puma.rb"
+      SESSION_COOKIE_SECURE: "false"
+      UI_URL: ${UI_URL:-http://localhost:3001}
+    command: sh -c "bundle exec rails db:prepare && bundle exec rails db:seed && bundle exec puma -C config/puma.rb"
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "3000:3000"
+    volumes:
+      - uploads_data:/app/public/uploads
 
 volumes:
   postgres_data:
+  uploads_data:

@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "tutorial-virtualbox",
+    "title": "Tutorial VirtualBox",
+    "excerpt": "VirtualBox oferă o metodă rapidă de a crea, configura, importa și exporta mașini virtuale pentru dezvoltare și testare pe mai multe platforme.",
+    "author_name": "Sabin Marcu & Elena Pistol",
+    "category": "Tutorial",
+    "published_at": "2015-07-25T20:00:00+03:00"
+  },
+  {
+    "slug": "tutorial-vagrant",
+    "title": "Tutorial Vagrant",
+    "excerpt": "O introducere în instalarea și configurarea Vagrant pentru medii de dezvoltare virtualizate, reproductibile și ușor de distribuit.",
+    "author_name": "Sabin Marcu & Elena Pistol",
+    "category": "Tutorial",
+    "published_at": "2015-07-23T20:00:00+03:00"
+  },
+  {
+    "slug": "blog-tehnic-infoeducatie",
+    "title": "Blog tehnic pentru comunitatea InfoEducație",
+    "excerpt": "Anunțul lansării blogului tehnic InfoEducație ca spațiu pentru schimbul de informații și articole ale comunității.",
+    "author_name": "Coman Alexandru",
+    "category": "Știri",
+    "published_at": "2015-07-07T21:19:00+03:00"
+  },
+  {
+    "slug": "github-101",
+    "title": "GitHub 101",
+    "excerpt": "Un ghid introductiv despre versionarea cu Git și publicarea proiectelor într-un repository GitHub.",
+    "author_name": "Mircea Brățan",
+    "category": "Tutorial",
+    "published_at": "2015-04-14T21:30:00+03:00"
+  },
+  {
+    "slug": "hackathon-intern-1",
+    "title": "Hackathon Intern 1",
+    "excerpt": "Povestea unei întâlniri a voluntarilor InfoEducație pentru migrarea forumului și dezvoltarea noii platforme.",
+    "author_name": "Alex Palcuie",
+    "category": "Știri",
+    "published_at": "2015-04-07T23:16:02+03:00"
+  },
+  {
+    "slug": "infoeducatie-online-2015",
+    "title": "InfoEducație - Ediția Online 2015",
+    "excerpt": "Anunțul ediției online InfoEducație 2015, cu perioada de înscriere și cele cinci secțiuni ale concursului.",
+    "author_name": "Cîtea Alexandru",
+    "category": "Știri",
+    "published_at": "2015-03-13T23:16:02+02:00"
+  }
+]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_01_200000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.text     "description_en"
   end
 
   add_index "alumni", ["user_id"], name: "index_alumni_on_user_id", unique: true, using: :btree
@@ -54,6 +55,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "blog_posts", force: :cascade do |t|
+    t.string   "slug",                              null: false
+    t.string   "title",                             null: false
+    t.string   "title_en"
+    t.text     "excerpt",                           null: false
+    t.text     "excerpt_en"
+    t.text     "body",                              null: false
+    t.text     "body_en"
+    t.string   "author_name",                       null: false
+    t.string   "category"
+    t.string   "category_en"
+    t.datetime "published_at",                      null: false
+    t.boolean  "active",        default: true,      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "blog_posts", ["active", "published_at"], name: "index_blog_posts_on_active_and_published_at", using: :btree
+  add_index "blog_posts", ["slug"], name: "index_blog_posts_on_slug", unique: true, using: :btree
+
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -75,6 +96,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "content_pages", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.string   "title",                     null: false
+    t.string   "title_en"
+    t.text     "body",                      null: false
+    t.text     "body_en"
+    t.string   "document"
+    t.string   "document_en"
+    t.boolean  "active",    default: true,  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "content_pages", ["active", "slug"], name: "index_content_pages_on_active_and_slug", using: :btree
+  add_index "content_pages", ["slug"], name: "index_content_pages_on_slug", unique: true, using: :btree
 
   create_table "colaborators", force: :cascade do |t|
     t.integer  "contestant_id"
@@ -132,6 +169,50 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.boolean  "show_results"
   end
 
+  create_table "judging_criteria", force: :cascade do |t|
+    t.string   "title",                     null: false
+    t.string   "title_en",                  null: false
+    t.string   "document",                  null: false
+    t.integer  "position",  default: 0,     null: false
+    t.boolean  "active",    default: true,  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "judging_criteria", ["active", "position"], name: "index_judging_criteria_on_active_and_position", using: :btree
+  add_index "judging_criteria", ["position"], name: "index_judging_criteria_on_position", using: :btree
+  add_index "judging_criteria", ["title"], name: "index_judging_criteria_on_title", unique: true, using: :btree
+
+  create_table "jury_categories", force: :cascade do |t|
+    t.string   "title",                     null: false
+    t.string   "title_en",                  null: false
+    t.string   "icon"
+    t.integer  "position",  default: 0,     null: false
+    t.boolean  "active",    default: true,  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "jury_categories", ["position"], name: "index_jury_categories_on_position", using: :btree
+  add_index "jury_categories", ["title"], name: "index_jury_categories_on_title", unique: true, using: :btree
+
+  create_table "jury_members", force: :cascade do |t|
+    t.string   "title"
+    t.string   "title_en"
+    t.string   "name",                                      null: false
+    t.string   "photo",                                     null: false
+    t.string   "occupation",                                null: false
+    t.string   "occupation_en"
+    t.integer  "position",         default: 0,              null: false
+    t.boolean  "active",           default: true,           null: false
+    t.bigint   "jury_category_id",                          null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "jury_members", ["jury_category_id", "position"], name: "index_jury_members_on_jury_category_id_and_position", using: :btree
+  add_index "jury_members", ["jury_category_id"], name: "index_jury_members_on_jury_category_id", using: :btree
+
   create_table "news", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
@@ -140,7 +221,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.datetime "updated_at",                 null: false
     t.integer  "edition_id"
     t.text     "short"
+    t.string   "title_en"
+    t.text     "body_en"
   end
+
+  create_table "photo_albums", force: :cascade do |t|
+    t.string   "title",                      null: false
+    t.string   "title_en"
+    t.string   "external_url",               null: false
+    t.string   "cover_image",                null: false
+    t.integer  "position",    default: 0,    null: false
+    t.boolean  "active",      default: true, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "photo_albums", ["active", "position"], name: "index_photo_albums_on_active_and_position", using: :btree
+  add_index "photo_albums", ["title"], name: "index_photo_albums_on_title", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "title"
@@ -298,6 +395,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sponsor_tiers", force: :cascade do |t|
+    t.string   "name",                    null: false
+    t.string   "name_en"
+    t.integer  "position",   default: 0,  null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "sponsor_tiers", ["name"], name: "index_sponsor_tiers_on_name", unique: true, using: :btree
+  add_index "sponsor_tiers", ["position"], name: "index_sponsor_tiers_on_position", using: :btree
+
+  create_table "sponsors", force: :cascade do |t|
+    t.string   "title",                              null: false
+    t.string   "image",                              null: false
+    t.string   "website_url"
+    t.integer  "position",          default: 0,      null: false
+    t.boolean  "active",            default: true,   null: false
+    t.bigint   "sponsor_tier_id",                    null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "sponsors", ["sponsor_tier_id", "position"], name: "index_sponsors_on_sponsor_tier_id_and_position", using: :btree
+  add_index "sponsors", ["sponsor_tier_id"], name: "index_sponsors_on_sponsor_tier_id", using: :btree
+
   create_table "talk_users", force: :cascade do |t|
     t.integer  "talk_id"
     t.integer  "user_id"
@@ -316,6 +438,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.integer  "edition_id"
     t.integer  "topic_id"
     t.integer  "comments_count", default: 0, null: false
+    t.string   "title_en"
+    t.text     "description_en"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -357,6 +481,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
     t.integer  "registration_step_number", default: 1
     t.string   "job"
     t.boolean  "newsletter"
+    t.string   "job_en"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -365,6 +490,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
 
   add_foreign_key "api_credentials", "users", column: "created_by_id", on_delete: :nullify
   add_foreign_key "api_credentials", "users", column: "revoked_by_id", on_delete: :nullify
+  add_foreign_key "jury_members", "jury_categories"
   add_foreign_key "robotics_queue_entries", "robotics_competitions", on_delete: :cascade
   add_foreign_key "robotics_queue_entries", "robotics_teams", on_delete: :cascade
   add_foreign_key "robotics_teams", "robotics_competitions", on_delete: :cascade
@@ -375,4 +501,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_090000) do
   add_foreign_key "robotics_turns", "robotics_competitions", on_delete: :cascade
   add_foreign_key "robotics_turns", "robotics_teams", on_delete: :restrict
   add_foreign_key "robotics_turns", "users", column: "stopped_by_id", on_delete: :nullify
+  add_foreign_key "sponsors", "sponsor_tiers"
 end

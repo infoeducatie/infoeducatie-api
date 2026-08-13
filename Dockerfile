@@ -44,8 +44,8 @@ COPY --from=build ${APP_HOME} ${APP_HOME}
 
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    mkdir -p log tmp/pids tmp/cache tmp/uploads && \
-    chown -R rails:rails log tmp
+    mkdir -p log tmp/pids tmp/cache tmp/uploads public/uploads && \
+    chown -R rails:rails log tmp public/uploads
 
 USER 1000:1000
 

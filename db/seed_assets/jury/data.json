@@ -1,0 +1,398 @@
+[
+  {
+    "title": "Conducerea juriului",
+    "title_en": "Jury leadership",
+    "icon_filename": null,
+    "members": [
+      {
+        "name": "Conf. Dr. Ing. Răzvan Diaconescu",
+        "occupation": "conferențiar @ UNȘT Politehnica București",
+        "photo_filename": "razvan_deaconescu.jpg",
+        "title": "Președinte",
+        "title_en": "President",
+        "position": 10
+      },
+      {
+        "name": "Daniel Gherasim",
+        "occupation": "inspector discipline informatice @ ISJ Vrancea",
+        "photo_filename": "default.png",
+        "title": "Președinte executiv",
+        "title_en": "Executive president",
+        "position": 20
+      },
+      {
+        "name": "Prof. Livia – Silvia MARCU",
+        "occupation": "Inspector şcolar general @ ISJ Vrancea",
+        "photo_filename": "default.png",
+        "title": "Vicepreședinte",
+        "title_en": "Vice president",
+        "position": 30
+      },
+      {
+        "name": "Georgeta Antonia Rodica Crăciunescu",
+        "occupation": "consilier @ MEC",
+        "photo_filename": "default.png",
+        "title": "Vicepreședinte executiv",
+        "title_en": "Executive vice president",
+        "position": 40
+      }
+    ],
+    "position": 10
+  },
+  {
+    "title": "comisia software educațional",
+    "title_en": "educational software jury",
+    "icon_filename": "educational.png",
+    "members": [
+      {
+        "name": "Daniel Popa",
+        "occupation": "profesor @ Colegiul Național 'Aurel Vlaicu' Orastie",
+        "photo_filename": "daniel_popa.jpg",
+        "position": 10
+      },
+      {
+        "name": "Ana-Maria Arișanu",
+        "occupation": "Profesor @ Colegiul National 'Mircea cel Batran' Rm. Valcea",
+        "photo_filename": "arisanu.png",
+        "position": 20
+      },
+      {
+        "name": "Barbu Mihai",
+        "occupation": "student @ UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 30
+      },
+      {
+        "name": "Zaim-Oprea Flavia",
+        "occupation": "profesor @ UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 40
+      },
+      {
+        "name": "Adriel Rafael Matei",
+        "occupation": "student @ Radboud University",
+        "photo_filename": "default.png",
+        "position": 50
+      },
+      {
+        "name": "Ebru Resul",
+        "occupation": "UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 60
+      },
+      {
+        "name": "Negru Alexandru",
+        "occupation": "Software Engineer @ HOOTSUITE",
+        "photo_filename": "default.png",
+        "position": 70
+      },
+      {
+        "name": "Victor Iulian Sandu",
+        "occupation": "Lead Software Engineer & Architect @ Axes Software",
+        "photo_filename": "default.png",
+        "position": 80
+      }
+    ],
+    "position": 20
+  },
+  {
+    "title": "comisia software utilitar",
+    "title_en": "utility software jury",
+    "icon_filename": "utility.png",
+    "members": [
+      {
+        "name": "Simion Strugar",
+        "occupation": "profesor @ Col. Nat. „George Cosbuc” Nasaud",
+        "photo_filename": "default.png",
+        "position": 10
+      },
+      {
+        "name": "Gorea-Zamfir Claudiu-Cristian",
+        "occupation": "inspector @ Lic. Teo. de Informatică Gr. Moisil Iași",
+        "photo_filename": "default.png",
+        "position": 20
+      },
+      {
+        "name": "Ștefănescu Alin",
+        "occupation": "profesor @ Universitatea din București",
+        "photo_filename": "default.png",
+        "position": 30
+      },
+      {
+        "name": "Anton Nicolae",
+        "occupation": "profesor @ Lic. Teh. Anghel Saligny Brăila",
+        "photo_filename": "default.png",
+        "position": 40
+      },
+      {
+        "name": "Denis Troncotă",
+        "occupation": "inginer @ TDR TECH S.R.L.",
+        "photo_filename": "default.png",
+        "position": 50
+      },
+      {
+        "name": "Luca Sas",
+        "occupation": "inginer @ Team Kappa Studio",
+        "photo_filename": "default.png",
+        "position": 60
+      },
+      {
+        "name": "Cristian Vasilache",
+        "occupation": "AVL Romania",
+        "photo_filename": "default.png",
+        "position": 70
+      },
+      {
+        "name": "Vlad Luță",
+        "occupation": "student @ UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 80
+      },
+      {
+        "name": "George Dragomir",
+        "occupation": "Clinica Prevencia SRL",
+        "photo_filename": "default.png",
+        "position": 90
+      },
+      {
+        "name": "Popa Liviu",
+        "occupation": "student @ Universitatea din București",
+        "photo_filename": "default.png",
+        "position": 100
+      }
+    ],
+    "position": 30
+  },
+  {
+    "title": "comisia aplicații web",
+    "title_en": "web applications jury",
+    "icon_filename": "web.png",
+    "members": [
+      {
+        "name": "Adriana Chereș",
+        "occupation": "Profesor @ Liceul Teoretic Nicolae Bălcescu Cluj Napoca",
+        "photo_filename": "adrianacheres.jpg",
+        "position": 10
+      },
+      {
+        "name": "Mihai Nan",
+        "occupation": "profesor @ UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 20
+      },
+      {
+        "name": "Dorin Bibicu",
+        "occupation": "Profesor @ Liceul Teoretic 'Dunarea' Galati",
+        "photo_filename": "default.png",
+        "position": 30
+      },
+      {
+        "name": "Anton Cristina",
+        "occupation": "profesor @ Colegiul Național „Gheorghe Munteanu Murgoci” Brăila",
+        "photo_filename": "default.png",
+        "position": 40
+      },
+      {
+        "name": "Muntean Rareș Mircea",
+        "occupation": "profesor @ Liceul Teoretic „Emil Racoviță”, Baia Mare",
+        "photo_filename": "default.png",
+        "position": 50
+      },
+      {
+        "name": "Alexandru Botici",
+        "occupation": "inginer @ Wolt Development Romania S.R.L.",
+        "photo_filename": "default.png",
+        "position": 60
+      },
+      {
+        "name": "Alexandru Borza",
+        "occupation": "inginer @ Wolt Development Romania S.R.L.",
+        "photo_filename": "default.png",
+        "position": 70
+      },
+      {
+        "name": "Cosmin Ciolacu",
+        "occupation": "freelancer",
+        "photo_filename": "default.png",
+        "position": 80
+      },
+      {
+        "name": "Tal Paul-Gabriel",
+        "occupation": "student @ Universitatea Babeș-Bolyai",
+        "photo_filename": "default.png",
+        "position": 90
+      }
+    ],
+    "position": 40
+  },
+  {
+    "title": "comisia roboți",
+    "title_en": "robotics jury",
+    "icon_filename": "robots.png",
+    "members": [
+      {
+        "name": "Robert Mihai Colca",
+        "occupation": "doctorand @ Universitatea de Vest din Timișoara",
+        "photo_filename": "Robert_Colca.jpg",
+        "position": 10
+      },
+      {
+        "name": "Stan Maria",
+        "occupation": "profesor @ Colegiul Tehnic Radu Negru Galaţi",
+        "photo_filename": "default.png",
+        "position": 20
+      },
+      {
+        "name": "Burlacu Cătălina",
+        "occupation": "Profesor @ Colegiul Dunărea Galaţi",
+        "photo_filename": "default.png",
+        "position": 30
+      },
+      {
+        "name": "Laviniu Bejenaru",
+        "occupation": "Profesor @ Colegiul National 'Traian' din Drobeta Turnu Severin",
+        "photo_filename": "laviniubejenaru.png",
+        "position": 40
+      },
+      {
+        "name": "Gheorghe Carmocanu",
+        "occupation": "profesor @ Liceul Teoretic 'Mihai Eminescu' Cluj-Napoca",
+        "photo_filename": "carmocanu.jpg",
+        "position": 50
+      },
+      {
+        "name": "Crăciun Marian",
+        "occupation": "inginer @ Global Brother SRL",
+        "photo_filename": "default.png",
+        "position": 60
+      },
+      {
+        "name": "Deonise Costin-Alexandru",
+        "occupation": "UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 70
+      },
+      {
+        "name": "Grumeza Theodor-Radu",
+        "occupation": "doctorand @ Universitatea de Vest din Timișoara",
+        "photo_filename": "default.png",
+        "position": 80
+      },
+      {
+        "name": "Ionescu Cristina Elena",
+        "occupation": "profesor @ Șc. Gim. Anghel Saligny Focșani",
+        "photo_filename": "default.png",
+        "position": 90
+      }
+    ],
+    "position": 50
+  },
+  {
+    "title": "comisia multimedia",
+    "title_en": "multimedia jury",
+    "icon_filename": "media.png",
+    "members": [
+      {
+        "name": "Roxana Tîmplaru",
+        "occupation": "Profesor @ Colegiul Național 'Ștefan Odobleja'",
+        "photo_filename": "default.png",
+        "position": 10
+      },
+      {
+        "name": "Antonia Haller",
+        "occupation": "Profesor @ Colegiul National 'Mircea cel Batran' Rm. Valcea",
+        "photo_filename": "antoniahaller.jpg",
+        "position": 20
+      },
+      {
+        "name": "Emilia-Felicia COȘNIȚĂ",
+        "occupation": "profesor @ Liceul Teoretic Miron Costin, Pașcani",
+        "photo_filename": "default.png",
+        "position": 30
+      },
+      {
+        "name": "Alin Maidan",
+        "occupation": "profesor @ Colegiul Național 'Miron Costin' Galați",
+        "photo_filename": "default.png",
+        "position": 40
+      },
+      {
+        "name": "Rodica-Gabriela SPIRIDON",
+        "occupation": "profesor @ Liceul Sanitar Antim Ivireanu, Râm. Vâlcea",
+        "photo_filename": "default.png",
+        "position": 50
+      },
+      {
+        "name": "Penu Ionela-Mihaela",
+        "occupation": "profesor @ Șc. Gim. „Miron Costin”, Galați",
+        "photo_filename": "default.png",
+        "position": 60
+      },
+      {
+        "name": "Micu George-Alexandru",
+        "occupation": "UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 70
+      },
+      {
+        "name": "Oprea Theodora-Otilia",
+        "occupation": "student @ UNȘT Politehnica București",
+        "photo_filename": "default.png",
+        "position": 80
+      },
+      {
+        "name": "Munteanu Ana Adelina",
+        "occupation": "Dreamfilm Antena1",
+        "photo_filename": "default.png",
+        "position": 90
+      }
+    ],
+    "position": 60
+  },
+  {
+    "title": "comisia tehnică",
+    "title_en": "technical committee",
+    "icon_filename": null,
+    "members": [
+      {
+        "name": "Emil Onea",
+        "occupation": "Profesor @ Colegiul Naţional “Unirea“ Focşani",
+        "photo_filename": "emil_onea.jpg",
+        "position": 10
+      },
+      {
+        "name": "Dan Roșioru",
+        "occupation": "Profesor @ Colegiul Naţional “Unirea“ Focşani",
+        "photo_filename": "default.png",
+        "position": 20
+      },
+      {
+        "name": "Ovidiu Domșa",
+        "occupation": "Profesor @ Univ. Alba Iulia",
+        "photo_filename": "domsa_ovidiu.jpg",
+        "position": 30
+      },
+      {
+        "name": "Monica Chiriță",
+        "occupation": "Profesor @ Colegiul National Unirea",
+        "photo_filename": "default.png",
+        "position": 40
+      }
+    ],
+    "position": 70
+  },
+  {
+    "title": "secretar",
+    "title_en": "secretary",
+    "icon_filename": null,
+    "members": [
+      {
+        "name": "Cristina Ionescu",
+        "occupation": "profesor @ Școala Gimnazială 'Anghel Saligny' Focșani",
+        "photo_filename": "default.png",
+        "position": 10
+      }
+    ],
+    "position": 80
+  }
+]

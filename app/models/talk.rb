@@ -7,6 +7,11 @@ class Talk < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
 
+  with_options if: :english_content_present? do
+    validates :title_en, presence: true
+    validates :description_en, presence: true
+  end
+
   validates :topic_id, numericality: { only_integer: true,
                                        greater_than: 0,
                                        allow_blank: true}
@@ -59,6 +64,14 @@ class Talk < ActiveRecord::Base
     "#{Settings.ui.community_url}/t/#{topic_id}" if topic_id
   end
 
+  def localized_title(locale)
+    english_locale?(locale) ? title_en.presence || title : title
+  end
+
+  def localized_description(locale)
+    english_locale?(locale) ? description_en.presence || description : description
+  end
+
   def discourse_title
     discourse = Discourse.new
     discourse_category = discourse.category(edition.talks_forum_category)
@@ -80,6 +93,14 @@ class Talk < ActiveRecord::Base
 
   private
 
+  def english_content_present?
+    title_en.present? || description_en.present?
+  end
+
+  def english_locale?(locale)
+    locale.to_s.downcase.start_with?("en")
+  end
+
   def report_discourse_error(operation, error)
     Rails.logger.error(
       "Talk Discourse #{operation} failed for talk=#{id}: " \
@@ -99,7 +120,14 @@ class Talk < ActiveRecord::Base
     end
     edit do
       field :title
+      field :title_en do
+        label "Title (English)"
+        help "Optional. Romanian content is used when the English translation is blank."
+      end
       field :description
+      field :description_en do
+        label "Description (English)"
+      end
       field :edition
       field :users
     end
