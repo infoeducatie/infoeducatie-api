@@ -45,7 +45,8 @@ RSpec.describe Integrations::RegistrationSnapshotExporter do
         snapshot_id: "legacy-final-2026"
       ).export!
       payload = JSON.parse(File.read(path))
-      exported_edition = payload.fetch("editions").sole
+      exported_editions = payload.fetch("editions")
+      exported_edition = exported_editions.find { |item| item.fetch("id") == edition.id }
       exported_project = exported_edition.fetch("projects").find { |item| item.fetch("id") == project.id }
       exported_draft = exported_edition.fetch("projects").find { |item| item.fetch("title") == "Unfinished" }
       exported_screenshot = exported_project.fetch("screenshots").sole
@@ -54,6 +55,7 @@ RSpec.describe Integrations::RegistrationSnapshotExporter do
         "snapshotId" => "legacy-final-2026",
         "includesAllEditions" => true
       )
+      expect(exported_editions.map { |item| item.fetch("id") }).to match_array(Edition.pluck(:id))
       expect(exported_edition.fetch("contestants").sole.dig("privateData", "email")).to eq(
         "ada@example.test"
       )
@@ -84,7 +86,10 @@ RSpec.describe Integrations::RegistrationSnapshotExporter do
         snapshot_id: "public-rehearsal",
         include_personal_data: false
       ).export!
-      participant = JSON.parse(File.read(path)).fetch("editions").sole.fetch("contestants").sole
+      exported_editions = JSON.parse(File.read(path)).fetch("editions")
+      exported_edition = exported_editions.find { |item| item.fetch("id") == edition.id }
+      participant = exported_edition.fetch("contestants").sole
+      expect(exported_editions.map { |item| item.fetch("id") }).to match_array(Edition.pluck(:id))
       expect(participant.fetch("privateData")).to be_nil
       expect(File.read(path)).not_to include("ada@example.test")
     end
