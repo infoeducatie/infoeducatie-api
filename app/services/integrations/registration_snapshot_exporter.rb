@@ -6,25 +6,28 @@ require "pathname"
 module Integrations
   class RegistrationSnapshotExporter
     SNAPSHOT_FILE_NAME = "registration-snapshot.json"
+    SNAPSHOT_ID_FILE_NAME = ".registration-snapshot-id"
+    SCREENSHOT_BUCKETS = 32
     SEXES = {
       1 => "male",
       2 => "female",
       3 => "preferNotToSay"
     }.freeze
 
-    def initialize(output_directory:, snapshot_id:, include_personal_data: true)
+    def initialize(output_directory:, snapshot_id:, include_personal_data: true, on_screenshot: nil)
       destination = Pathname.new(output_directory)
       @output_directory_was_absolute = destination.absolute?
       @output_directory = destination.expand_path
       @snapshot_id = snapshot_id.to_s.strip
       @include_personal_data = include_personal_data
+      @on_screenshot = on_screenshot
     end
 
     def export!
-      created_output = false
       validate_destination!
       FileUtils.mkdir_p(output_directory)
-      created_output = true
+      marker = output_directory.join(SNAPSHOT_ID_FILE_NAME)
+      File.write(marker, snapshot_id) unless marker.exist?
       payload = {
         snapshotId: snapshot_id,
         capturedAt: Time.current.iso8601(3),
@@ -34,20 +37,34 @@ module Integrations
       snapshot_path = output_directory.join(SNAPSHOT_FILE_NAME)
       File.write(snapshot_path, JSON.pretty_generate(payload))
       snapshot_path
-    rescue
-      FileUtils.rm_rf(output_directory) if created_output && output_directory.exist?
-      raise
     end
 
     private
 
     attr_reader :output_directory, :snapshot_id, :include_personal_data,
-      :output_directory_was_absolute
+      :output_directory_was_absolute, :on_screenshot
 
     def validate_destination!
       raise ArgumentError, "snapshot_id is required" if snapshot_id.blank?
       raise ArgumentError, "output_directory must be absolute" unless output_directory_was_absolute
-      raise ArgumentError, "output_directory already exists" if output_directory.exist?
+      return unless output_directory.exist?
+
+      raise ArgumentError, "output_directory is not a directory" unless output_directory.directory?
+
+      marker = output_directory.join(SNAPSHOT_ID_FILE_NAME)
+      snapshot = output_directory.join(SNAPSHOT_FILE_NAME)
+      raise ArgumentError, "snapshot ID marker is not a regular file" if marker.symlink? || (marker.exist? && !marker.file?)
+
+      existing_id = if marker.file?
+        File.read(marker)
+      elsif snapshot.file?
+        JSON.parse(File.read(snapshot)).fetch("snapshotId")
+      elsif output_directory.children.any?
+        raise ArgumentError, "output_directory has no snapshot ID"
+      end
+      if existing_id && existing_id != snapshot_id
+        raise ArgumentError, "output_directory belongs to a different snapshot ID"
+      end
     end
 
     def edition_payload(edition)
@@ -153,6 +170,8 @@ module Integrations
       screenshots = project.screenshots.sort_by { |screenshot|
         [screenshot.created_at || Time.at(0), screenshot.id]
       }
+      exported_screenshots = screenshots.filter_map { |screenshot| screenshot_payload(screenshot) }
+      exported_screenshots.each_with_index { |payload, index| payload[:displayOrder] = index + 1 }
       {
         id: project.id,
         categoryId: project.category_id,
@@ -179,9 +198,7 @@ module Integrations
         submittedAt: state[:submitted_at],
         moderatedAt: state[:moderated_at],
         contestantIds: ordered_contestant_ids(project),
-        screenshots: screenshots.each_with_index.map { |screenshot, index|
-          screenshot_payload(screenshot, index + 1)
-        }
+        screenshots: exported_screenshots
       }
     end
 
@@ -210,24 +227,40 @@ module Integrations
       }.map(&:contestant_id)
     end
 
-    def screenshot_payload(screenshot, display_order)
-      file = screenshot.screenshot.file
-      raise "Screenshot #{screenshot.id} has no stored file" unless file
-
-      bytes = file.read
-      raise "Screenshot #{screenshot.id} is empty" if bytes.blank?
-
+    def screenshot_payload(screenshot)
       original_name = File.basename(screenshot.filename.to_s.presence || "screenshot-#{screenshot.id}")
-      relative_path = Pathname.new("screenshots").join(screenshot.id.to_s, original_name)
+      exported_name = "#{screenshot.id}#{File.extname(original_name).downcase}"
+      bucket = format("%02d", screenshot.id % SCREENSHOT_BUCKETS)
+      relative_path = Pathname.new("screenshots").join(bucket, exported_name)
       destination = output_directory.join(relative_path)
-      FileUtils.mkdir_p(destination.dirname)
-      File.binwrite(destination, bytes)
+      if destination.symlink? || (destination.exist? && !destination.file?)
+        raise "Screenshot #{screenshot.id} destination is not a regular file"
+      end
+
+      if destination.file? && destination.size.positive?
+        checksum = Digest::SHA256.file(destination).hexdigest.upcase
+        status = :reused
+      else
+        file = screenshot.screenshot.file
+        bytes = file&.read
+        if bytes.blank?
+          File.delete(destination) if destination.file? && destination.size.zero?
+          on_screenshot&.call(:skipped, screenshot.id, file ? "blank source" : "no stored file")
+          return
+        end
+
+        FileUtils.mkdir_p(destination.dirname)
+        File.binwrite(destination, bytes)
+        checksum = Digest::SHA256.hexdigest(bytes).upcase
+        status = :downloaded
+      end
+
+      on_screenshot&.call(status, screenshot.id, nil)
       {
         id: screenshot.id,
         sourcePath: relative_path.to_s,
         originalFileName: original_name,
-        sha256: Digest::SHA256.hexdigest(bytes).upcase,
-        displayOrder: display_order
+        sha256: checksum
       }
     end
 
